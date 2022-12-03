@@ -1,0 +1,29 @@
+project:
+  type: book
+  output-dir: docs
+
+website:
+  title: "Aayush Agrawal"
+  site-url: https://aayushmnit.com/pytorch_book
+  repo-url: https://github.com/aayushmnit/pytorch_book
+book:
+  title: "Pytorch Book"
+  author: "Aayush Agrawal"
+  date: "12/3/2022"
+  chapters:
+    - index.qmd
+    - part: "Pytorch basics"
+      chapters: 
+        - basics/intro.qmd
+        - basics/intro1.qmd
+
+bibliography: references.bib
+
+format:
+  html:
+    theme: cosmo
+  pdf:
+    documentclass: scrreprt
+
+
+

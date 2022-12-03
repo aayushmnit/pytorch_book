@@ -1,0 +1,6 @@
+# Preface {.unnumbered}
+
+An informal collection of content in my quest to learn Pytorch, Machine learning, and Deep learning. The book will focus on practical applications with Pytorch and popular frameworks on top of Pytorch like FastAI, Huggingface, etc. This book will remain under construction and I will keep adding chapters to it. Hopefully, it will be useful for people trying to learn Pytorch too. 
+
+
+Read [here](https://aayushmnit.com/about.html) to learn more about the author.
