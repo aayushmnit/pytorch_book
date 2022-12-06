@@ -3,25 +3,29 @@ project:
   output-dir: docs
 
 website:
-  title: "Aayush Agrawal"
   site-url: https://aayushmnit.com/pytorch_book
   repo-url: https://github.com/aayushmnit/pytorch_book
+
 book:
-  title: "Pytorch Book"
+  title: "The Pytorch Book"
   author: "Aayush Agrawal"
   date: "12/3/2022"
+  cover-image: bookcover.jpg
   chapters:
     - index.qmd
     - part: "Pytorch basics"
       chapters: 
-        - basics/intro.qmd
-        - basics/intro1.qmd
+        - basics/0_pytorch_intro.ipynb
+  
 
 bibliography: references.bib
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: sandstone
+      dark: cyborg
+    mainfont: Roboto
   pdf:
     documentclass: scrreprt
 
