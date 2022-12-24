@@ -7,13 +7,18 @@ website:
   repo-url: https://github.com/aayushmnit/pytorch_book
 
 book:
-  title: "The Pytorch Book"
+  title: "The PyTorch Book"
   author: "Aayush Agrawal"
-  date: "12/3/2022"
+  search: true
+  sharing: [linkedin, twitter, facebook]
+  #date: "12/24/2022"
   cover-image: bookcover.jpg
+  page-footer: 
+    left: "The PyTorch book. Copyright (c) 2022 Aayush Agrawal."
+    right: "This book was built with [Quarto](https://quarto.org/)"
   chapters:
     - index.qmd
-    - part: "Pytorch basics"
+    - part: "PyTorch basics"
       chapters: 
         - basics/0_pytorch_intro.ipynb
   
@@ -26,8 +31,6 @@ format:
       light: sandstone
       dark: cyborg
     mainfont: Roboto
-  pdf:
-    documentclass: scrreprt
 
 
 

@@ -1,16 +1,30 @@
 [
   {
-    "objectID": "index.html",
-    "href": "index.html",
-    "title": "The Pytorch Book",
-    "section": "",
-    "text": "Preface\nAn informal collection of content in my quest to learn Pytorch, Machine learning, and Deep learning. The book will focus on practical applications with Pytorch and popular frameworks on top of Pytorch like FastAI, Huggingface, etc. This book will remain under construction and I will keep adding chapters to it. Hopefully, it will be useful for people trying to learn Pytorch too.\nRead here to learn more about the author."
+    "objectID": "index.html#what-is-this-book-about",
+    "href": "index.html#what-is-this-book-about",
+    "title": "The PyTorch Book",
+    "section": "What is this book about?",
+    "text": "What is this book about?\nThis is a collection of content compiled during my journey to learn PyTorch, machine learning, and deep learning. The book will primarily cover practical applications of PyTorch and popular frameworks that build upon PyTorch, such as FastAI and Huggingface. Please note that this book is a work in progress and additional chapters will be added over time.I hope that this book, with its collection of theory and practical projects, will be useful for others who are also learning PyTorch."
   },
   {
     "objectID": "basics/0_pytorch_intro.html#what-is-pytorch",
     "href": "basics/0_pytorch_intro.html#what-is-pytorch",
-    "title": "1  Pytorch Basics",
-    "section": "1.1 What is Pytorch?",
-    "text": "1.1 What is Pytorch?\n\nimport torch"
+    "title": "1  PyTorch Introduction and Installation",
+    "section": "1.1 What is PyTorch",
+    "text": "1.1 What is PyTorch\n\n\n\nPyTorch is an open-source machine learning library for Python, based on the Torch library, used for applications such as deep learning and GPU based acceleration. It is primarily developed by Facebook’s artificial intelligence research group. PyTorch provides a high-level interface for working with large-scale machine learning models. It allows developers to define and train neural networks in a fast, flexible, and dynamic way.\nSome key features of PyTorch include:\n\nTensor computations with GPU acceleration: PyTorch includes GPU acceleration out of the box, allowing you to train your models on a single or multiple GPUs with ease.\nDynamic computation graphs: PyTorch allows you to define your computations as a dynamic graph, which allows you to change the structure of the graph on the fly and enables you to use dynamic control flow.\nEasy model building: PyTorch provides a wide range of predefined layers and architectures that you can use to build your models, making it easy to get started with machine learning.\nEcosystem support: PyTorch has a large and active community of users, and there are many tools and libraries available that are built on top of PyTorch, such as visualization tools, data loaders, and more.\n\nOverall, PyTorch is a powerful and flexible tool for working with large-scale machine learning models, and is widely used in research and industry.\n\n\n\n\n\n\nNote\n\n\n\n\n\nOn a personal note, I have used many different Deep learning frameworks and I find Pytorch to be the most intuitive. It blends nicely with regular Python and have really good ecosystem. I am also big fan of FastAI library which is written on top of Pytorch and is one of the best framework to do deep learning based project."
+  },
+  {
+    "objectID": "basics/0_pytorch_intro.html#installation",
+    "href": "basics/0_pytorch_intro.html#installation",
+    "title": "1  PyTorch Introduction and Installation",
+    "section": "1.2 Installation",
+    "text": "1.2 Installation\nSince, Pytorch is under active development and new version keeps getting released. You want to visit this website for latest Pytorch installation instruction.\n\n\n\nFig 1: Pytorch Installation page.\n\n\nThe above interface is what you will typically see on the installation page, based on your OS and other selection, it will produce a command you can run on your command line interface and install Pytorch. I recommend installing through conda and it will take care of the dependencies automatically."
+  },
+  {
+    "objectID": "basics/0_pytorch_intro.html#checking-installation",
+    "href": "basics/0_pytorch_intro.html#checking-installation",
+    "title": "1  PyTorch Introduction and Installation",
+    "section": "1.3 Checking Installation",
+    "text": "1.3 Checking Installation\nLet’s run the import command and see if we have Pytorch setup correctly.\n\nimport torch\nprint(torch.__version__)\n\n1.12.1\n\n\nIt is recommended to use a machine with a GPU when working with PyTorch because it is typically used for GPU-accelerated computations. If you are running PyTorch on a machine with a GPU and want to verify that it has access to the GPU, you can run the following command-\n\ntorch.cuda.is_available()\n\nTrue\n\n\nIf PyTorch is installed on a machine with a GPU, the above command will return True otherwise it will return False."
   }
 ]

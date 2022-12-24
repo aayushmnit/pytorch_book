@@ -2,14 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.124">
+<meta name="generator" content="quarto-1.2.226">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Aayush Agrawal">
-<meta name="dcterms.date" content="2022-12-03">
 
-<title>The Pytorch Book</title>
+<title>The PyTorch Book</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -73,7 +72,7 @@ ul.task-list li input[type="checkbox"] {
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">The Pytorch Book</h1>
+      <h1 class="quarto-secondary-nav-title">The PyTorch Book</h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -86,8 +85,29 @@ ul.task-list li input[type="checkbox"] {
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">The Pytorch Book</a> 
+      <a href="./">The PyTorch Book</a> 
         <div class="sidebar-tools-main">
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <i class="bi bi-bi-linkedin pe-1"></i>
+          LinkedIn
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -106,7 +126,7 @@ ul.task-list li input[type="checkbox"] {
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Pytorch basics</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">PyTorch basics</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -114,7 +134,7 @@ ul.task-list li input[type="checkbox"] {
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./basics/0_pytorch_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Pytorch Basics</span></a>
+  <a href="./basics/0_pytorch_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
   </div>
 </li>
       </ul>
@@ -128,7 +148,11 @@ ul.task-list li input[type="checkbox"] {
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a></li>
+  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
+  <ul class="collapse">
+  <li><a href="#what-is-this-book-about" id="toc-what-is-this-book-about" class="nav-link" data-scroll-target="#what-is-this-book-about">What is this book about?</a></li>
+  </ul></li>
+  <li><a href="#about-author" id="toc-about-author" class="nav-link" data-scroll-target="#about-author">About Author</a></li>
   </ul>
 </nav>
     </div>
@@ -137,7 +161,7 @@ ul.task-list li input[type="checkbox"] {
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">The Pytorch Book</h1>
+<h1 class="title d-none d-lg-block">The PyTorch Book</h1>
 </div>
 
 
@@ -145,18 +169,13 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     <div>
-    <div class="quarto-title-meta-heading">Authors</div>
+    <div class="quarto-title-meta-heading">Author</div>
     <div class="quarto-title-meta-contents">
              <p>Aayush Agrawal </p>
           </div>
   </div>
     
-    <div>
-    <div class="quarto-title-meta-heading">Published</div>
-    <div class="quarto-title-meta-contents">
-      <p class="date">December 3, 2022</p>
-    </div>
-  </div>
+  
     
   </div>
   
@@ -165,9 +184,23 @@ ul.task-list li input[type="checkbox"] {
 
 
 <section id="preface" class="level1 unnumbered">
-<p><img src="bookcover.jpg" title="The Pytorch Book" class="quarto-cover-image img-fluid"></p><h1 class="unnumbered">Preface</h1>
-<p>An informal collection of content in my quest to learn Pytorch, Machine learning, and Deep learning. The book will focus on practical applications with Pytorch and popular frameworks on top of Pytorch like FastAI, Huggingface, etc. This book will remain under construction and I will keep adding chapters to it. Hopefully, it will be useful for people trying to learn Pytorch too.</p>
-<p>Read <a href="https://aayushmnit.com/about.html">here</a> to learn more about the author.</p>
+<p><img src="bookcover.jpg" title="The PyTorch Book" class="quarto-cover-image img-fluid"></p><h1 class="unnumbered">Preface</h1>
+<section id="what-is-this-book-about" class="level2">
+<h2 class="anchored" data-anchor-id="what-is-this-book-about">What is this book about?</h2>
+<p>This is a collection of content compiled during my journey to learn PyTorch, machine learning, and deep learning. The book will primarily cover practical applications of PyTorch and popular frameworks that build upon PyTorch, such as FastAI and Huggingface. Please note that this book is a work in progress and additional chapters will be added over time.I hope that this book, with its collection of theory and practical projects, will be useful for others who are also learning PyTorch.</p>
+</section>
+</section>
+<section id="about-author" class="level1">
+<h1>About Author</h1>
+<div class="grid">
+<div class="g-col-8">
+<p>Aayush Agrawal is a skilled data scientist with expertise in machine learning solutions. He is interested in staying up-to-date with the latest data technologies, including big data platforms, deep learning, optimization methods, and business analytics. At the time of writing, He is working on developing data-driven products to improve recommendations for Microsoft Partners, M365 service administrators, and end-users in order to optimize the use of M365 services. Aayush has previously worked in various industries such as agricultural technology, pharmaceuticals, retail, e-commerce, and ride-sharing.</p>
+<p>Read more about him <a href="https://aayushmnit.com/about.html">here</a>.</p>
+</div>
+<div class="g-col-4">
+<p><img src="./author_img.jpg" class="img-fluid"></p>
+</div>
+</div>
 
 
 </section>
@@ -329,7 +362,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -365,24 +415,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
@@ -391,11 +459,17 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="./basics/0_pytorch_intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Pytorch Basics</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">The PyTorch book. Copyright (c) 2022 Aayush Agrawal.</div>   
+    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
 
 
 

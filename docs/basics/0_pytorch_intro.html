@@ -2,12 +2,12 @@
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head>
 
 <meta charset="utf-8">
-<meta name="generator" content="quarto-1.2.124">
+<meta name="generator" content="quarto-1.2.226">
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The Pytorch Book - 1&nbsp; Pytorch Basics</title>
+<title>The PyTorch Book - 1&nbsp; PyTorch Introduction and Installation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -134,7 +134,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Pytorch Basics</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -147,8 +147,29 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="../">The Pytorch Book</a> 
+      <a href="../">The PyTorch Book</a> 
         <div class="sidebar-tools-main">
+    <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
+    <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.linkedin.com/sharing/share-offsite/?url=|url|">
+            <i class="bi bi-bi-linkedin pe-1"></i>
+          LinkedIn
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://twitter.com/intent/tweet?url=|url|">
+            <i class="bi bi-bi-twitter pe-1"></i>
+          Twitter
+          </a>
+        </li>
+        <li>
+          <a class="dropdown-item sidebar-tools-main-item" href="https://www.facebook.com/sharer/sharer.php?u=|url|">
+            <i class="bi bi-bi-facebook pe-1"></i>
+          Facebook
+          </a>
+        </li>
+    </ul>
   <a href="" class="quarto-color-scheme-toggle sidebar-tool" onclick="window.quartoToggleColorScheme(); return false;" title="Toggle dark mode"><i class="bi"></i></a>
 </div>
     </div>
@@ -167,7 +188,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </li>
         <li class="sidebar-item sidebar-item-section">
       <div class="sidebar-item-container"> 
-            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">Pytorch basics</a>
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">PyTorch basics</a>
           <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" aria-expanded="true">
             <i class="bi bi-chevron-right ms-2"></i>
           </a> 
@@ -175,7 +196,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/0_pytorch_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Pytorch Basics</span></a>
+  <a href="../basics/0_pytorch_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
   </div>
 </li>
       </ul>
@@ -189,7 +210,9 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#what-is-pytorch" id="toc-what-is-pytorch" class="nav-link active" data-scroll-target="#what-is-pytorch"><span class="toc-section-number">1.1</span>  What is Pytorch?</a></li>
+  <li><a href="#what-is-pytorch" id="toc-what-is-pytorch" class="nav-link active" data-scroll-target="#what-is-pytorch"><span class="toc-section-number">1.1</span>  What is PyTorch</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="toc-section-number">1.2</span>  Installation</a></li>
+  <li><a href="#checking-installation" id="toc-checking-installation" class="nav-link" data-scroll-target="#checking-installation"><span class="toc-section-number">1.3</span>  Checking Installation</a></li>
   </ul>
 </nav>
     </div>
@@ -198,7 +221,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">Pytorch Basics</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></h1>
 </div>
 
 
@@ -206,6 +229,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <div class="quarto-title-meta">
 
     
+  
     
   </div>
   
@@ -213,10 +237,65 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 </header>
 
 <section id="what-is-pytorch" class="level2" data-number="1.1">
-<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-pytorch"><span class="header-section-number">1.1</span> What is Pytorch?</h2>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-05T22:29:55.662195Z&quot;,&quot;start_time&quot;:&quot;2022-12-05T22:29:54.263043Z&quot;}" data-execution_count="2">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-pytorch"><span class="header-section-number">1.1</span> What is PyTorch</h2>
+<figure align="center" class="figure">
+<img src="./img/pytorch_logo.png" alt="Pytorch logo." class="figure-img">
+</figure>
+<p><a href="https://pytorch.org/">PyTorch</a> is an open-source machine learning library for Python, based on the Torch library, used for applications such as deep learning and GPU based acceleration. It is primarily developed by Facebook’s artificial intelligence research group. PyTorch provides a high-level interface for working with large-scale machine learning models. It allows developers to define and train neural networks in a fast, flexible, and dynamic way.</p>
+<p>Some key features of PyTorch include:</p>
+<ul>
+<li><strong>Tensor computations with GPU acceleration</strong>: PyTorch includes GPU acceleration out of the box, allowing you to train your models on a single or multiple GPUs with ease.</li>
+<li><strong>Dynamic computation graphs</strong>: PyTorch allows you to define your computations as a dynamic graph, which allows you to change the structure of the graph on the fly and enables you to use dynamic control flow.</li>
+<li><strong>Easy model building</strong>: PyTorch provides a wide range of predefined layers and architectures that you can use to build your models, making it easy to get started with machine learning.</li>
+<li><strong>Ecosystem support</strong>: PyTorch has a large and active community of users, and there are many tools and libraries available that are built on top of PyTorch, such as visualization tools, data loaders, and more.</li>
+</ul>
+<p>Overall, PyTorch is a powerful and flexible tool for working with large-scale machine learning models, and is widely used in research and industry.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On a personal note, I have used many different Deep learning frameworks and I find Pytorch to be the most intuitive. It blends nicely with regular Python and have really good ecosystem. I am also big fan of <a href="https://docs.fast.ai/">FastAI</a> library which is written on top of Pytorch and is one of the best framework to do deep learning based project.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="installation" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="installation"><span class="header-section-number">1.2</span> Installation</h2>
+<p>Since, Pytorch is under active development and new version keeps getting released. You want to visit <a href="https://pytorch.org/get-started/locally/">this website</a> for latest Pytorch installation instruction.</p>
+<figure align="center" class="figure">
+<img src="./img/pytorch_installation.png" style="width:100%" class="figure-img">
+<figcaption align="center" class="figure-caption">
+Fig 1: Pytorch Installation page.
+</figcaption>
+</figure>
+<p>The above interface is what you will typically see on the installation page, based on your OS and other selection, it will produce a command you can run on your command line interface and install Pytorch. I recommend installing through conda and it will take care of the dependencies automatically.</p>
+</section>
+<section id="checking-installation" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="checking-installation"><span class="header-section-number">1.3</span> Checking Installation</h2>
+<p>Let’s run the import command and see if we have Pytorch setup correctly.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-24T20:18:13.353460Z&quot;,&quot;start_time&quot;:&quot;2022-12-24T20:18:13.350814Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(torch.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.12.1</code></pre>
+</div>
+</div>
+<p>It is recommended to use a machine with a GPU when working with PyTorch because it is typically used for GPU-accelerated computations. If you are running PyTorch on a machine with a GPU and want to verify that it has access to the GPU, you can run the following command-</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-24T20:21:59.940933Z&quot;,&quot;start_time&quot;:&quot;2022-12-24T20:21:59.938115Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.is_available()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>True</code></pre>
+</div>
+</div>
+<p>If PyTorch is installed on a machine with a GPU, the above command will return <code>True</code> otherwise it will return <code>False</code>.</p>
 
 
 </section>
@@ -378,7 +457,24 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
     button.classList.add('code-copy-button-checked');
     var currentTitle = button.getAttribute("title");
     button.setAttribute("title", "Copied!");
+    let tooltip;
+    if (window.bootstrap) {
+      button.setAttribute("data-bs-toggle", "tooltip");
+      button.setAttribute("data-bs-placement", "left");
+      button.setAttribute("data-bs-title", "Copied!");
+      tooltip = new bootstrap.Tooltip(button, 
+        { trigger: "manual", 
+          customClass: "code-copy-button-tooltip",
+          offset: [0, -8]});
+      tooltip.show();    
+    }
     setTimeout(function() {
+      if (tooltip) {
+        tooltip.hide();
+        button.removeAttribute("data-bs-title");
+        button.removeAttribute("data-bs-toggle");
+        button.removeAttribute("data-bs-placement");
+      }
       button.setAttribute("title", currentTitle);
       button.classList.remove('code-copy-button-checked');
     }, 1000);
@@ -414,24 +510,42 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       return note.innerHTML;
     });
   }
+  const findCites = (el) => {
+    const parentEl = el.parentElement;
+    if (parentEl) {
+      const cites = parentEl.dataset.cites;
+      if (cites) {
+        return {
+          el,
+          cites: cites.split(' ')
+        };
+      } else {
+        return findCites(el.parentElement)
+      }
+    } else {
+      return undefined;
+    }
+  };
   var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
   for (var i=0; i<bibliorefs.length; i++) {
     const ref = bibliorefs[i];
-    const cites = ref.parentNode.getAttribute('data-cites').split(' ');
-    tippyHover(ref, function() {
-      var popup = window.document.createElement('div');
-      cites.forEach(function(cite) {
-        var citeDiv = window.document.createElement('div');
-        citeDiv.classList.add('hanging-indent');
-        citeDiv.classList.add('csl-entry');
-        var biblioDiv = window.document.getElementById('ref-' + cite);
-        if (biblioDiv) {
-          citeDiv.innerHTML = biblioDiv.innerHTML;
-        }
-        popup.appendChild(citeDiv);
+    const citeInfo = findCites(ref);
+    if (citeInfo) {
+      tippyHover(citeInfo.el, function() {
+        var popup = window.document.createElement('div');
+        citeInfo.cites.forEach(function(cite) {
+          var citeDiv = window.document.createElement('div');
+          citeDiv.classList.add('hanging-indent');
+          citeDiv.classList.add('csl-entry');
+          var biblioDiv = window.document.getElementById('ref-' + cite);
+          if (biblioDiv) {
+            citeDiv.innerHTML = biblioDiv.innerHTML;
+          }
+          popup.appendChild(citeDiv);
+        });
+        return popup.innerHTML;
       });
-      return popup.innerHTML;
-    });
+    }
   }
 });
 </script>
@@ -445,6 +559,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
 </nav>
 </div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">The PyTorch book. Copyright (c) 2022 Aayush Agrawal.</div>   
+    <div class="nav-footer-right">This book was built with <a href="https://quarto.org/">Quarto</a></div>
+  </div>
+</footer>
 
 
 

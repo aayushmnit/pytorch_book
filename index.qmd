@@ -1,6 +1,19 @@
 # Preface {.unnumbered}
 
-An informal collection of content in my quest to learn Pytorch, Machine learning, and Deep learning. The book will focus on practical applications with Pytorch and popular frameworks on top of Pytorch like FastAI, Huggingface, etc. This book will remain under construction and I will keep adding chapters to it. Hopefully, it will be useful for people trying to learn Pytorch too. 
+## What is this book about?
+This is a collection of content compiled during my journey to learn PyTorch, machine learning, and deep learning. The book will primarily cover practical applications of PyTorch and popular frameworks that build upon PyTorch, such as FastAI and Huggingface. Please note that this book is a work in progress and additional chapters will be added over time.I hope that this book, with its collection of theory and practical projects, will be useful for others who are also learning PyTorch.
 
+# About Author
+::: {.grid}
+    
+::: {.g-col-8}
+Aayush Agrawal is a skilled data scientist with expertise in machine learning solutions. He is interested in staying up-to-date with the latest data technologies, including big data platforms, deep learning, optimization methods, and business analytics. At the time of writing, He is working on developing data-driven products to improve recommendations for Microsoft Partners, M365 service administrators, and end-users in order to optimize the use of M365 services. Aayush has previously worked in various industries such as agricultural technology, pharmaceuticals, retail, e-commerce, and ride-sharing.
 
-Read [here](https://aayushmnit.com/about.html) to learn more about the author.
+Read more about him [here](https://aayushmnit.com/about.html).
+:::
+
+::: {.g-col-4}
+![](./author_img.jpg)
+:::
+
+:::
