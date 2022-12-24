@@ -1,3 +1,2 @@
-# pytorch_book
-
-A collection of contents in my quest to learn Pytorch, Machine learning and Deep learning. The book will focus on practical application with Pytorch and popular frameworks on top of Pytorch like FastAI, Huggingface, etc. Hopefully it will be useful for people trying to learn Pytorch too.
+## The Pytorch Book
+This is a collection of content compiled during my journey to learn PyTorch, machine learning, and deep learning. The book will primarily cover practical applications of PyTorch and popular frameworks that build upon PyTorch, such as FastAI and Huggingface. Please note that this book is a work in progress and additional chapters will be added over time.I hope that this book, with its collection of theory and practical projects, will be useful for others who are also learning PyTorch.

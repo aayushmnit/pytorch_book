@@ -5,6 +5,7 @@ project:
 website:
   site-url: https://aayushmnit.com/pytorch_book
   repo-url: https://github.com/aayushmnit/pytorch_book
+  google-analytics: "G-7QN8N70N41"
 
 book:
   title: "The PyTorch Book"
