@@ -32,6 +32,9 @@ format:
     theme:
       light: sandstone
       dark: cyborg
+    highlight-style: 
+      light: a11y
+      dark: github
     mainfont: Roboto
 
 

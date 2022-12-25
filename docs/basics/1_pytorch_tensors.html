@@ -99,8 +99,6 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
 <script src="../site_libs/quarto-html/anchor.min.js"></script>
 <link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
-<link href="../site_libs/quarto-html/quarto-syntax-highlighting-dark.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
 <script src="../site_libs/bootstrap/bootstrap.min.js"></script>
 <link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
 <link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
@@ -217,7 +215,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <ul>
   <li><a href="#what-are-tensors" id="toc-what-are-tensors" class="nav-link active" data-scroll-target="#what-are-tensors"><span class="toc-section-number">2.1</span>  What are Tensors?</a></li>
   <li><a href="#initializing-a-tensor" id="toc-initializing-a-tensor" class="nav-link" data-scroll-target="#initializing-a-tensor"><span class="toc-section-number">2.2</span>  Initializing a Tensor</a></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">2.3</span>  References</a></li>
+  <li><a href="#tensor-attributes" id="toc-tensor-attributes" class="nav-link" data-scroll-target="#tensor-attributes"><span class="toc-section-number">2.3</span>  Tensor Attributes</a></li>
+  <li><a href="#tensor-operations" id="toc-tensor-operations" class="nav-link" data-scroll-target="#tensor-operations"><span class="toc-section-number">2.4</span>  Tensor Operations</a>
+  <ul class="collapse">
+  <li><a href="#moving-tensor-from-cpu-to-gpu" id="toc-moving-tensor-from-cpu-to-gpu" class="nav-link" data-scroll-target="#moving-tensor-from-cpu-to-gpu"><span class="toc-section-number">2.4.1</span>  Moving tensor from CPU to GPU</a></li>
+  <li><a href="#slicing-and-indexing" id="toc-slicing-and-indexing" class="nav-link" data-scroll-target="#slicing-and-indexing"><span class="toc-section-number">2.4.2</span>  Slicing and Indexing</a></li>
+  <li><a href="#concatenation" id="toc-concatenation" class="nav-link" data-scroll-target="#concatenation"><span class="toc-section-number">2.4.3</span>  Concatenation</a></li>
+  <li><a href="#arithmetic-operations" id="toc-arithmetic-operations" class="nav-link" data-scroll-target="#arithmetic-operations"><span class="toc-section-number">2.4.4</span>  Arithmetic operations</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">2.5</span>  References</a></li>
   </ul>
 </nav>
     </div>
@@ -347,8 +353,147 @@ Tensor from nested list:
 </div>
 </div>
 </section>
-<section id="references" class="level2" data-number="2.3">
-<h2 data-number="2.3" class="anchored" data-anchor-id="references"><span class="header-section-number">2.3</span> References</h2>
+<section id="tensor-attributes" class="level2" data-number="2.3">
+<h2 data-number="2.3" class="anchored" data-anchor-id="tensor-attributes"><span class="header-section-number">2.3</span> Tensor Attributes</h2>
+<p>It has several attributes that you can access to get information about the tensor. Here are some common attributes of a PyTorch tensor:</p>
+<ul>
+<li><code>shape</code>: returns the shape of the tensor as a tuple of integers. For example, if the tensor has dimensions (batch_size, num_channels, height, width), the shape would be (batch_size, num_channels, height, width).</li>
+<li><code>dtype</code>: returns the data type of the tensor. For example, the data type could be torch.float32 or torch.int64.</li>
+<li><code>device</code>: returns the device on which the tensor is stored. This can be the CPU or a GPU.</li>
+<li><code>requires_grad</code>: a boolean flag indicating whether the tensor requires gradient computation. If set to True, the tensor’s gradients will be computed during backpropagation.</li>
+<li><code>grad</code>: a tensor containing the gradient of the tensor with respect to some scalar value. This attribute is typically used during training with gradient descent.</li>
+</ul>
+<p>You can access these attributes by calling them on a tensor object. For example:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T20:40:38.985981Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T20:40:38.982978Z&quot;}" data-execution_count="20">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a>tensor_randn <span class="op">=</span> torch.randn(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of tensor : </span><span class="sc">{</span>tensor_randn<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Type of tensor : </span><span class="sc">{</span>tensor_randn<span class="sc">.</span>dtype<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Device tensor is stored on : </span><span class="sc">{</span>tensor_randn<span class="sc">.</span>device<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Autograd enabled : </span><span class="sc">{</span>tensor_randn<span class="sc">.</span>requires_grad<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Any stored gradient : </span><span class="sc">{</span>tensor_randn<span class="sc">.</span>grad<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Shape of tensor : torch.Size([3, 4])
+Type of tensor : torch.float32
+Device tensor is stored on : cpu
+Autograd enabled : False
+Any stored gradient : None</code></pre>
+</div>
+</div>
+<p>As we can see above we initialized a random tensor of shape (3,4) with a torch.float32 data type and its currently on a cpu device. Currently, automatic gradient calculations are disabled and no gradient is stored in the tensor.</p>
+<p>There are several other attributes that you can access, such as <code>ndim</code>, <code>size</code>, <code>numel</code>, <code>storage</code>, etc. You can find more information about these attributes in the <a href="https://pytorch.org/docs/stable/tensors.html">PyTorch Tensor documentation</a>.</p>
+</section>
+<section id="tensor-operations" class="level2" data-number="2.4">
+<h2 data-number="2.4" class="anchored" data-anchor-id="tensor-operations"><span class="header-section-number">2.4</span> Tensor Operations</h2>
+<p>There are several operations you can perform on tensors, lets look at the most commonly used operations.</p>
+<section id="moving-tensor-from-cpu-to-gpu" class="level3" data-number="2.4.1">
+<h3 data-number="2.4.1" class="anchored" data-anchor-id="moving-tensor-from-cpu-to-gpu"><span class="header-section-number">2.4.1</span> Moving tensor from CPU to GPU</h3>
+<p>To move a tensor from CPU to GPU is a simple command but probably the one which people will use the most.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:34:30.481106Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:34:30.457389Z&quot;}" data-execution_count="23">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tensor_randn.to(<span class="st">"cuda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="23">
+<pre><code>tensor([[-0.0984, -1.3804,  0.3343, -0.1623],
+        [ 0.9155, -0.8620, -0.3943, -0.2997],
+        [-0.1336, -0.7395, -0.7143, -0.0735]], device='cuda:0')</code></pre>
+</div>
+</div>
+<p>As we can see the tensor_randn is now moved to a cuda(GPU) device.</p>
+</section>
+<section id="slicing-and-indexing" class="level3" data-number="2.4.2">
+<h3 data-number="2.4.2" class="anchored" data-anchor-id="slicing-and-indexing"><span class="header-section-number">2.4.2</span> Slicing and Indexing</h3>
+<p>PyTorch tensors similar to numpy arrays support various slicing and indexing operations.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:43:25.713911Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:43:25.709184Z&quot;}" data-execution_count="38">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tensor_randn <span class="op">=</span> torch.randn(<span class="dv">3</span>, <span class="dv">4</span>)</span>
+<span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tensor_randn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="38">
+<pre><code>tensor([[-1.3470,  0.2204,  0.2963, -0.9745],
+        [ 0.1867, -1.8338, -1.1872, -1.2987],
+        [ 0.0517, -0.3206,  0.3584, -0.4778]])</code></pre>
+</div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:43:26.415622Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:43:26.411369Z&quot;}" data-execution_count="39">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"First row:  </span><span class="ch">\n</span><span class="sc">{</span>tensor_randn[<span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> First column: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tensor_randn[:, <span class="dv">0</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Last column: </span><span class="sc">{</span>tensor_randn[..., <span class="op">-</span><span class="dv">1</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-4"><a href="#cb16-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Selected columns: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tensor_randn[:,<span class="dv">2</span>:<span class="dv">4</span>]<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb16-5"><a href="#cb16-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Assignment of column to zero</span></span>
+<span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a>tensor_randn[:,<span class="dv">1</span>] <span class="op">=</span> <span class="dv">0</span></span>
+<span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st"> Assigning column to zero: </span><span class="ch">\n</span><span class="st">"</span>, tensor_randn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>First row:  
+tensor([-1.3470,  0.2204,  0.2963, -0.9745])
+
+ First column: 
+ tensor([-1.3470,  0.1867,  0.0517])
+
+ Last column: tensor([-0.9745, -1.2987, -0.4778])
+
+ Selected columns: 
+ tensor([[ 0.2963, -0.9745],
+        [-1.1872, -1.2987],
+        [ 0.3584, -0.4778]])
+
+ Assigning column to zero: 
+ tensor([[-1.3470,  0.0000,  0.2963, -0.9745],
+        [ 0.1867,  0.0000, -1.1872, -1.2987],
+        [ 0.0517,  0.0000,  0.3584, -0.4778]])</code></pre>
+</div>
+</div>
+</section>
+<section id="concatenation" class="level3" data-number="2.4.3">
+<h3 data-number="2.4.3" class="anchored" data-anchor-id="concatenation"><span class="header-section-number">2.4.3</span> Concatenation</h3>
+<p>The <code>torch.cat</code> function can be used to concatenate or join multiple tensors together, which is often useful when working with deep learning models.</p>
+<p>Let’s take our previous defined tensors and check their shape.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:05.329440Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:05.326348Z&quot;}" data-execution_count="42">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tensor_ones.shape, tensor_zeros.shape, tensor_rand.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="42">
+<pre><code>(torch.Size([3, 4]), torch.Size([3, 4]), torch.Size([3, 4]))</code></pre>
+</div>
+</div>
+<p>We can concatenate these tensors column wise by using <code>torch.cat</code> with <code>dim=1</code>. We will get a resultant tensor with shape (3,12).</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:30.836022Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:30.831533Z&quot;}" data-execution_count="44">
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>concat_tensor <span class="op">=</span> torch.cat([tensor_ones, tensor_zeros, tensor_rand], dim<span class="op">=</span><span class="dv">1</span>)</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concat_tensor.shape)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>concat_tensor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([3, 12])</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="44">
+<pre><code>tensor([[1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.8675,
+         0.0161, 0.5472, 0.7002],
+        [1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.6551,
+         0.3049, 0.4088, 0.6341],
+        [1.0000, 1.0000, 1.0000, 1.0000, 0.0000, 0.0000, 0.0000, 0.0000, 0.2363,
+         0.8951, 0.0335, 0.5779]])</code></pre>
+</div>
+</div>
+<p>We can concatenate these tensors row wise by using <code>torch.cat</code> with <code>dim=0</code>. We will get a resultant tensor with shape (9,4).</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:40.750201Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:40.746284Z&quot;}" data-execution_count="45">
+<div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>concat_tensor <span class="op">=</span> torch.cat([tensor_ones, tensor_zeros, tensor_rand], dim<span class="op">=</span><span class="dv">0</span>)</span>
+<span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concat_tensor.shape)</span>
+<span id="cb23-3"><a href="#cb23-3" aria-hidden="true" tabindex="-1"></a>concat_tensor</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>torch.Size([9, 4])</code></pre>
+</div>
+<div class="cell-output cell-output-display" data-execution_count="45">
+<pre><code>tensor([[1.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000],
+        [1.0000, 1.0000, 1.0000, 1.0000],
+        [0.0000, 0.0000, 0.0000, 0.0000],
+        [0.0000, 0.0000, 0.0000, 0.0000],
+        [0.0000, 0.0000, 0.0000, 0.0000],
+        [0.8675, 0.0161, 0.5472, 0.7002],
+        [0.6551, 0.3049, 0.4088, 0.6341],
+        [0.2363, 0.8951, 0.0335, 0.5779]])</code></pre>
+</div>
+</div>
+</section>
+<section id="arithmetic-operations" class="level3" data-number="2.4.4">
+<h3 data-number="2.4.4" class="anchored" data-anchor-id="arithmetic-operations"><span class="header-section-number">2.4.4</span> Arithmetic operations</h3>
+<p>In PyTorch, you can perform arithmetic operations on tensors in a similar way to how you would perform them on numpy arrays. Lets look at some common you can perform with PyTorch tensors include element wise addition, subtraction, multiplication, division.</p>
+</section>
+</section>
+<section id="references" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="references"><span class="header-section-number">2.5</span> References</h2>
 <ul>
 <li><a href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">Pytorch tensors tutorial documentation</a>.</li>
 </ul>
