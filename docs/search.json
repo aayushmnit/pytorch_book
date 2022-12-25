@@ -26,5 +26,26 @@
     "title": "1  PyTorch Introduction and Installation",
     "section": "1.3 Checking Installation",
     "text": "1.3 Checking Installation\nLet’s run the import command and see if we have Pytorch setup correctly.\n\nimport torch\nprint(torch.__version__)\n\n1.12.1\n\n\nIt is recommended to use a machine with a GPU when working with PyTorch because it is typically used for GPU-accelerated computations. If you are running PyTorch on a machine with a GPU and want to verify that it has access to the GPU, you can run the following command-\n\ntorch.cuda.is_available()\n\nTrue\n\n\nIf PyTorch is installed on a machine with a GPU, the above command will return True otherwise it will return False."
+  },
+  {
+    "objectID": "basics/1_pytorch_tensors.html#what-are-tensors",
+    "href": "basics/1_pytorch_tensors.html#what-are-tensors",
+    "title": "2  Tensors",
+    "section": "2.1 What are Tensors?",
+    "text": "2.1 What are Tensors?\nPyTorch provides tensors as its primary data structure. Tensors are similar to numpy arrays, but they can be used on a GPU to accelerate the computation. PyTorch tensors are similar to numpy arrays, but they have additional functionality (automatic differentiation) and are designed to take advantage of GPUs for acceleration. Similar to numpy, tensors in PyTorch supports a variety of operations, including indexing, slicing, math operations, linear algebra operations, and more. Let’s dive in by importing the library.\n\nimport torch\nimport numpy as np"
+  },
+  {
+    "objectID": "basics/1_pytorch_tensors.html#initializing-a-tensor",
+    "href": "basics/1_pytorch_tensors.html#initializing-a-tensor",
+    "title": "2  Tensors",
+    "section": "2.2 Initializing a Tensor",
+    "text": "2.2 Initializing a Tensor\nThere are several ways to initialize tensors in PyTorch. Here are some examples:\nInitializing from an iterator like a list\n\nimport torch\n\n# Initialize a tensor from a list\ntensor_from_list = torch.tensor([1, 2, 3, 4])\nprint(\"Tensor from list: \\n\", tensor_from_list)\n\n# Initialize a tensor from a nested list\ntensor_from_nested_list = torch.tensor([[1, 2], [3, 4]])\nprint(\"Tensor from nested list: \\n\", tensor_from_nested_list)\n\nTensor from list: \n tensor([1, 2, 3, 4])\nTensor from nested list: \n tensor([[1, 2],\n        [3, 4]])\n\n\nInitializing from a numpy array\n\n# Create a NumPy array\nnumpy_array = np.array([[1, 2], [3, 4]])\n\n# Initialize a tensor from a NumPy array\ntensor_from_numpy = torch.from_numpy(numpy_array)\nprint(\"Tensor from np array: \\n\", tensor_from_numpy)\n\nTensor from np array: \n tensor([[1, 2],\n        [3, 4]])\n\n\nInitializing from another tensor\n\n# Create a tensor\noriginal_tensor = torch.tensor([1, 2, 3, 4])\n\n# Initialize a new tensor from the original tensor\nnew_tensor = original_tensor.clone()\nprint(\"Tensor from another tensor: \\n\", new_tensor)\n\nTensor from another tensor: \n tensor([1, 2, 3, 4])\n\n\nConstant or random initialization\n\n# Initialize a tensor with all elements set to zero\ntensor_zeros = torch.zeros(3, 4)\nprint(\"Tensor with all elements set to zero: \\n\", tensor_zeros)\n\n# Initialize a tensor with all elements set to one\ntensor_ones = torch.ones(3, 4)\nprint(\"\\n Tensor with all elements set to one: \\n\", tensor_ones)\n\n# Initialize a tensor with all elements set to a specific value\ntensor_full = torch.full((3, 4), fill_value=2.5)\nprint(\"\\n Tensor with all elements set to a specific value: \\n\", tensor_full)\n\n# Initialize a tensor with random values\ntensor_rand = torch.rand(3, 4)\nprint(\"\\n Tensor with random initialization: \\n\", tensor_rand)\n\n# Initialize a tensor with random values from a normal distribution\ntensor_randn = torch.randn(3, 4)\nprint(\"\\n Tensor with random values from a normal distribution: \\n\", tensor_randn)\n\nTensor with all elements set to zero: \n tensor([[0., 0., 0., 0.],\n        [0., 0., 0., 0.],\n        [0., 0., 0., 0.]])\n\n Tensor with all elements set to one: \n tensor([[1., 1., 1., 1.],\n        [1., 1., 1., 1.],\n        [1., 1., 1., 1.]])\n\n Tensor with all elements set to a specific value: \n tensor([[2.5000, 2.5000, 2.5000, 2.5000],\n        [2.5000, 2.5000, 2.5000, 2.5000],\n        [2.5000, 2.5000, 2.5000, 2.5000]])\n\n Tensor with random initialization: \n tensor([[0.8675, 0.0161, 0.5472, 0.7002],\n        [0.6551, 0.3049, 0.4088, 0.6341],\n        [0.2363, 0.8951, 0.0335, 0.5779]])\n\n Tensor with random values from a normal distribution: \n tensor([[ 1.0550,  0.9214, -1.3023,  0.4119],\n        [-0.4691,  0.8733,  0.7910, -2.3932],\n        [-0.6304, -0.8792,  0.4188,  0.4221]])"
+  },
+  {
+    "objectID": "basics/1_pytorch_tensors.html#references",
+    "href": "basics/1_pytorch_tensors.html#references",
+    "title": "2  Tensors",
+    "section": "2.3 References",
+    "text": "2.3 References\n\nPytorch tensors tutorial documentation."
   }
 ]

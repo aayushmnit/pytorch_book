@@ -5,7 +5,7 @@ project:
 website:
   site-url: https://aayushmnit.com/pytorch_book
   repo-url: https://github.com/aayushmnit/pytorch_book
-  google-analytics: "G-7QN8N70N41"
+  google-analytics: "G-Q8J05XS7Q7"
 
 book:
   title: "The PyTorch Book"
@@ -22,6 +22,7 @@ book:
     - part: "PyTorch basics"
       chapters: 
         - basics/0_pytorch_intro.ipynb
+        - basics/1_pytorch_tensors.ipynb
   
 
 bibliography: references.bib
