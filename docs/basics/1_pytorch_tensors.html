@@ -250,7 +250,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="what-are-tensors" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="what-are-tensors"><span class="header-section-number">2.1</span> What are Tensors?</h2>
 <p>PyTorch provides tensors as its primary data structure. Tensors are similar to numpy arrays, but they can be used on a GPU to accelerate the computation. PyTorch tensors are similar to numpy arrays, but they have additional functionality (automatic differentiation) and are designed to take advantage of GPUs for acceleration. Similar to numpy, tensors in PyTorch supports a variety of operations, including indexing, slicing, math operations, linear algebra operations, and more. Let’s dive in by importing the library.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T19:34:09.422348Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T19:34:09.420092Z&quot;}" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:30:40.998020Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:30:40.297313Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -260,15 +260,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <p>There are several ways to initialize tensors in PyTorch. Here are some examples:</p>
 <p><strong>Initializing from an iterator like a list</strong></p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T19:47:03.640369Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T19:47:03.636990Z&quot;}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
-<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a tensor from a list</span></span>
-<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>tensor_from_list <span class="op">=</span> torch.tensor([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
-<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tensor from list: </span><span class="ch">\n</span><span class="st">"</span>, tensor_from_list)</span>
-<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a tensor from a nested list</span></span>
-<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>tensor_from_nested_list <span class="op">=</span> torch.tensor([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]])</span>
-<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tensor from nested list: </span><span class="ch">\n</span><span class="st">"</span>, tensor_from_nested_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a tensor from a list</span></span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>tensor_from_list <span class="op">=</span> torch.tensor([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>, <span class="dv">4</span>])</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tensor from list: </span><span class="ch">\n</span><span class="st">"</span>, tensor_from_list)</span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Initialize a tensor from a nested list</span></span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>tensor_from_nested_list <span class="op">=</span> torch.tensor([[<span class="dv">1</span>, <span class="dv">2</span>], [<span class="dv">3</span>, <span class="dv">4</span>]])</span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Tensor from nested list: </span><span class="ch">\n</span><span class="st">"</span>, tensor_from_nested_list)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Tensor from list: 
  tensor([1, 2, 3, 4])
@@ -489,7 +487,161 @@ tensor([-1.3470,  0.2204,  0.2963, -0.9745])
 </section>
 <section id="arithmetic-operations" class="level3" data-number="2.4.4">
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="arithmetic-operations"><span class="header-section-number">2.4.4</span> Arithmetic operations</h3>
-<p>In PyTorch, you can perform arithmetic operations on tensors in a similar way to how you would perform them on numpy arrays. Lets look at some common you can perform with PyTorch tensors include element wise addition, subtraction, multiplication, division.</p>
+<p>In PyTorch, you can perform arithmetic operations on tensors in a similar way to how you would perform them on numpy arrays. Lets look at some common arithmetic operations -</p>
+<p><strong>Element wise addition</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:38:04.682966Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:38:04.679197Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tnsr1 <span class="op">=</span> torch.randn((<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb26-2"><a href="#cb26-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tensor 1: </span><span class="ch">\n</span><span class="ss">"</span>, tnsr1)</span>
+<span id="cb26-3"><a href="#cb26-3" aria-hidden="true" tabindex="-1"></a>tnsr2 <span class="op">=</span> torch.randn((<span class="dv">3</span>,<span class="dv">4</span>))</span>
+<span id="cb26-4"><a href="#cb26-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor 2: </span><span class="ch">\n</span><span class="ss">"</span>, tnsr2)</span>
+<span id="cb26-5"><a href="#cb26-5" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-6"><a href="#cb26-6" aria-hidden="true" tabindex="-1"></a><span class="co">## Addition</span></span>
+<span id="cb26-7"><a href="#cb26-7" aria-hidden="true" tabindex="-1"></a>tensor_add <span class="op">=</span> tnsr1 <span class="op">+</span> tnsr2 </span>
+<span id="cb26-8"><a href="#cb26-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor additions using + : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_add)</span>
+<span id="cb26-9"><a href="#cb26-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb26-10"><a href="#cb26-10" aria-hidden="true" tabindex="-1"></a>tensor_add <span class="op">=</span> tnsr1.add(tnsr2)</span>
+<span id="cb26-11"><a href="#cb26-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor additions using .add : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_add)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tensor 1: 
+ tensor([[-0.4685, -0.7848, -0.4198,  0.0890],
+        [ 0.2496,  0.2578,  0.6366, -2.0815],
+        [-1.6914, -0.8824,  1.0809,  1.5308]])
+
+ Tensor 2: 
+ tensor([[-0.3125,  1.0860,  0.7340,  0.2249],
+        [-0.9887,  0.2265, -0.5214, -1.5676],
+        [ 0.6817,  0.1099, -0.5298, -0.3109]])
+
+ Tensor additions using + : 
+ tensor([[-0.7810,  0.3013,  0.3142,  0.3139],
+        [-0.7391,  0.4843,  0.1152, -3.6492],
+        [-1.0097, -0.7725,  0.5511,  1.2199]])
+
+ Tensor additions using .add : 
+ tensor([[-0.7810,  0.3013,  0.3142,  0.3139],
+        [-0.7391,  0.4843,  0.1152, -3.6492],
+        [-1.0097, -0.7725,  0.5511,  1.2199]])</code></pre>
+</div>
+</div>
+<p><strong>Element wise subtraction</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:39:32.241459Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:39:32.238300Z&quot;}" data-execution_count="17">
+<div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Subtraction</span></span>
+<span id="cb28-2"><a href="#cb28-2" aria-hidden="true" tabindex="-1"></a>tensor_sub <span class="op">=</span> tnsr1 <span class="op">-</span> tnsr2 </span>
+<span id="cb28-3"><a href="#cb28-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor subtraction using - : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_sub)</span>
+<span id="cb28-4"><a href="#cb28-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb28-5"><a href="#cb28-5" aria-hidden="true" tabindex="-1"></a>tensor_sub <span class="op">=</span> tnsr1.sub(tnsr2)</span>
+<span id="cb28-6"><a href="#cb28-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor subtraction using .sub : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_sub)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Tensor subtraction using - : 
+ tensor([[-0.1561, -1.8708, -1.1537, -0.1359],
+        [ 1.2384,  0.0313,  1.1580, -0.5139],
+        [-2.3732, -0.9923,  1.6107,  1.8417]])
+
+ Tensor subtraction using .sub : 
+ tensor([[-0.1561, -1.8708, -1.1537, -0.1359],
+        [ 1.2384,  0.0313,  1.1580, -0.5139],
+        [-2.3732, -0.9923,  1.6107,  1.8417]])</code></pre>
+</div>
+</div>
+<p><strong>Element wise multiplication</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:39:25.561507Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:39:25.558061Z&quot;}" data-execution_count="16">
+<div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Multiplication</span></span>
+<span id="cb30-2"><a href="#cb30-2" aria-hidden="true" tabindex="-1"></a>tensor_mul <span class="op">=</span> tnsr1 <span class="op">*</span> tnsr2 </span>
+<span id="cb30-3"><a href="#cb30-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor element-wise multiplication using * : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_mul)</span>
+<span id="cb30-4"><a href="#cb30-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb30-5"><a href="#cb30-5" aria-hidden="true" tabindex="-1"></a>tensor_mul <span class="op">=</span> tnsr1.mul(tnsr2)</span>
+<span id="cb30-6"><a href="#cb30-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor element-wise multiplication using .mul : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_mul)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Tensor element-wise multiplication using * : 
+ tensor([[ 0.1464, -0.8523, -0.3081,  0.0200],
+        [-0.2468,  0.0584, -0.3319,  3.2631],
+        [-1.1531, -0.0970, -0.5727, -0.4759]])
+
+ Tensor element-wise multiplication using .mul : 
+ tensor([[ 0.1464, -0.8523, -0.3081,  0.0200],
+        [-0.2468,  0.0584, -0.3319,  3.2631],
+        [-1.1531, -0.0970, -0.5727, -0.4759]])</code></pre>
+</div>
+</div>
+<p><strong>Element wise division</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:39:14.825458Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:39:14.822102Z&quot;}" data-execution_count="15">
+<div class="sourceCode cell-code" id="cb32"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb32-1"><a href="#cb32-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Division</span></span>
+<span id="cb32-2"><a href="#cb32-2" aria-hidden="true" tabindex="-1"></a>tensor_div <span class="op">=</span> tnsr1 <span class="op">/</span> tnsr2 </span>
+<span id="cb32-3"><a href="#cb32-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor element-wise division using / : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_div)</span>
+<span id="cb32-4"><a href="#cb32-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb32-5"><a href="#cb32-5" aria-hidden="true" tabindex="-1"></a>tensor_div <span class="op">=</span> tnsr1.div(tnsr2)</span>
+<span id="cb32-6"><a href="#cb32-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor element-wise division using .div : </span><span class="ch">\n</span><span class="ss">"</span>, tensor_div)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Tensor element-wise division using + : 
+ tensor([[ 1.4994, -0.7226, -0.5719,  0.3958],
+        [-0.2525,  1.1381, -1.2209,  1.3278],
+        [-2.4811, -8.0272, -2.0401, -4.9238]])
+
+ Tensor element-wise division using .div : 
+ tensor([[ 1.4994, -0.7226, -0.5719,  0.3958],
+        [-0.2525,  1.1381, -1.2209,  1.3278],
+        [-2.4811, -8.0272, -2.0401, -4.9238]])</code></pre>
+</div>
+</div>
+<p><strong>Matrix multiplication</strong></p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:43:42.844471Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:43:42.841076Z&quot;}" data-execution_count="21">
+<div class="sourceCode cell-code" id="cb34"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb34-1"><a href="#cb34-1" aria-hidden="true" tabindex="-1"></a>tensor_mm <span class="op">=</span> tnsr1 <span class="op">@</span> tnsr2.T</span>
+<span id="cb34-2"><a href="#cb34-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor matrix multiplication using @: </span><span class="ch">\n</span><span class="ss">"</span>, tensor_mm)</span>
+<span id="cb34-3"><a href="#cb34-3" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb34-4"><a href="#cb34-4" aria-hidden="true" tabindex="-1"></a>tensor_mm <span class="op">=</span> tnsr1.matmul(tnsr2.T)</span>
+<span id="cb34-5"><a href="#cb34-5" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Tensor matrix multiplication using .matmul: </span><span class="ch">\n</span><span class="ss">"</span>, tensor_mm)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>
+ Tensor matrix multiplication using @: 
+ tensor([[-0.9940,  0.3648, -0.2109],
+        [ 0.2010,  2.7427,  0.5084],
+        [ 0.7078, -1.4908, -2.2987]])
+
+ Tensor matrix multiplication using .matmul: 
+ tensor([[-0.9940,  0.3648, -0.2109],
+        [ 0.2010,  2.7427,  0.5084],
+        [ 0.7078, -1.4908, -2.2987]])</code></pre>
+</div>
+</div>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Observe that <code>tnsr1</code> and <code>tnsr2</code> have shape (3,4). To perform a matrix multiplication, we used the <code>.T</code> function to transpose <code>tnsr2</code>, which changed its shape to (4,3). The resulting matrix multiplication has size (3x3).</p>
+</div>
+</div>
+<p><strong>Summing it up</strong></p>
+<p>Summing tensors along rows and columns is a common operation. Here is the syntax for this operation:</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T20:00:29.283615Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T20:00:29.280282Z&quot;}" data-execution_count="32">
+<div class="sourceCode cell-code" id="cb36"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb36-1"><a href="#cb36-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Tensor: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tnsr1<span class="sc">}</span><span class="ss">"</span> )</span>
+<span id="cb36-2"><a href="#cb36-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> All up sum: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tnsr1<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-3"><a href="#cb36-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Column wise sum: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tnsr1<span class="sc">.</span><span class="bu">sum</span>(<span class="dv">0</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb36-4"><a href="#cb36-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss"> Row wise sum: </span><span class="ch">\n</span><span class="ss"> </span><span class="sc">{</span>tnsr1<span class="sc">.</span><span class="bu">sum</span>(<span class="dv">1</span>)<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>Tensor: 
+ tensor([[-0.4685, -0.7848, -0.4198,  0.0890],
+        [ 0.2496,  0.2578,  0.6366, -2.0815],
+        [-1.6914, -0.8824,  1.0809,  1.5308]])
+
+ All up sum: 
+ -2.48371958732605
+
+ Column wise sum: 
+ tensor([-1.9103, -1.4094,  1.2977, -0.4617])
+
+ Row wise sum: 
+ tensor([-1.5841, -0.9375,  0.0378])</code></pre>
+</div>
+</div>
 </section>
 </section>
 <section id="references" class="level2" data-number="2.5">

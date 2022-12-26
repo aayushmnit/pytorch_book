@@ -35,7 +35,7 @@ format:
     highlight-style: 
       light: a11y
       dark: github
-    mainfont: Roboto
+    mainfont: roboto
 
 
 
