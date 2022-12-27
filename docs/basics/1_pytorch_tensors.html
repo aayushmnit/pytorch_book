@@ -93,6 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../basics/2_broadcasting.html" rel="next">
 <link href="../basics/0_pytorch_intro.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -122,6 +123,15 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
     "search-submit-button-title": "Submit"
   }
 }</script>
+<script async="" src="https://www.googletagmanager.com/gtag/js?id=G-Q8J05XS7Q7"></script>
+
+<script type="text/javascript">
+
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
+gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
+</script>
 
 
 </head>
@@ -202,6 +212,11 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <a href="../basics/1_pytorch_tensors.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/2_broadcasting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -223,7 +238,13 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
   <li><a href="#concatenation" id="toc-concatenation" class="nav-link" data-scroll-target="#concatenation"><span class="toc-section-number">2.4.3</span>  Concatenation</a></li>
   <li><a href="#arithmetic-operations" id="toc-arithmetic-operations" class="nav-link" data-scroll-target="#arithmetic-operations"><span class="toc-section-number">2.4.4</span>  Arithmetic operations</a></li>
   </ul></li>
-  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">2.5</span>  References</a></li>
+  <li><a href="#why-gpus" id="toc-why-gpus" class="nav-link" data-scroll-target="#why-gpus"><span class="toc-section-number">2.5</span>  Why GPUs?</a>
+  <ul class="collapse">
+  <li><a href="#matrix-multiplication-using-numpy" id="toc-matrix-multiplication-using-numpy" class="nav-link" data-scroll-target="#matrix-multiplication-using-numpy"><span class="toc-section-number">2.5.1</span>  Matrix multiplication using numpy</a></li>
+  <li><a href="#matrix-multiplication-using-pytorch-on-cpu" id="toc-matrix-multiplication-using-pytorch-on-cpu" class="nav-link" data-scroll-target="#matrix-multiplication-using-pytorch-on-cpu"><span class="toc-section-number">2.5.2</span>  Matrix multiplication using pytorch on cpu</a></li>
+  <li><a href="#matrix-multiplication-using-pytorch-on-gpu" id="toc-matrix-multiplication-using-pytorch-on-gpu" class="nav-link" data-scroll-target="#matrix-multiplication-using-pytorch-on-gpu"><span class="toc-section-number">2.5.3</span>  Matrix multiplication using pytorch on GPU</a></li>
+  </ul></li>
+  <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">2.6</span>  References</a></li>
   </ul>
 </nav>
     </div>
@@ -250,7 +271,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <section id="what-are-tensors" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="what-are-tensors"><span class="header-section-number">2.1</span> What are Tensors?</h2>
 <p>PyTorch provides tensors as its primary data structure. Tensors are similar to numpy arrays, but they can be used on a GPU to accelerate the computation. PyTorch tensors are similar to numpy arrays, but they have additional functionality (automatic differentiation) and are designed to take advantage of GPUs for acceleration. Similar to numpy, tensors in PyTorch supports a variety of operations, including indexing, slicing, math operations, linear algebra operations, and more. Let’s dive in by importing the library.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:30:40.998020Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:30:40.297313Z&quot;}" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:00:37.583532Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:00:37.246700Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -644,8 +665,57 @@ Note
 </div>
 </section>
 </section>
-<section id="references" class="level2" data-number="2.5">
-<h2 data-number="2.5" class="anchored" data-anchor-id="references"><span class="header-section-number">2.5</span> References</h2>
+<section id="why-gpus" class="level2" data-number="2.5">
+<h2 data-number="2.5" class="anchored" data-anchor-id="why-gpus"><span class="header-section-number">2.5</span> Why GPUs?</h2>
+<p>Deep learning models often involve large amounts of matrix operations such as matrix multiplication. Let’s do a speed comparison b/w numpy CPU implementation, Pytorch CPU and GPU implementation.</p>
+<section id="matrix-multiplication-using-numpy" class="level3" data-number="2.5.1">
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="matrix-multiplication-using-numpy"><span class="header-section-number">2.5.1</span> Matrix multiplication using numpy</h3>
+<p>Let’s initialize one tensors of size (1000,64,64) and one tensor of size (64,32) and lets do a matrix multiplication speed comparison</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:11:59.073861Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:11:59.009383Z&quot;}" data-execution_count="46">
+<div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>arr1 <span class="op">=</span> np.random.randn(<span class="dv">1000</span>, <span class="dv">64</span>, <span class="dv">64</span>)</span>
+<span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>arr2 <span class="op">=</span> np.random.randn(<span class="dv">64</span>, <span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:12:04.072632Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:12:00.672598Z&quot;}" data-execution_count="47">
+<div class="sourceCode cell-code" id="cb39"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb39-1"><a href="#cb39-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="op">-</span>n <span class="dv">50</span> res <span class="op">=</span> np.matmul(arr1, arr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>9.7 ms ± 201 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
+</div>
+</div>
+<p>As we can see matrix multiplicaiton on numpy which uses a highly optmized matrix multiplication does the above operation in 9.7 milliseconds.</p>
+</section>
+<section id="matrix-multiplication-using-pytorch-on-cpu" class="level3" data-number="2.5.2">
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="matrix-multiplication-using-pytorch-on-cpu"><span class="header-section-number">2.5.2</span> Matrix multiplication using pytorch on cpu</h3>
+<p>Now let’s do the same operation using PyTorch tensors on CPU.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:13:36.870868Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:13:36.868626Z&quot;}" data-execution_count="48">
+<div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tnsr1 <span class="op">=</span> torch.from_numpy(arr1)</span>
+<span id="cb41-2"><a href="#cb41-2" aria-hidden="true" tabindex="-1"></a>tnsr2 <span class="op">=</span> torch.from_numpy(arr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:13:39.109516Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:13:38.132013Z&quot;}" data-execution_count="49">
+<div class="sourceCode cell-code" id="cb42"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb42-1"><a href="#cb42-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="op">-</span>n <span class="dv">50</span> res <span class="op">=</span> tnsr1 <span class="op">@</span> tnsr2</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>2.78 ms ± 127 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
+</div>
+</div>
+<p>We can see that PyTorch on CPU performed the same operation in 2.78 milliseconds which is roughly 3 times faster than the numpy version.</p>
+</section>
+<section id="matrix-multiplication-using-pytorch-on-gpu" class="level3" data-number="2.5.3">
+<h3 data-number="2.5.3" class="anchored" data-anchor-id="matrix-multiplication-using-pytorch-on-gpu"><span class="header-section-number">2.5.3</span> Matrix multiplication using pytorch on GPU</h3>
+<p>Let’s do the same operation on GPU using Pytorch.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:15:15.579115Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:15:15.563078Z&quot;}" data-execution_count="50">
+<div class="sourceCode cell-code" id="cb44"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb44-1"><a href="#cb44-1" aria-hidden="true" tabindex="-1"></a>tnsr1 <span class="op">=</span> tnsr1.to(<span class="st">"cuda"</span>)</span>
+<span id="cb44-2"><a href="#cb44-2" aria-hidden="true" tabindex="-1"></a>tnsr2 <span class="op">=</span> tnsr2.to(<span class="st">"cuda"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+</div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:15:17.627340Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:15:17.619326Z&quot;}" data-execution_count="51">
+<div class="sourceCode cell-code" id="cb45"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb45-1"><a href="#cb45-1" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>timeit <span class="op">-</span>n <span class="dv">50</span> res <span class="op">=</span> (tnsr1 <span class="op">@</span> tnsr2)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>15.6 µs ± 4.32 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
+</div>
+</div>
+<p>As demonstrated by the Matrix multiplication example, the GPU version was completed in 15.6 microseconds, a significant improvement over both the Pytorch CPU version (which took 2.8 milliseconds) and the numpy implementation (which took 9.7 milliseconds). This speedup is even more pronounced when working with larger matrices.</p>
+</section>
+</section>
+<section id="references" class="level2" data-number="2.6">
+<h2 data-number="2.6" class="anchored" data-anchor-id="references"><span class="header-section-number">2.6</span> References</h2>
 <ul>
 <li><a href="https://pytorch.org/tutorials/beginner/basics/tensorqs_tutorial.html">Pytorch tensors tutorial documentation</a>.</li>
 </ul>
@@ -909,6 +979,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../basics/2_broadcasting.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
