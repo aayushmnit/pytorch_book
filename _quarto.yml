@@ -24,6 +24,7 @@ book:
         - basics/0_pytorch_intro.ipynb
         - basics/1_pytorch_tensors.ipynb
         - basics/2_broadcasting.ipynb
+        - basics/3_autograd.ipynb
   
 
 bibliography: references.bib
