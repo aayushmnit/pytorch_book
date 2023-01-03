@@ -271,7 +271,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <p>For training any machine learning models we need data. Typically, this data needs to be represented in form of a PyTorch tensor in order to be fed into a model. In PyTorch, a <code>Dataset</code> is an abstract class that represents a dataset. It provides a way to access the data and defines the way the data should be processed. The <code>Dataset</code> class is an abstract class and you need to create a subclass to use it. If you are not familiar with OOPs fundamentals like abstract base class and subclass, I suggest you to read <a href="https://aayushmnit.com/posts/2022-12-20-PythonFundamentals/Python%20OOPs%20Fundamentals.html">this blog</a>.</p>
 <p>The main use of a dataset in PyTorch is to provide a way to access the data that you want to use to train a machine learning model. By creating a subclass of the <code>Dataset</code> class, you can define how the data should be loaded and processed. Once you have created a <code>Dataset</code> subclass, you can use it to create a PyTorch <code>DataLoader</code>, which is an iterator that will yield batches of data from your dataset. You can then use the <code>DataLoader</code> to train a model in PyTorch.</p>
 <p>Let’s look at the <code>Dataset</code> documentation.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-02T21:28:37.849884Z&quot;,&quot;start_time&quot;:&quot;2023-01-02T21:28:37.512932Z&quot;}" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:35.825765Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:35.823121Z&quot;}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(Dataset.__doc__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -297,7 +297,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <h2 data-number="5.2" class="anchored" data-anchor-id="exercise-creating-our-first-custom-dataset-class"><span class="header-section-number">5.2</span> Exercise: Creating our first custom dataset class</h2>
 <p>In this exercise, we will continue from our previous <a href="../basics/3_autograd.html#creating-dummy-data">linear regression example</a> where we trained a linear regression using batch gradient descent and replace it with mini-batch gradient descent using <code>Dataset</code> and <code>Dataloaders</code>.</p>
 <p>Let’s start by importing required libraries and creating our linear data.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-02T21:28:39.046763Z&quot;,&quot;start_time&quot;:&quot;2023-01-02T21:28:37.851711Z&quot;}" data-code_folding="[]" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.456832Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:35.827270Z&quot;}" data-code_folding="[]" data-execution_count="15">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing required functions</span></span>
@@ -369,7 +369,7 @@ Note
 <p>Methods with double underscores (also known as “dunder” methods) are special methods in Python. When the <code>len()</code> function is called on an object, Python will automatically call the object’s <code>__len__</code> method to get the length of the object. Similarly, when the object is indexed using the square bracket operator (e.g.&nbsp;<code>obj[key]</code>), Python will call the object’s <code>__getitem__</code> method to retrieve the value at the specified index.</p>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-02T21:28:39.050942Z&quot;,&quot;start_time&quot;:&quot;2023-01-02T21:28:39.047950Z&quot;}" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.461052Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.458233Z&quot;}" data-execution_count="16">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TabularDataset(Dataset):</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data <span class="op">=</span> data.X</span>
@@ -393,7 +393,7 @@ Note
 <li>The <code>__getitem__</code> method returns a sample from the dataset at a given index <code>idx</code>, in the form of a dictionary with keys X and y.</li>
 </ul>
 <p>We can create an object from the <code>TabularDataset</code> class using our regression example, and then call the <code>__len__</code> and<code>__getitem__</code> methods on it.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-02T21:58:27.728192Z&quot;,&quot;start_time&quot;:&quot;2023-01-02T21:58:27.724497Z&quot;}" data-execution_count="6">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.480692Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.462635Z&quot;}" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co"># create an object of the TabularDataset class</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>custom_dataset <span class="op">=</span> TabularDataset(data)</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a></span>
@@ -417,34 +417,34 @@ Indexing on 0 index:
 <p>While training a machine learning model, it is often more efficient to pass a group of samples, or a “mini-batch,” to the model at once, rather than processing one sample at a time. Additionally, we may want to reshuffle the data at the end of each epoch and use multiple threads to speed up the data loading process.</p>
 <p>The PyTorch <code>DataLoader</code> class helps us achieve these goals by creating an iterable from our <code>Dataset</code> object. The <code>DataLoader</code> can be used to efficiently batch and shuffle the data, and it can use multiple threads to speed up the data loading process.</p>
 <p>Let’s create a dataloader object from our <code>TabularDataset</code> object.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T02:48:47.505203Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T02:48:47.502750Z&quot;}" data-execution_count="183">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.491724Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.481875Z&quot;}" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> DataLoader</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>custom_dataloader <span class="op">=</span> DataLoader(custom_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Now let’s look at one minibatch:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T02:49:19.487338Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T02:49:19.482546Z&quot;}" data-execution_count="187">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.503456Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.492873Z&quot;}" data-execution_count="19">
 <div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a>batch <span class="op">=</span> <span class="bu">next</span>(<span class="bu">iter</span>(custom_dataloader))</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>batch</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="187">
-<pre><code>{'X': tensor([-0.3077,  1.2761, -1.3750,  0.3675, -0.1698, -0.9571,  0.8025,  0.5990,
-         -0.0493,  0.6723, -0.4685,  0.3869, -0.4524, -0.0723,  0.4608, -0.9526,
-         -1.1540, -0.7615, -1.9808,  0.6169,  0.8635,  0.4573,  0.5128,  1.3710,
-         -0.7579,  0.6536,  2.2436, -2.0042,  1.0963,  0.0963, -0.3596,  1.8676,
-          2.2409, -1.5416, -1.6760,  0.0876, -0.8603, -0.0554, -0.2718, -0.1799,
-         -0.1984, -0.1496,  0.2135, -1.0225,  0.8203,  0.1758,  1.3014, -0.8964,
-         -0.8158, -0.4032,  2.7594, -2.2453, -0.8076, -1.2846,  1.0814, -0.1928,
-          0.5249, -0.2008, -0.5395, -0.4059, -0.0157, -0.1378, -0.0731,  0.7557]),
- 'y': tensor([1.5262, 2.3860, 1.4399, 1.9463, 1.6299, 1.3185, 2.5141, 2.1944, 1.3988,
-         2.5274, 1.7082, 1.7096, 2.0795, 1.7431, 2.3721, 1.6414, 1.7229, 2.0887,
-         0.5326, 2.7281, 2.0023, 2.3580, 1.7565, 3.0359, 1.8835, 1.6034, 2.7181,
-         1.2389, 2.2476, 2.1065, 1.5870, 2.7240, 3.3953, 0.6919, 1.8756, 2.1122,
-         1.4296, 2.7625, 1.7923, 1.6011, 2.2082, 1.6476, 2.0116, 1.9439, 2.0346,
-         2.3775, 2.7582, 1.5213, 1.8143, 1.6000, 3.6710, 0.7019, 1.8395, 1.0015,
-         2.0053, 2.3891, 2.1356, 2.0346, 1.7471, 1.5558, 1.9609, 1.6480, 1.8946,
-         2.8276])}</code></pre>
+<div class="cell-output cell-output-display" data-execution_count="19">
+<pre><code>{'X': tensor([ 1.5328,  0.4394,  1.1542, -0.6743,  0.3194, -0.5863,  0.8216, -0.9489,
+         -1.5408, -1.0546,  0.9501,  0.3382, -0.0357, -0.4675,  0.7231,  0.9694,
+          0.8526, -1.4466, -1.0994, -1.2141, -0.7999,  1.3750, -1.1268, -0.7923,
+          0.0940, -0.1043, -0.0393,  1.2961, -0.4961,  1.0170, -0.6677, -0.7946,
+          0.9364,  2.5944, -0.2201, -0.5376,  1.6581,  0.2348,  0.5766, -1.6326,
+          0.0175, -0.3328, -1.7442, -1.4464,  0.1047,  0.0633, -0.5963,  0.7775,
+         -0.3005, -0.7565, -0.7994, -0.9605,  0.2461, -0.7047,  0.3769,  0.5410,
+         -0.6524,  1.5430,  1.0480, -0.5028,  1.3676, -0.2904,  0.2671,  1.3014]),
+ 'y': tensor([2.2464, 2.5879, 2.7877, 1.5178, 2.2373, 1.9258, 2.1885, 2.2265, 1.4833,
+         1.4586, 2.7604, 2.4890, 1.9327, 1.5933, 2.4738, 2.4766, 2.4160, 1.3819,
+         1.4487, 0.8635, 1.4181, 2.8232, 1.2373, 2.0373, 1.7182, 2.0764, 2.1702,
+         2.8312, 1.7150, 2.3457, 1.9804, 1.5520, 2.5604, 3.3382, 1.9031, 1.2880,
+         2.9112, 1.9802, 2.0943, 1.3462, 2.0327, 1.9207, 1.2720, 1.8974, 2.5618,
+         2.4288, 2.0103, 2.5764, 1.4878, 1.6772, 1.6701, 1.5360, 2.3156, 1.7014,
+         2.3102, 2.1018, 2.4023, 2.0447, 2.8422, 1.3625, 2.6827, 1.9267, 2.1790,
+         2.7582])}</code></pre>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T02:52:14.975328Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T02:52:14.972657Z&quot;}" data-execution_count="190">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.509856Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.504696Z&quot;}" data-execution_count="20">
 <div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Input feature shape: </span><span class="sc">{</span>batch[<span class="st">'X'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Target  shape: </span><span class="sc">{</span>batch[<span class="st">'y'</span>]<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -457,7 +457,7 @@ Target  shape: torch.Size([64])</code></pre>
 <section id="exercise-linear-regression-with-mini-batch-gradient-descent" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="exercise-linear-regression-with-mini-batch-gradient-descent"><span class="header-section-number">5.4</span> Exercise: Linear regression with mini-batch gradient descent</h2>
 <p>Let’s get our model definition from <a href="../basics/3_autograd.html#define-a-linear-regression-function">last chapter</a>.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:30:26.172785Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:30:26.152320Z&quot;}" data-execution_count="322">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.537466Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.511038Z&quot;}" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear:</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_in, n_out):</span>
 <span id="cb13-3"><a href="#cb13-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.randn(n_in, n_out).requires_grad_(<span class="va">True</span>)</span>
@@ -484,8 +484,8 @@ Target  shape: torch.Size([64])</code></pre>
 </div>
 </div>
 <p>This MSE is bad considering in last chapter we were able to achieve 0.09. Let’s update the previous chapter <code>step</code> function to take mini-batches.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:26:26.486932Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:26:26.482752Z&quot;}" data-execution_count="312">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(custom_dataloader, model, lr <span class="op">=</span> <span class="fl">1e-3</span>):</span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:43.275759Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:43.272274Z&quot;}" data-execution_count="24">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(custom_dataloader, model, lr <span class="op">=</span> <span class="fl">5e-3</span>):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Iterate through mini-batch</span></span>
 <span id="cb15-3"><a href="#cb15-3" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> batch <span class="kw">in</span> <span class="bu">iter</span>(custom_dataloader):</span>
 <span id="cb15-4"><a href="#cb15-4" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Taking one mini-batch</span></span>
@@ -514,7 +514,7 @@ Target  shape: torch.Size([64])</code></pre>
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss<span class="op">/</span><span class="bu">len</span>(custom_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>Let’s run few epoch.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:30:19.543585Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:30:19.408516Z&quot;}" data-execution_count="321">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:45.431348Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:45.300638Z&quot;}" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(<span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
 <span id="cb16-3"><a href="#cb16-3" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> step(custom_dataloader, model)</span>
@@ -523,12 +523,23 @@ Target  shape: torch.Size([64])</code></pre>
 <span id="cb16-6"><a href="#cb16-6" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">True coefficient is </span><span class="sc">{</span>coef<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss"> and predicted coefficient is </span><span class="sc">{</span>model<span class="sc">.</span>w<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">."</span>)</span>
 <span id="cb16-7"><a href="#cb16-7" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"True bias term is </span><span class="sc">{</span><span class="dv">2</span><span class="sc">}</span><span class="ss"> and predicted coefficient is </span><span class="sc">{</span>model<span class="sc">.</span>b<span class="sc">.</span>item()<span class="sc">:.2f}</span><span class="ss">."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch: 0, MSE: 0.0945
-Epoch: 1, MSE: 0.0878
-Epoch: 2, MSE: 0.0877
+<pre><code>Epoch: 0, MSE: 0.0879
+Epoch: 1, MSE: 0.0881
+Epoch: 2, MSE: 0.0885
 
 True coefficient is 0.48 and predicted coefficient is 0.47.
-True bias term is 2 and predicted coefficient is 2.00.</code></pre>
+True bias term is 2 and predicted coefficient is 1.97.</code></pre>
+</div>
+</div>
+<p>Let’s visualize the fit.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:44:07.678037Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:44:07.042570Z&quot;}" data-execution_count="31">
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>y_pred <span class="op">=</span> []</span>
+<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
+<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> batch <span class="kw">in</span> <span class="bu">iter</span>(DataLoader(custom_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">False</span>)):</span>
+<span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            y_pred.append(model.forward(batch[<span class="st">'X'</span>].unsqueeze(<span class="op">-</span><span class="dv">1</span>)).detach().numpy())      </span>
+<span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plot_data(X, y, y_pred<span class="op">=</span>np.concatenate(y_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+<p><img src="4_datasets_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>From the results above, it appears that the model’s performance improved with each epoch, as the mean squared error (MSE) consistently decreased. The performance of the model is now similar to the performance we observed in the last chapter.</p>
