@@ -26,6 +26,7 @@ book:
         - basics/2_broadcasting.ipynb
         - basics/3_autograd.ipynb
         - basics/4_datasets.ipynb
+        - basics/5_optimizers.ipynb
   
 
 bibliography: references.bib
