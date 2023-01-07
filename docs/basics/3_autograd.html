@@ -288,7 +288,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <p>Gradient with respect to a and b will be: <span class="math display">\[\frac{dy}{da} = 3a^2 =&gt; 3*5^2 =&gt; 75\]</span></p>
 <p><span class="math display">\[\frac{dy}{db} = -2b =&gt; -2*6 =&gt; -12\]</span></p>
 <p>Now let’s observe these in PyTorch. To make a tensor compute gradients automatically we can initialize them with <code>requires_grad = True</code>.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T22:43:22.665762Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T22:43:21.937882Z&quot;}" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:40:04.882508Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:40:04.534650Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co">## initializing a anb b with requires grad = True</span></span>
@@ -302,14 +302,14 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </div>
 </div>
 <p>To compute the derivatives we can call <code>backward</code> method and retrieve gradients from a and b calling <code>a.grad</code> and <code>b.grad</code>.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T22:43:27.737051Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T22:43:27.401148Z&quot;}" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:40:07.167699Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:40:06.850249Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y.backward()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gradient of a and b is </span><span class="sc">{</span>a<span class="sc">.</span>grad<span class="sc">.</span>item()<span class="sc">}</span><span class="ss"> and </span><span class="sc">{</span>b<span class="sc">.</span>grad<span class="sc">.</span>item()<span class="sc">}</span><span class="ss"> respectively."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Gradient of a and b is 75.0 and -12.0 respectively.</code></pre>
 </div>
 </div>
-<p>As computed above the gradient of a and b is 75 and -12 respectively.</p>
+<p>As computed above the gradient of <code>a</code> and <code>b</code> is 75 and -12 respectively.</p>
 </section>
 <section id="exercise-linear-regression" class="level2" data-number="4.2">
 <h2 data-number="4.2" class="anchored" data-anchor-id="exercise-linear-regression"><span class="header-section-number">4.2</span> Exercise: Linear regression</h2>
