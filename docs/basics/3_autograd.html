@@ -233,6 +233,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -278,7 +283,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <section id="what-is-autograd" class="level2" data-number="4.1">
 <h2 data-number="4.1" class="anchored" data-anchor-id="what-is-autograd"><span class="header-section-number">4.1</span> What is Autograd?</h2>
-<p>In PyTorch, autograd automatically computes gradients. It is a key part of PyTorch’s deep learning framework, and is used to optimize model parameters during training by computing gradients of the loss function with respect to the model’s parameters.</p>
+<p>In PyTorch, autograd automatically computes gradients. It is a key part of PyTorch’s deep learning framework and is used to optimize model parameters during training by computing gradients of the loss function with respect to the model’s parameters.</p>
 <p>Autograd can compute gradients for both scalar and vector-valued functions, and it can do so efficiently for a large variety of differentiable operations, including matrix and element-wise operations, as well as higher-order derivatives.</p>
 <p>Let’s take a simple example of looking at a function. <span class="math display">\[y = a^3 - b^2 + 3\]</span></p>
 <p>Differentiation of this function with respect to a and b is going to be:</p>
@@ -301,7 +306,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <pre><code>tensor([89.], grad_fn=&lt;SubBackward0&gt;)</code></pre>
 </div>
 </div>
-<p>To compute the derivatives we can call <code>backward</code> method and retrieve gradients from a and b calling <code>a.grad</code> and <code>b.grad</code>.</p>
+<p>To compute the derivatives we can call the <code>backward</code> method and retrieve gradients from a and b by calling <code>a.grad</code> and <code>b.grad</code>.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:40:07.167699Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:40:06.850249Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>y.backward()</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Gradient of a and b is </span><span class="sc">{</span>a<span class="sc">.</span>grad<span class="sc">.</span>item()<span class="sc">}</span><span class="ss"> and </span><span class="sc">{</span>b<span class="sc">.</span>grad<span class="sc">.</span>item()<span class="sc">}</span><span class="ss"> respectively."</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -316,7 +321,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <p>In this section, we will implement a linear regression model in PyTorch and use the Autograd package to optimize the model’s parameters through gradient descent.</p>
 <section id="creating-dummy-data" class="level3" data-number="4.2.1">
 <h3 data-number="4.2.1" class="anchored" data-anchor-id="creating-dummy-data"><span class="header-section-number">4.2.1</span> Creating dummy data</h3>
-<p>Let’s begin by generating linear data that exhibits linear characteristics. We will use sklearn <code>make_regression</code> function to do the same.</p>
+<p>Let’s begin by generating linear data that exhibits linear characteristics. We will use the sklearn <code>make_regression</code> function to do the same.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T22:44:07.501395Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T22:44:06.609401Z&quot;}" data-execution_count="1">
 <details>
 <summary>Code</summary>
@@ -329,36 +334,35 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
 <span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"dark"</span>)</span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_data(x, y, y_pred<span class="op">=</span><span class="va">None</span>, label<span class="op">=</span><span class="va">None</span>):</span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x <span class="op">=</span> X.squeeze(), y<span class="op">=</span>y)</span>
-<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y_pred <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
-<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>        sns.lineplot(x <span class="op">=</span> X.squeeze(), y<span class="op">=</span>y_pred.squeeze(), color<span class="op">=</span><span class="st">'red'</span>)</span>
-<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Input"</span>)</span>
-<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Target"</span>)</span>
-<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> label: </span>
-<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>        plt.title(label)</span>
-<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
-<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"dark"</span>)</span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> plot_data(x, y, y_pred<span class="op">=</span><span class="va">None</span>, label<span class="op">=</span><span class="va">None</span>):</span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a>    clear_output(wait<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a>    sns.scatterplot(x<span class="op">=</span>X.squeeze(), y<span class="op">=</span>y)</span>
+<span id="cb5-17"><a href="#cb5-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> y_pred <span class="kw">is</span> <span class="kw">not</span> <span class="va">None</span>:</span>
+<span id="cb5-18"><a href="#cb5-18" aria-hidden="true" tabindex="-1"></a>        sns.lineplot(x<span class="op">=</span>X.squeeze(), y<span class="op">=</span>y_pred.squeeze(), color<span class="op">=</span><span class="st">'red'</span>)</span>
+<span id="cb5-19"><a href="#cb5-19" aria-hidden="true" tabindex="-1"></a>    plt.xlabel(<span class="st">"Input"</span>)</span>
+<span id="cb5-20"><a href="#cb5-20" aria-hidden="true" tabindex="-1"></a>    plt.ylabel(<span class="st">"Target"</span>)</span>
+<span id="cb5-21"><a href="#cb5-21" aria-hidden="true" tabindex="-1"></a>    <span class="cf">if</span> label:</span>
+<span id="cb5-22"><a href="#cb5-22" aria-hidden="true" tabindex="-1"></a>        plt.title(label)</span>
+<span id="cb5-23"><a href="#cb5-23" aria-hidden="true" tabindex="-1"></a>    plt.show()</span>
+<span id="cb5-24"><a href="#cb5-24" aria-hidden="true" tabindex="-1"></a>    time.sleep(<span class="fl">0.5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 </div>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T22:48:58.581148Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T22:48:57.961723Z&quot;}" data-execution_count="31">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Generate some dataset</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X, y, coef <span class="op">=</span> make_regression(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span><span class="dv">1500</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    n_features<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>    n_informative<span class="op">=</span><span class="dv">1</span>,</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>    noise<span class="op">=</span><span class="fl">0.3</span>,</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>    coef<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>    bias<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor(X, dtype<span class="op">=</span>torch.float32)</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(y, dtype<span class="op">=</span>torch.float32)</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>plot_data(X,y, label<span class="op">=</span><span class="ss">f"Coefficient: </span><span class="sc">{</span>coef<span class="sc">:.2f}</span><span class="ss">, Bias:</span><span class="sc">{</span><span class="dv">2</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>X, y, coef <span class="op">=</span> make_regression(n_samples<span class="op">=</span><span class="dv">1500</span>,</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>                             n_features<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>                             n_informative<span class="op">=</span><span class="dv">1</span>,</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                             noise<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>                             coef<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                             random_state<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>                             bias<span class="op">=</span><span class="dv">2</span>)</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>X <span class="op">=</span> torch.tensor(X, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>y <span class="op">=</span> torch.tensor(y, dtype<span class="op">=</span>torch.float32)</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>plot_data(X, y, label<span class="op">=</span><span class="ss">f"Coefficient: </span><span class="sc">{</span>coef<span class="sc">:.2f}</span><span class="ss">, Bias:</span><span class="sc">{</span><span class="dv">2</span><span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -371,28 +375,30 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </section>
 <section id="define-a-linear-regression-function" class="level3" data-number="4.2.2">
 <h3 data-number="4.2.2" class="anchored" data-anchor-id="define-a-linear-regression-function"><span class="header-section-number">4.2.2</span> Define a linear regression function</h3>
-<p>Since we are only building a simple linear regression with one feature and one bias term. It can be defined as following -</p>
+<p>Since we are only building a simple linear regression with one feature and one bias term. It can be defined as the following -</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T22:49:11.860335Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T22:49:11.857717Z&quot;}" data-execution_count="32">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear:</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_in, n_out):</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.randn(n_in, n_out).requires_grad_(<span class="va">True</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b <span class="op">=</span> torch.randn(n_out).requires_grad_(<span class="va">True</span>)</span>
 <span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.params <span class="op">=</span> [<span class="va">self</span>.w, <span class="va">self</span>.b]</span>
-<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
 <span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x <span class="op">@</span> <span class="va">self</span>.w <span class="op">+</span> <span class="va">self</span>.b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
+<p>This code above defines a class called <code>Linear</code> that represents a simple linear regression model. In this case, the <code>__init__</code> takes two arguments: <code>n_in</code> and <code>n_out</code>, which represent the dimensions of the input and output of the linear regression model. The <code>__init__</code> method initializes the weight matrix <code>w</code> and the bias vector <code>b</code> to random values, and also sets them to be <code>requires_grad</code> to <code>True</code>, which means that the gradients of these parameters will be calculated during backpropagation. The <code>forward</code> method defines the forward pass of the linear regression model. It takes an input <code>x</code> and applies the linear transformation defined by <code>w</code> and <code>b</code>, returning the model prediction.</p>
 <p>Let’s initialize the model and make a random prediction.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T23:05:24.267682Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T23:05:23.495097Z&quot;}" data-execution_count="47">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Initializing model</span></span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">4</span>)</span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
-<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a><span class="co">## Making a random prediction</span></span>
-<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad():</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.forward(X).numpy()</span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="co">## Plotting the prediction</span></span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>plot_data(X, y, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Making a random prediction</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a><span class="cf">with</span> torch.no_grad(): </span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.forward(X).numpy()</span>
+<span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Plotting the prediction</span></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>plot_data(X, y, y_pred)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
@@ -402,28 +408,29 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </div>
 </div>
 </div>
-<p>As shown above, our randomly generated predictions do not accurately fit the data. To improve the model’s performance, we can use the <code>autograd</code> function to create a simple gradient descent function called <code>step</code>, which runs one epoch of training. This will allow us to optimize the model’s parameters and improve the accuracy of our predictions.</p>
+<p>The code above generates random predictions that do not fit the data well. The <code>torch.no_grad()</code> context manager is used to prevent torch from calculating gradients for the operations within the context.</p>
+<p>To improve the model’s performance, we can use the <code>autograd</code> function to create a simple gradient descent function called <code>step</code>, which runs one epoch of training. This will allow us to optimize the model’s parameters and improve the accuracy of our predictions.</p>
 </section>
 <section id="stochastic-gradient-descent" class="level3" data-number="4.2.3">
 <h3 data-number="4.2.3" class="anchored" data-anchor-id="stochastic-gradient-descent"><span class="header-section-number">4.2.3</span> Stochastic Gradient Descent</h3>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-30T23:05:25.893682Z&quot;,&quot;start_time&quot;:&quot;2022-12-30T23:05:25.890999Z&quot;}" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(X, y, model, lr <span class="op">=</span> <span class="fl">0.1</span>):</span>
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(X, y, model, lr<span class="op">=</span><span class="fl">0.1</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    y_pred <span class="op">=</span> model.forward(X)</span>
-<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Calculation mean square error</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> torch.square(y <span class="op">-</span> y_pred.squeeze()).mean()</span>
-<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Computing gradients</span></span>
 <span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    loss.backward()</span>
-<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Updating parameters</span></span>
-<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad(): </span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> param <span class="kw">in</span> model.params:</span>
-<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            param <span class="op">-=</span> lr<span class="op">*</span>param.grad.data</span>
+<span id="cb9-13"><a href="#cb9-13" aria-hidden="true" tabindex="-1"></a>            param <span class="op">-=</span> lr <span class="op">*</span> param.grad.data</span>
 <span id="cb9-14"><a href="#cb9-14" aria-hidden="true" tabindex="-1"></a>            param.grad.data.zero_()</span>
 <span id="cb9-15"><a href="#cb9-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Lets walk through the <code>step</code> function:</p>
+<p>Let’s walk through the <code>step</code> function:</p>
 <ul>
 <li>The model performs a forward pass to generate predictions.</li>
 <li>The mean squared error loss is calculated between the predicted values and the true values.</li>
@@ -435,7 +442,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> i <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">30</span>):</span>
 <span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run one gradient descent epoch</span></span>
 <span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> step(X, y, model)</span>
-<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
+<span id="cb10-4"><a href="#cb10-4" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad(): </span>
 <span id="cb10-5"><a href="#cb10-5" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.forward(X).numpy()</span>
 <span id="cb10-6"><a href="#cb10-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># plot each step with delay</span></span>
 <span id="cb10-7"><a href="#cb10-7" aria-hidden="true" tabindex="-1"></a>    plot_data(X, y, y_pred, label<span class="op">=</span><span class="ss">f"Step: </span><span class="sc">{</span>i<span class="op">+</span><span class="dv">1</span><span class="sc">}</span><span class="ss">, MSE = </span><span class="sc">{</span>loss<span class="sc">:.2f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -467,6 +474,7 @@ True bias term is 2 and predicted coefficient is 2.00.</code></pre>
 <h2 data-number="4.4" class="anchored" data-anchor-id="references"><span class="header-section-number">4.4</span> References</h2>
 <ul>
 <li><a href="https://pytorch.org/tutorials/beginner/basics/autogradqs_tutorial.html">Pytorch Auto grad tutorial</a></li>
+<li><a href="https://pytorch.org/docs/stable/notes/autograd.html">Pytorch Autograd Mechanics</a></li>
 </ul>
 
 

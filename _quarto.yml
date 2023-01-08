@@ -27,6 +27,7 @@ book:
         - basics/3_autograd.ipynb
         - basics/4_datasets.ipynb
         - basics/5_optimizers.ipynb
+        - basics/6_models.ipynb
   
 
 bibliography: references.bib

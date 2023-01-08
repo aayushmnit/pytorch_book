@@ -232,6 +232,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -255,8 +260,8 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   </ul></li>
   <li><a href="#why-gpus" id="toc-why-gpus" class="nav-link" data-scroll-target="#why-gpus"><span class="toc-section-number">2.5</span>  Why GPUs?</a>
   <ul class="collapse">
-  <li><a href="#matrix-multiplication-using-numpy" id="toc-matrix-multiplication-using-numpy" class="nav-link" data-scroll-target="#matrix-multiplication-using-numpy"><span class="toc-section-number">2.5.1</span>  Matrix multiplication using numpy</a></li>
-  <li><a href="#matrix-multiplication-using-pytorch-on-cpu" id="toc-matrix-multiplication-using-pytorch-on-cpu" class="nav-link" data-scroll-target="#matrix-multiplication-using-pytorch-on-cpu"><span class="toc-section-number">2.5.2</span>  Matrix multiplication using pytorch on cpu</a></li>
+  <li><a href="#matrix-multiplication-using-numpy" id="toc-matrix-multiplication-using-numpy" class="nav-link" data-scroll-target="#matrix-multiplication-using-numpy"><span class="toc-section-number">2.5.1</span>  Matrix multiplication using NumPy</a></li>
+  <li><a href="#matrix-multiplication-using-pytorch-on-cpu" id="toc-matrix-multiplication-using-pytorch-on-cpu" class="nav-link" data-scroll-target="#matrix-multiplication-using-pytorch-on-cpu"><span class="toc-section-number">2.5.2</span>  Matrix multiplication using PyTorch on CPU</a></li>
   <li><a href="#matrix-multiplication-using-pytorch-on-gpu" id="toc-matrix-multiplication-using-pytorch-on-gpu" class="nav-link" data-scroll-target="#matrix-multiplication-using-pytorch-on-gpu"><span class="toc-section-number">2.5.3</span>  Matrix multiplication using pytorch on GPU</a></li>
   </ul></li>
   <li><a href="#references" id="toc-references" class="nav-link" data-scroll-target="#references"><span class="toc-section-number">2.6</span>  References</a></li>
@@ -285,7 +290,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <section id="what-are-tensors" class="level2" data-number="2.1">
 <h2 data-number="2.1" class="anchored" data-anchor-id="what-are-tensors"><span class="header-section-number">2.1</span> What are Tensors?</h2>
-<p>PyTorch provides tensors as its primary data structure. Tensors are similar to numpy arrays, but they can be used on a GPU to accelerate the computation. PyTorch tensors are similar to numpy arrays, but they have additional functionality (automatic differentiation) and are designed to take advantage of GPUs for acceleration. Similar to numpy, tensors in PyTorch supports a variety of operations, including indexing, slicing, math operations, linear algebra operations, and more. Let’s dive in by importing the library.</p>
+<p>PyTorch provides tensors as its primary data structure. Tensors are similar to NumPy arrays, but they can be used on a GPU to accelerate the computation. PyTorch tensors are similar to NumPy arrays, but they have additional functionality (automatic differentiation) and are designed to take advantage of GPUs for acceleration. Similar to NumPy, tensors in PyTorch support a variety of operations, including indexing, slicing, math operations, linear algebra operations, and more. Let’s dive in by importing the library.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:00:37.583532Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:00:37.246700Z&quot;}" data-execution_count="1">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -392,7 +397,7 @@ Tensor from nested list:
 <p>It has several attributes that you can access to get information about the tensor. Here are some common attributes of a PyTorch tensor:</p>
 <ul>
 <li><code>shape</code>: returns the shape of the tensor as a tuple of integers. For example, if the tensor has dimensions (batch_size, num_channels, height, width), the shape would be (batch_size, num_channels, height, width).</li>
-<li><code>dtype</code>: returns the data type of the tensor. For example, the data type could be torch.float32 or torch.int64.</li>
+<li><code>dtype</code>: returns the data type of the tensor. For example, the data type could be <code>torch.float32</code> or <code>torch.int64</code>.</li>
 <li><code>device</code>: returns the device on which the tensor is stored. This can be the CPU or a GPU.</li>
 <li><code>requires_grad</code>: a boolean flag indicating whether the tensor requires gradient computation. If set to True, the tensor’s gradients will be computed during backpropagation.</li>
 <li><code>grad</code>: a tensor containing the gradient of the tensor with respect to some scalar value. This attribute is typically used during training with gradient descent.</li>
@@ -413,12 +418,12 @@ Autograd enabled : False
 Any stored gradient : None</code></pre>
 </div>
 </div>
-<p>As we can see above we initialized a random tensor of shape (3,4) with a torch.float32 data type and its currently on a cpu device. Currently, automatic gradient calculations are disabled and no gradient is stored in the tensor.</p>
+<p>As we can see above we initialized a random tensor of shape <code>(3,4)</code> with a <code>torch.float32</code> data type and it’s currently on a CPU device. Currently, automatic gradient calculations are disabled and no gradient is stored in the tensor.</p>
 <p>There are several other attributes that you can access, such as <code>ndim</code>, <code>size</code>, <code>numel</code>, <code>storage</code>, etc. You can find more information about these attributes in the <a href="https://pytorch.org/docs/stable/tensors.html">PyTorch Tensor documentation</a>.</p>
 </section>
 <section id="tensor-operations" class="level2" data-number="2.4">
 <h2 data-number="2.4" class="anchored" data-anchor-id="tensor-operations"><span class="header-section-number">2.4</span> Tensor Operations</h2>
-<p>There are several operations you can perform on tensors, lets look at the most commonly used operations.</p>
+<p>There are several operations you can perform on tensors, let’s look at the most commonly used operations.</p>
 <section id="moving-tensor-from-cpu-to-gpu" class="level3" data-number="2.4.1">
 <h3 data-number="2.4.1" class="anchored" data-anchor-id="moving-tensor-from-cpu-to-gpu"><span class="header-section-number">2.4.1</span> Moving tensor from CPU to GPU</h3>
 <p>To move a tensor from CPU to GPU is a simple command but probably the one which people will use the most.</p>
@@ -430,11 +435,11 @@ Any stored gradient : None</code></pre>
         [-0.1336, -0.7395, -0.7143, -0.0735]], device='cuda:0')</code></pre>
 </div>
 </div>
-<p>As we can see the tensor_randn is now moved to a cuda(GPU) device.</p>
+<p>As we can see the tensor_randn is now moved to a Cuda(GPU) device.</p>
 </section>
 <section id="slicing-and-indexing" class="level3" data-number="2.4.2">
 <h3 data-number="2.4.2" class="anchored" data-anchor-id="slicing-and-indexing"><span class="header-section-number">2.4.2</span> Slicing and Indexing</h3>
-<p>PyTorch tensors similar to numpy arrays support various slicing and indexing operations.</p>
+<p>PyTorch tensors similar to NumPy arrays support various slicing and indexing operations.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:43:25.713911Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:43:25.709184Z&quot;}" data-execution_count="38">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>tensor_randn <span class="op">=</span> torch.randn(<span class="dv">3</span>, <span class="dv">4</span>)</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a>tensor_randn</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -476,14 +481,14 @@ tensor([-1.3470,  0.2204,  0.2963, -0.9745])
 <section id="concatenation" class="level3" data-number="2.4.3">
 <h3 data-number="2.4.3" class="anchored" data-anchor-id="concatenation"><span class="header-section-number">2.4.3</span> Concatenation</h3>
 <p>The <code>torch.cat</code> function can be used to concatenate or join multiple tensors together, which is often useful when working with deep learning models.</p>
-<p>Let’s take our previous defined tensors and check their shape.</p>
+<p>Let’s take our previously defined tensors and check their shape.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:05.329440Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:05.326348Z&quot;}" data-execution_count="42">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>tensor_ones.shape, tensor_zeros.shape, tensor_rand.shape</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display" data-execution_count="42">
 <pre><code>(torch.Size([3, 4]), torch.Size([3, 4]), torch.Size([3, 4]))</code></pre>
 </div>
 </div>
-<p>We can concatenate these tensors column wise by using <code>torch.cat</code> with <code>dim=1</code>. We will get a resultant tensor with shape (3,12).</p>
+<p>We can concatenate these tensors column wise by using <code>torch.cat</code> with <code>dim=1</code>. We will get a resultant tensor with shape <code>(3,12)</code>.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:30.836022Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:30.831533Z&quot;}" data-execution_count="44">
 <div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>concat_tensor <span class="op">=</span> torch.cat([tensor_ones, tensor_zeros, tensor_rand], dim<span class="op">=</span><span class="dv">1</span>)</span>
 <span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concat_tensor.shape)</span>
@@ -500,7 +505,7 @@ tensor([-1.3470,  0.2204,  0.2963, -0.9745])
          0.8951, 0.0335, 0.5779]])</code></pre>
 </div>
 </div>
-<p>We can concatenate these tensors row wise by using <code>torch.cat</code> with <code>dim=0</code>. We will get a resultant tensor with shape (9,4).</p>
+<p>We can concatenate these tensors row wise by using <code>torch.cat</code> with <code>dim=0</code>. We will get a resultant tensor with shape <code>(9,4)</code>.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-25T22:51:40.750201Z&quot;,&quot;start_time&quot;:&quot;2022-12-25T22:51:40.746284Z&quot;}" data-execution_count="45">
 <div class="sourceCode cell-code" id="cb23"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb23-1"><a href="#cb23-1" aria-hidden="true" tabindex="-1"></a>concat_tensor <span class="op">=</span> torch.cat([tensor_ones, tensor_zeros, tensor_rand], dim<span class="op">=</span><span class="dv">0</span>)</span>
 <span id="cb23-2"><a href="#cb23-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(concat_tensor.shape)</span>
@@ -523,7 +528,7 @@ tensor([-1.3470,  0.2204,  0.2963, -0.9745])
 </section>
 <section id="arithmetic-operations" class="level3" data-number="2.4.4">
 <h3 data-number="2.4.4" class="anchored" data-anchor-id="arithmetic-operations"><span class="header-section-number">2.4.4</span> Arithmetic operations</h3>
-<p>In PyTorch, you can perform arithmetic operations on tensors in a similar way to how you would perform them on numpy arrays. Lets look at some common arithmetic operations -</p>
+<p>In PyTorch, you can perform arithmetic operations on tensors in a similar way to how you would perform them on numpy arrays. Let’s look at some common arithmetic operations -</p>
 <p><strong>Element wise addition</strong></p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-26T19:38:04.682966Z&quot;,&quot;start_time&quot;:&quot;2022-12-26T19:38:04.679197Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb26"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb26-1"><a href="#cb26-1" aria-hidden="true" tabindex="-1"></a>tnsr1 <span class="op">=</span> torch.randn((<span class="dv">3</span>,<span class="dv">4</span>))</span>
@@ -652,7 +657,7 @@ Note
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>Observe that <code>tnsr1</code> and <code>tnsr2</code> have shape (3,4). To perform a matrix multiplication, we used the <code>.T</code> function to transpose <code>tnsr2</code>, which changed its shape to (4,3). The resulting matrix multiplication has size (3x3).</p>
+<p>Observe that <code>tnsr1</code> and <code>tnsr2</code> have shape <code>(3,4)</code>. To perform matrix multiplication, we used the <code>.T</code> function to transpose <code>tnsr2</code>, which changed its shape to <code>(4,3)</code>. The resulting matrix multiplication has a shape <code>(3,3)</code>.</p>
 </div>
 </div>
 <p><strong>Summing it up</strong></p>
@@ -682,10 +687,10 @@ Note
 </section>
 <section id="why-gpus" class="level2" data-number="2.5">
 <h2 data-number="2.5" class="anchored" data-anchor-id="why-gpus"><span class="header-section-number">2.5</span> Why GPUs?</h2>
-<p>Deep learning models often involve large amounts of matrix operations such as matrix multiplication. Let’s do a speed comparison b/w numpy CPU implementation, Pytorch CPU and GPU implementation.</p>
+<p>Deep learning models often involve large amounts of matrix operations such as matrix multiplication. Let’s do a speed comparison b/w NumPy CPU implementation, Pytorch CPU, and GPU implementation.</p>
 <section id="matrix-multiplication-using-numpy" class="level3" data-number="2.5.1">
-<h3 data-number="2.5.1" class="anchored" data-anchor-id="matrix-multiplication-using-numpy"><span class="header-section-number">2.5.1</span> Matrix multiplication using numpy</h3>
-<p>Let’s initialize one tensors of size (1000,64,64) and one tensor of size (64,32) and lets do a matrix multiplication speed comparison</p>
+<h3 data-number="2.5.1" class="anchored" data-anchor-id="matrix-multiplication-using-numpy"><span class="header-section-number">2.5.1</span> Matrix multiplication using NumPy</h3>
+<p>Let’s initialize one tensor of size <code>(1000,64,64)</code> and one tensor of size <code>(64,32)</code> and let’s do a matrix multiplication speed comparison</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:11:59.073861Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:11:59.009383Z&quot;}" data-execution_count="46">
 <div class="sourceCode cell-code" id="cb38"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb38-1"><a href="#cb38-1" aria-hidden="true" tabindex="-1"></a>arr1 <span class="op">=</span> np.random.randn(<span class="dv">1000</span>, <span class="dv">64</span>, <span class="dv">64</span>)</span>
 <span id="cb38-2"><a href="#cb38-2" aria-hidden="true" tabindex="-1"></a>arr2 <span class="op">=</span> np.random.randn(<span class="dv">64</span>, <span class="dv">32</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -696,10 +701,10 @@ Note
 <pre><code>9.7 ms ± 201 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
 </div>
 </div>
-<p>As we can see matrix multiplicaiton on numpy which uses a highly optmized matrix multiplication does the above operation in 9.7 milliseconds.</p>
+<p>As we can see matrix multiplication on NumPy which uses a highly optimized matrix multiplication does the above operation in 9.7 milliseconds.</p>
 </section>
 <section id="matrix-multiplication-using-pytorch-on-cpu" class="level3" data-number="2.5.2">
-<h3 data-number="2.5.2" class="anchored" data-anchor-id="matrix-multiplication-using-pytorch-on-cpu"><span class="header-section-number">2.5.2</span> Matrix multiplication using pytorch on cpu</h3>
+<h3 data-number="2.5.2" class="anchored" data-anchor-id="matrix-multiplication-using-pytorch-on-cpu"><span class="header-section-number">2.5.2</span> Matrix multiplication using PyTorch on CPU</h3>
 <p>Now let’s do the same operation using PyTorch tensors on CPU.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T01:13:36.870868Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T01:13:36.868626Z&quot;}" data-execution_count="48">
 <div class="sourceCode cell-code" id="cb41"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb41-1"><a href="#cb41-1" aria-hidden="true" tabindex="-1"></a>tnsr1 <span class="op">=</span> torch.from_numpy(arr1)</span>
@@ -711,7 +716,7 @@ Note
 <pre><code>2.78 ms ± 127 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
 </div>
 </div>
-<p>We can see that PyTorch on CPU performed the same operation in 2.78 milliseconds which is roughly 3 times faster than the numpy version.</p>
+<p>We can see that PyTorch on CPU performed the same operation in 2.78 milliseconds which is roughly 3 times faster than the NumPy version.</p>
 </section>
 <section id="matrix-multiplication-using-pytorch-on-gpu" class="level3" data-number="2.5.3">
 <h3 data-number="2.5.3" class="anchored" data-anchor-id="matrix-multiplication-using-pytorch-on-gpu"><span class="header-section-number">2.5.3</span> Matrix multiplication using pytorch on GPU</h3>
@@ -726,7 +731,7 @@ Note
 <pre><code>15.6 µs ± 4.32 µs per loop (mean ± std. dev. of 7 runs, 50 loops each)</code></pre>
 </div>
 </div>
-<p>As demonstrated by the Matrix multiplication example, the GPU version was completed in 15.6 microseconds, a significant improvement over both the Pytorch CPU version (which took 2.8 milliseconds) and the numpy implementation (which took 9.7 milliseconds). This speedup is even more pronounced when working with larger matrices.</p>
+<p>As demonstrated by the Matrix multiplication example, the GPU version was completed in 15.6 microseconds, a significant improvement over both the Pytorch CPU version (which took 2.8 milliseconds) and the NumPy implementation (which took 9.7 milliseconds). This speedup is even more pronounced when working with larger matrices.</p>
 </section>
 </section>
 <section id="references" class="level2" data-number="2.6">

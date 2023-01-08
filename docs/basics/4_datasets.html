@@ -232,6 +232,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -297,12 +302,12 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
     </code></pre>
 </div>
 </div>
-<p>As we can see above <code>Dataset</code> is an abstract base class which requires us to implement <code>__getitem__</code> function and optionally overwrite the <code>__len__</code> method for returning the size of the dataset.</p>
+<p>As we can see above <code>Dataset</code> is an abstract base class that requires us to implement the <code>__getitem__</code> function and optionally overwrite the <code>__len__</code> method for returning the size of the dataset.</p>
 </section>
 <section id="exercise-creating-our-first-custom-dataset-class" class="level2" data-number="5.2">
 <h2 data-number="5.2" class="anchored" data-anchor-id="exercise-creating-our-first-custom-dataset-class"><span class="header-section-number">5.2</span> Exercise: Creating our first custom dataset class</h2>
 <p>In this exercise, we will continue from our previous <a href="../basics/3_autograd.html#creating-dummy-data">linear regression example</a> where we trained a linear regression using batch gradient descent and replace it with mini-batch gradient descent using <code>Dataset</code> and <code>Dataloaders</code>.</p>
-<p>Let’s start by importing required libraries and creating our linear data.</p>
+<p>Let’s start by importing the required libraries and creating our linear data.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.456832Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:35.827270Z&quot;}" data-code_folding="[]" data-execution_count="15">
 <details>
 <summary>Code</summary>
@@ -361,7 +366,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 4  0.829986  2.488750</code></pre>
 </div>
 </div>
-<p>Let’s create a custom <code>Dataset</code> class named <code>TabularDataset</code> by inheriting the <code>Dataset</code> abstract base class and implementing our <code>__len__</code> and <code>__getitem__</code> function.</p>
+<p>Let’s create a custom <code>Dataset</code> class named <code>TabularDataset</code> by inheriting the <code>Dataset</code> abstract base class and implementing our <code>__len__</code> and <code>__getitem__</code> functions.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -394,7 +399,7 @@ Note
 </div>
 <p>The <code>TabularDataset</code> class has three methods: <code>__init__</code>, <code>__len__</code>, and <code>__getitem__</code>.</p>
 <ul>
-<li>The <code>__init__</code> method is called when the class is instantiated and takes a pandas dataframe as an input.</li>
+<li>The <code>__init__</code> method is called when the class is instantiated and takes a pandas dataframe as input.</li>
 <li>The <code>__len__</code> method returns the number of samples in the dataset.</li>
 <li>The <code>__getitem__</code> method returns a sample from the dataset at a given index <code>idx</code>, in the form of a dictionary with keys X and y.</li>
 </ul>
@@ -462,7 +467,7 @@ Target  shape: torch.Size([64])</code></pre>
 </section>
 <section id="exercise-linear-regression-with-mini-batch-gradient-descent" class="level2" data-number="5.4">
 <h2 data-number="5.4" class="anchored" data-anchor-id="exercise-linear-regression-with-mini-batch-gradient-descent"><span class="header-section-number">5.4</span> Exercise: Linear regression with mini-batch gradient descent</h2>
-<p>Let’s get our model definition from <a href="../basics/3_autograd.html#define-a-linear-regression-function">last chapter</a>.</p>
+<p>Let’s get our model definition from the <a href="../basics/3_autograd.html#define-a-linear-regression-function">last chapter</a>.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:36.537466Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:36.511038Z&quot;}" data-execution_count="21">
 <div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear:</span>
 <span id="cb13-2"><a href="#cb13-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_in, n_out):</span>
@@ -489,7 +494,7 @@ Target  shape: torch.Size([64])</code></pre>
 <pre><code>MSE loss: 7.2129</code></pre>
 </div>
 </div>
-<p>This MSE is bad considering in last chapter we were able to achieve 0.09. Let’s update the previous chapter <code>step</code> function to take mini-batches.</p>
+<p>This MSE of <code>7.2129</code> is bad considering in the last chapter we were able to achieve <code>0.09</code>. Let’s update the previous chapter <code>step</code> function to take mini-batches.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:43.275759Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:43.272274Z&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> step(custom_dataloader, model, lr <span class="op">=</span> <span class="fl">5e-3</span>):</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">## Iterate through mini-batch</span></span>
@@ -519,7 +524,7 @@ Target  shape: torch.Size([64])</code></pre>
 <span id="cb15-26"><a href="#cb15-26" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">+=</span> <span class="bu">sum</span>((y_pred.squeeze() <span class="op">-</span> y_true.squeeze())<span class="op">**</span><span class="dv">2</span>)</span>
 <span id="cb15-27"><a href="#cb15-27" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss<span class="op">/</span><span class="bu">len</span>(custom_dataset)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Let’s run few epoch.</p>
+<p>Let’s run few epochs.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-03T03:41:45.431348Z&quot;,&quot;start_time&quot;:&quot;2023-01-03T03:41:45.300638Z&quot;}" data-execution_count="25">
 <div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(<span class="dv">1</span>,<span class="dv">1</span>)</span>
 <span id="cb16-2"><a href="#cb16-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">3</span>):</span>
@@ -554,7 +559,7 @@ True bias term is 2 and predicted coefficient is 1.97.</code></pre>
 <h2 data-number="5.5" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">5.5</span> Conclusion</h2>
 <p>In PyTorch, a <code>Dataset</code> is an abstract class that represents a dataset. It provides a way to access the data and defines the way the data should be processed. The <code>Dataset</code> class is an abstract class and you need to create a subclass to use it.</p>
 <p>A <code>DataLoader</code> is an iterator that provides access to a dataset. It can be used to efficiently batch and shuffle the data, and it can use multiple threads to speed up the data loading process.</p>
-<p>The <code>Dataset</code> and <code>DataLoader</code> classes are an important part of PyTorch’s data loading and processing functionality. They are often used together to train machine learning models, because they provide a convenient and efficient way to access and process data.</p>
+<p>The <code>Dataset</code> and <code>DataLoader</code> classes are an important part of PyTorch’s data loading and processing functionality. They are often used together to train machine learning model, because they provide a convenient and efficient way to access and process data.</p>
 </section>
 <section id="references" class="level2" data-number="5.6">
 <h2 data-number="5.6" class="anchored" data-anchor-id="references"><span class="header-section-number">5.6</span> References</h2>

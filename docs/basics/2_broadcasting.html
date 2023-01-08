@@ -232,6 +232,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -313,19 +318,19 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
         [11, 13, 15]])</code></pre>
 </div>
 </div>
-<p>Broadcasting is a powerful feature in PyTorch that allows for efficient operations between tensors of different shapes, and is an important concept to understand when working with deep learning models.</p>
+<p>Broadcasting is a powerful feature in PyTorch that allows for efficient operations between tensors of different shapes and is an important concept to understand when working with deep learning models.</p>
 </section>
 <section id="general-broadcasting-rules" class="level2" data-number="3.2">
 <h2 data-number="3.2" class="anchored" data-anchor-id="general-broadcasting-rules"><span class="header-section-number">3.2</span> General Broadcasting rules</h2>
 <p>The rules for broadcasting in PyTorch are the same as those in <a href="https://numpy.org/doc/stable/user/basics.broadcasting.html">NumPy</a>.</p>
-<p>When comparing two arrays, PyTorch compares their shapes element-wise. It starts with the rightmost dimesnion and works its way left. Two dimensions are “broadcastable” when -</p>
+<p>When comparing two arrays, PyTorch compares their shapes element-wise. It starts with the rightmost dimension and works its way left. Two dimensions are “broadcastable” when -</p>
 <ol type="1">
 <li>they are equal, or</li>
 <li>one of them is 1</li>
 </ol>
-<p>If these conditions are not met, a <code>RuntimeError</code> occurs, explaining the size of tensor are incompatible.</p>
+<p>If these conditions are not met, a <code>RuntimeError</code> occurs, explaining the size of tensors is incompatible.</p>
 <p>When performing a broadcast operation, the resulting array will have the same number of dimensions as the input array with the most dimensions. The size of each dimension in the resulting array will be the maximum size of the corresponding dimension among the input arrays. If an input array is missing a dimension, it is assumed to have a size of one in that dimension.</p>
-<p>Let’s look at some broadcasting example.</p>
+<p>Let’s look at some broadcasting examples.</p>
 <section id="example-1-valid-broadcasting" class="level3" data-number="3.2.1">
 <h3 data-number="3.2.1" class="anchored" data-anchor-id="example-1-valid-broadcasting"><span class="header-section-number">3.2.1</span> Example 1 : Valid broadcasting</h3>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:36:16.249218Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:36:16.246200Z&quot;}" data-execution_count="21">
@@ -338,10 +343,10 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 Shape of tensor b is torch.Size([1, 2])</code></pre>
 </div>
 </div>
-<p>In the example above, tensor_a is of shape <code>(3,2)</code> and tensor_b is of shape <code>(1,2)</code>. According to broadcasting principle if we start from right most side -</p>
+<p>In the example above, tensor_a is of shape <code>(3,2)</code> and tensor_b is of shape <code>(1,2)</code>. According to broadcasting principle if we start from the rightmost side -</p>
 <ul>
-<li>Right most dimension is 2 for both tensor_a and tensor_b</li>
-<li>Second right most dimension is 3 for tensor_a and 1 for tensor_b, as one of them is 1, it doesn’t violate the broadcasting rules</li>
+<li>Rightmost dimension is 2 for both tensor_a and tensor_b</li>
+<li>Second rightmost dimension is 3 for tensor_a and 1 for tensor_b, as one of them is 1, it doesn’t violate the broadcasting rules</li>
 </ul>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:36:19.293202Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:36:19.290484Z&quot;}" data-execution_count="22">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>tensor_c <span class="op">=</span> tensor_a <span class="op">+</span> tensor_b</span>
@@ -350,7 +355,7 @@ Shape of tensor b is torch.Size([1, 2])</code></pre>
 <pre><code>Shape of tensor c is torch.Size([3, 2])</code></pre>
 </div>
 </div>
-<p>Since all the broadcasting rules are valid, resultant sum of the tensors is <code>(3,2)</code> where tensor_b is expanded from size <code>(1,2)</code> to <code>(3,2)</code> and then added element wise with tensor_a.</p>
+<p>Since all the broadcasting rules are valid, the resultant sum of the tensors is <code>(3,2)</code> where tensor_b is expanded from size <code>(1,2)</code> to <code>(3,2)</code> and then added element wise with tensor_a.</p>
 </section>
 <section id="example-2-invalid-broadcasting" class="level3" data-number="3.2.2">
 <h3 data-number="3.2.2" class="anchored" data-anchor-id="example-2-invalid-broadcasting"><span class="header-section-number">3.2.2</span> Example 2 : Invalid Broadcasting</h3>
@@ -364,10 +369,10 @@ Shape of tensor b is torch.Size([1, 2])</code></pre>
 Shape of tensor b is torch.Size([1, 3])</code></pre>
 </div>
 </div>
-<p>In the example above, tensor_a is of shape <code>(3,2)</code> and tensor_b is of shape <code>(1,3)</code>. According to broadcasting principle if we start from right most side -</p>
+<p>In the example above, tensor_a is of shape <code>(3,2)</code> and tensor_b is of shape <code>(1,3)</code>. According to broadcasting principle if we start from the rightmost side -</p>
 <ul>
-<li>Right most dimension is 2 for tensor_a and 3 for tensor_b, there is a mismatch</li>
-<li>Second right most dimension is 3 for tensor_a and 1 for tensor_b, as one of them is 1, it doesn’t violate the broadcasting rules</li>
+<li>Rightmost dimension is 2 for tensor_a and 3 for tensor_b, there is a mismatch</li>
+<li>Second rightmost dimension is 3 for tensor_a and 1 for tensor_b, as one of them is 1, it doesn’t violate the broadcasting rules</li>
 </ul>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:36:27.793026Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:36:27.781823Z&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>tensor_c <span class="op">=</span> tensor_a <span class="op">+</span> tensor_b</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -375,12 +380,12 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <pre><code>RuntimeError: The size of tensor a (2) must match the size of tensor b (3) at non-singleton dimension 1</code></pre>
 </div>
 </div>
-<p>Since all the broadcasting rules are not valid, resultant sum leads to a run time error explaining that the right most dimension of the tensors are not matching.</p>
+<p>Since all the broadcasting rules are not valid, the resultant sum leads to a run time error explaining that the rightmost dimension of the tensors is not matching.</p>
 </section>
 </section>
 <section id="exercise-k-means-using-broadcasting-principle" class="level2" data-number="3.3">
 <h2 data-number="3.3" class="anchored" data-anchor-id="exercise-k-means-using-broadcasting-principle"><span class="header-section-number">3.3</span> Exercise: K Means using Broadcasting principle</h2>
-<p>In this section we will be using broadcasting principles to showcase the power of broadcasting and implement our own version of K-means clustering which can run on PyTorch. K-Means is a clustering algorithm that is used to group a set of data points into a specified number of clusters. Here is the general pseudocode for the K-Means algorithm:</p>
+<p>In this section, we will be using broadcasting principles to showcase the power of broadcasting and implement our version of K-means clustering which can run on PyTorch. K-Means is a clustering algorithm that is used to group a set of data points into a specified number of clusters. Here is the general pseudocode for the K-Means algorithm:</p>
 <ul>
 <li>Initialize the number of clusters, <code>k</code>, and the maximum number of iterations, <code>max_iter</code>.</li>
 <li>Randomly select <code>k</code> data points as the initial centroids for the clusters.</li>
@@ -427,7 +432,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 </section>
 <section id="randomly-initialize-the-centroids" class="level3" data-number="3.3.2">
 <h3 data-number="3.3.2" class="anchored" data-anchor-id="randomly-initialize-the-centroids"><span class="header-section-number">3.3.2</span> Randomly initialize the centroids</h3>
-<p>For this exercise, we will use a random initialization for the centroids, although there are more sophisticated techniques such as the “kmeans++” method that can be used to improve the convergence of the algorithm. For the sake of simplicity, we will stick with a random initialization.</p>
+<p>For this exercise, we will use a random initialization for the centroids, although there are more sophisticated techniques such as the “kmeans++” method that can be used to improve the convergence of the algorithm. For the sake of simplicity, we will stick with random initialization.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:09:25.057293Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:09:25.053195Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">2</span>)</span>
 <span id="cb15-2"><a href="#cb15-2" aria-hidden="true" tabindex="-1"></a>centroids <span class="op">=</span> torch.randn((<span class="dv">3</span>,X.shape[<span class="dv">1</span>]))</span>
@@ -455,8 +460,8 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 </section>
 <section id="assign-cluster-to-the-nearest-centroid" class="level3" data-number="3.3.3">
 <h3 data-number="3.3.3" class="anchored" data-anchor-id="assign-cluster-to-the-nearest-centroid"><span class="header-section-number">3.3.3</span> Assign cluster to the nearest centroid</h3>
-<p>We have 1500 samples and three randomly initialized centroids. Now to compute distance between these centroids and samples we can make use of broadcasting which is vectorized and significantly improve our compute times as we don’t need to loop each sample and centroid to calculate distance.</p>
-<p>To do broadcasting, we need to make sure that the two tensors are compatible for broadcasting, to achieve this we will add a additional dimension using <code>unsqueeze</code> method.</p>
+<p>We have 1500 samples and three randomly initialized centroids. Now to compute the distance between these centroids and samples we can make use of broadcasting which is vectorized and significantly improve our compute times as we don’t need to loop each sample and centroid to calculate distance.</p>
+<p>To do broadcasting, we need to make sure that the two tensors are compatible for broadcasting, to achieve this we will add an additional dimension using <code>unsqueeze</code> method.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:09:25.214570Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:09:25.211599Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Before unsqueeze: </span><span class="ch">\n</span><span class="ss"> Data shape: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, Centroid shape: </span><span class="sc">{</span>centroids<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">After unsqueeae: </span><span class="ch">\n</span><span class="ss"> Data shape: </span><span class="sc">{</span>X<span class="sc">.</span>unsqueeze(<span class="dv">1</span>)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">, Centroid shape: </span><span class="sc">{</span>centroids<span class="sc">.</span>unsqueeze(<span class="dv">0</span>)<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
@@ -476,7 +481,7 @@ After unsqueeae:
 <pre><code>Distance of 1500 samples with three centroids : torch.Size([1500, 3])</code></pre>
 </div>
 </div>
-<p>For assigning sample to the nearest cluster we can use the <code>argmin</code> function to find the cluster with smallest distance for each sample.</p>
+<p>For assigning a sample to the nearest cluster we can use the <code>argmin</code> function to find the cluster with the smallest distance for each sample.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:09:25.235416Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:09:25.226354Z&quot;}" data-execution_count="9">
 <div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(pd.DataFrame(square_dist.argmin(<span class="op">-</span><span class="dv">1</span>)).value_counts())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -486,7 +491,7 @@ After unsqueeae:
 dtype: int64</code></pre>
 </div>
 </div>
-<p>We can see that 974 samples are close to centroid 0 and 515 samples are near to centroid 1 and 11 samples are close to sample 2. Now let’s pack all of the above in a simple function.</p>
+<p>We can see that 974 samples are close to centroid 0 and 515 samples are near centroid 1 and 11 samples are close to sample 2. Now let’s pack all of the above in a simple function.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:09:25.244743Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:09:25.238197Z&quot;}" data-execution_count="10">
 <div class="sourceCode cell-code" id="cb24"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb24-1"><a href="#cb24-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> nearest_centroid(data, points):</span>
 <span id="cb24-2"><a href="#cb24-2" aria-hidden="true" tabindex="-1"></a>    <span class="co">'''</span></span>
@@ -541,7 +546,7 @@ dtype: int64</code></pre>
 </section>
 <section id="iterate-for-a-maximum-of-max_iter-times" class="level3" data-number="3.3.5">
 <h3 data-number="3.3.5" class="anchored" data-anchor-id="iterate-for-a-maximum-of-max_iter-times"><span class="header-section-number">3.3.5</span> Iterate for a maximum of max_iter times</h3>
-<p>Let’s set max_iter to 20 and run the cluster assignment and updating centroid for max_iter times.</p>
+<p>Let’s set max_iter to 20 and run the cluster assignment and update the centroids for max_iter times.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:09:25.718203Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:09:25.710580Z&quot;}" data-execution_count="14">
 <div class="sourceCode cell-code" id="cb29"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb29-1"><a href="#cb29-1" aria-hidden="true" tabindex="-1"></a>max_iter <span class="op">=</span> <span class="dv">20</span></span>
 <span id="cb29-2"><a href="#cb29-2" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">2</span>)</span>

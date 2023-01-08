@@ -93,6 +93,7 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
+<link href="../basics/6_models.html" rel="next">
 <link href="../basics/4_datasets.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
@@ -231,6 +232,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -271,7 +277,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <section id="introduction-to-optimizers" class="level2" data-number="6.1">
 <h2 data-number="6.1" class="anchored" data-anchor-id="introduction-to-optimizers"><span class="header-section-number">6.1</span> Introduction to Optimizers</h2>
-<p>In previous chapters, we saw how to load data and trained a linear regression model using mini-batch gradient decent. In practice, we don’t need to write our own implementation of gradient decent as Pytorch provides various inbuilt optimizers algorithm. There are many different optimizers available in PyTorch, and each one has its own set of hyperparameters that can be tuned. Some of the most popular optimizers include:</p>
+<p>In previous chapters, we saw how to load data and trained a linear regression model using mini-batch gradient descent. In practice, we don’t need to write our own implementation of gradient descent as Pytorch provides various inbuilt optimizers algorithm. There are many different optimizers available in PyTorch, and each one has its own set of hyperparameters that can be tuned. Some of the most popular optimizers include:</p>
 <ul>
 <li><strong>SGD (Stochastic Gradient Descent)</strong>: This is a simple optimizer that updates the model’s parameters using the gradient of the loss with respect to the parameters</li>
 <li><strong>Adam (Adaptive Moment Estimation)</strong>: This optimizer is based on the concept of momentum, which can help the optimizer to converge more quickly to a good solution. Adam also includes adaptive learning rates, which means that the optimizer can automatically adjust the learning rates of different parameters based on the historical gradient information</li>
@@ -283,71 +289,64 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <section id="exercise-linear-regression" class="level2" data-number="6.2">
 <h2 data-number="6.2" class="anchored" data-anchor-id="exercise-linear-regression"><span class="header-section-number">6.2</span> Exercise: Linear Regression</h2>
 <p>Let’s look at how we can start using Pytorch’s optimizer by continuing the previous linear regression example. Notice, this time we will use four input features instead of one in our previous examples.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.509632Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.504642Z&quot;}" data-execution_count="49">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing required functions</span></span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.093320Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:09.523105Z&quot;}" data-execution_count="2">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Importing required functions</span></span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
-<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
-<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> matplotlib.pyplot <span class="im">as</span> plt</span>
-<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_regression</span>
-<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> seaborn <span class="im">as</span> sns</span>
-<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> time</span>
-<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> IPython.display <span class="im">import</span> clear_output</span>
-<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
-<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
-<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>sns.set_style(<span class="st">"dark"</span>)</span>
-<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a><span class="op">%</span>matplotlib inline</span>
-<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a><span class="co">## Generate dataset with linear property</span></span>
-<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>X, y, coef <span class="op">=</span> make_regression(</span>
-<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span><span class="dv">1500</span>,</span>
-<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>    n_features<span class="op">=</span><span class="dv">4</span>, <span class="co">## Using four features</span></span>
-<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>    n_informative<span class="op">=</span><span class="dv">4</span>,</span>
-<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>    noise<span class="op">=</span><span class="fl">0.3</span>,</span>
-<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>    coef<span class="op">=</span><span class="va">True</span>,</span>
-<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">0</span>,</span>
-<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>    bias<span class="op">=</span><span class="dv">2</span></span>
-<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a>)</span>
-<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Input feature size: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_regression</span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> torch.utils.data <span class="im">import</span> Dataset, DataLoader</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.model_selection <span class="im">import</span> train_test_split</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="co"># Generate dataset with linear property</span></span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>X, y, coef <span class="op">=</span> make_regression(</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>    n_samples<span class="op">=</span><span class="dv">1500</span>,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>    n_features<span class="op">=</span><span class="dv">4</span>,  <span class="co"># Using four features</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>    n_informative<span class="op">=</span><span class="dv">4</span>,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>    noise<span class="op">=</span><span class="fl">0.3</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    coef<span class="op">=</span><span class="va">True</span>,</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    random_state<span class="op">=</span><span class="dv">0</span>,</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    bias<span class="op">=</span><span class="dv">2</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Input feature size: </span><span class="sc">{</span>X<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Input feature size: (1500, 4)</code></pre>
 </div>
 </div>
 <p>Now we will create a custom <code>Dataset</code> class.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.519108Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.511387Z&quot;}" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Creating our custom TabularDataset </span></span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.097795Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.094997Z&quot;}" data-execution_count="3">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating our custom TabularDataset</span></span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> TabularDataset(Dataset):</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, data, targets):</span>
 <span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.data <span class="op">=</span> data</span>
 <span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.targets <span class="op">=</span> targets</span>
 <span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>): </span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__len__</span>(<span class="va">self</span>):</span>
 <span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.data.shape[<span class="dv">0</span>]</span>
 <span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__getitem__</span>(<span class="va">self</span>, idx):</span>
 <span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>        current_sample <span class="op">=</span> <span class="va">self</span>.data[idx]</span>
 <span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>        current_target <span class="op">=</span> <span class="va">self</span>.targets[idx]</span>
 <span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> {</span>
-<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"X"</span>: torch.tensor(current_sample, dtype<span class="op">=</span>torch.<span class="bu">float</span>), </span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a>            <span class="st">"X"</span>: torch.tensor(current_sample, dtype<span class="op">=</span>torch.<span class="bu">float</span>),</span>
 <span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a>            <span class="st">"y"</span>: torch.tensor(current_target, dtype<span class="op">=</span>torch.<span class="bu">float</span>)</span>
 <span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a>        }</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>We have modified the <code>TabularDataset</code> class to handle additional features. Now, the class takes two inputs: <code>data</code> which includes our four features, and <code>targets</code> which is our target variable.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.529244Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.521859Z&quot;}" data-execution_count="51">
-<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Making a train-test split</span></span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.117742Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.098989Z&quot;}" data-execution_count="4">
+<div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Making a train-test split</span></span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>X_train, X_test, y_train, y_test <span class="op">=</span> train_test_split(</span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    X, y, test_size<span class="op">=</span><span class="fl">0.33</span>)</span>
 <span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co">## Creating Tabular Dataset</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Tabular Dataset</span></span>
 <span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>train_dataset <span class="op">=</span> TabularDataset(X_train, y_train)</span>
 <span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>test_dataset <span class="op">=</span> TabularDataset(X_test, y_test)</span>
 <span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co">## Creating Dataloaders</span></span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a><span class="co"># Creating Dataloaders</span></span>
 <span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>train_dataloader <span class="op">=</span> DataLoader(train_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">True</span>)</span>
 <span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>test_dataloader <span class="op">=</span> DataLoader(test_dataset, batch_size<span class="op">=</span><span class="dv">64</span>, shuffle<span class="op">=</span><span class="va">False</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>We have divided our sample into a training set and a test set, and used the <code>TabularDataset</code> class to create train and test objects. Finally, we created data loaders for the training set and test set using these objects.</p>
+<p>We have divided our sample into a training set and a test set and used the <code>TabularDataset</code> class to create train and test objects. Finally, we created data loaders for the training set and test set using these objects.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -361,58 +360,59 @@ Note
 <p>In the code, the training data is shuffled using the Dataloader while the testing data is not. This is a common practice when training a machine learning model.</p>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.541953Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.530677Z&quot;}" data-execution_count="52">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.130666Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.119590Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear:</span>
 <span id="cb5-2"><a href="#cb5-2" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_in, n_out):</span>
 <span id="cb5-3"><a href="#cb5-3" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.w <span class="op">=</span> torch.randn(n_in, n_out).requires_grad_(<span class="va">True</span>)</span>
 <span id="cb5-4"><a href="#cb5-4" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.b <span class="op">=</span> torch.randn(n_out).requires_grad_(<span class="va">True</span>)</span>
 <span id="cb5-5"><a href="#cb5-5" aria-hidden="true" tabindex="-1"></a>        <span class="va">self</span>.params <span class="op">=</span> [<span class="va">self</span>.w, <span class="va">self</span>.b]</span>
-<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb5-6"><a href="#cb5-6" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb5-7"><a href="#cb5-7" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> forward(<span class="va">self</span>, x):</span>
 <span id="cb5-8"><a href="#cb5-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> x <span class="op">@</span> <span class="va">self</span>.w <span class="op">+</span> <span class="va">self</span>.b</span>
-<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Initializing model</span></span>
-<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">4</span>)</span>
-<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
-<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of weights: </span><span class="sc">{</span>model<span class="sc">.</span>w<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
-<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of bias: </span><span class="sc">{</span>model<span class="sc">.</span>b<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<span id="cb5-9"><a href="#cb5-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-10"><a href="#cb5-10" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-11"><a href="#cb5-11" aria-hidden="true" tabindex="-1"></a><span class="co"># Initializing model</span></span>
+<span id="cb5-12"><a href="#cb5-12" aria-hidden="true" tabindex="-1"></a>torch.manual_seed(<span class="dv">4</span>)</span>
+<span id="cb5-13"><a href="#cb5-13" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
+<span id="cb5-14"><a href="#cb5-14" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb5-15"><a href="#cb5-15" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of weights: </span><span class="sc">{</span>model<span class="sc">.</span>w<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span>
+<span id="cb5-16"><a href="#cb5-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Shape of bias: </span><span class="sc">{</span>model<span class="sc">.</span>b<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Shape of weights: torch.Size([4, 1])
 Shape of bias: torch.Size([1])</code></pre>
 </div>
 </div>
 <p>We are using the same linear model as last time but this time it will take four inputs instead of one input.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.550404Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.543138Z&quot;}" data-execution_count="53">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.139073Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.131905Z&quot;}" data-execution_count="6">
 <div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.params, lr<span class="op">=</span><span class="fl">1e-3</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
-<p>Next, we will define our optimizer. We will use PyTorch’s implementation of stochastic gradient descent (SGD) by initializing <code>torch.optim.SGD</code>. Here we are passing the model parameters which needs to get modified during training process and a hyperparameter learning rate (<code>lr</code>) of <code>1e-3</code>.</p>
+<p>Next, we will define our optimizer. We will use PyTorch’s implementation of stochastic gradient descent (SGD) by initializing <code>torch.optim.SGD</code>. Here we are passing the model parameters which need to get modified during the training process and a hyperparameter learning rate (<code>lr</code>) of <code>1e-3</code>.</p>
 <p>For more information about other available optimizers and their hyperparameters, you can refer to the PyTorch optimizer documentation at <a href="https://pytorch.org/docs/stable/optim.html">this link</a>.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.559775Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.552417Z&quot;}" data-execution_count="54">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.148678Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.140193Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> train_one_epoch(model, data_loader, optimizer):</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    <span class="cf">for</span> batch <span class="kw">in</span> <span class="bu">iter</span>(data_loader):</span>
-<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Taking one mini-batch</span></span>
+<span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Taking one mini-batch</span></span>
 <span id="cb8-4"><a href="#cb8-4" aria-hidden="true" tabindex="-1"></a>        y_pred <span class="op">=</span> model.forward(batch[<span class="st">'X'</span>]).squeeze()</span>
 <span id="cb8-5"><a href="#cb8-5" aria-hidden="true" tabindex="-1"></a>        y_true <span class="op">=</span> batch[<span class="st">'y'</span>]</span>
-<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Calculation mean square error per min-batch</span></span>
+<span id="cb8-6"><a href="#cb8-6" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-7"><a href="#cb8-7" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Calculation mean square error per min-batch</span></span>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a>        loss <span class="op">=</span> torch.square(y_pred <span class="op">-</span> y_true).<span class="bu">sum</span>()</span>
-<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a>    </span>
-<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Computing gradients per mini-batch</span></span>
+<span id="cb8-9"><a href="#cb8-9" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-10"><a href="#cb8-10" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Computing gradients per mini-batch</span></span>
 <span id="cb8-11"><a href="#cb8-11" aria-hidden="true" tabindex="-1"></a>        loss.backward()</span>
-<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="co">## Update model parameters and zero grad</span></span>
+<span id="cb8-12"><a href="#cb8-12" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-13"><a href="#cb8-13" aria-hidden="true" tabindex="-1"></a>        <span class="co"># Update model parameters and zero grad</span></span>
 <span id="cb8-14"><a href="#cb8-14" aria-hidden="true" tabindex="-1"></a>        optimizer.step()</span>
 <span id="cb8-15"><a href="#cb8-15" aria-hidden="true" tabindex="-1"></a>        optimizer.zero_grad()</span>
-<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a>        </span>
-<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a>        </span>
+<span id="cb8-16"><a href="#cb8-16" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb8-17"><a href="#cb8-17" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb8-18"><a href="#cb8-18" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> validate_one_epoch(model, data_loader, optimizer):</span>
 <span id="cb8-19"><a href="#cb8-19" aria-hidden="true" tabindex="-1"></a>    loss <span class="op">=</span> <span class="dv">0</span></span>
 <span id="cb8-20"><a href="#cb8-20" aria-hidden="true" tabindex="-1"></a>    <span class="cf">with</span> torch.no_grad():</span>
 <span id="cb8-21"><a href="#cb8-21" aria-hidden="true" tabindex="-1"></a>        <span class="cf">for</span> batch <span class="kw">in</span> <span class="bu">iter</span>(data_loader):</span>
 <span id="cb8-22"><a href="#cb8-22" aria-hidden="true" tabindex="-1"></a>            y_pred <span class="op">=</span> model.forward(batch[<span class="st">'X'</span>]).squeeze()</span>
 <span id="cb8-23"><a href="#cb8-23" aria-hidden="true" tabindex="-1"></a>            y_true <span class="op">=</span> batch[<span class="st">'y'</span>]</span>
-<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">+=</span> torch.square(y_pred<span class="op">-</span> y_true).<span class="bu">sum</span>()</span>
+<span id="cb8-24"><a href="#cb8-24" aria-hidden="true" tabindex="-1"></a>            loss <span class="op">+=</span> torch.square(y_pred <span class="op">-</span> y_true).<span class="bu">sum</span>()</span>
 <span id="cb8-25"><a href="#cb8-25" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> loss<span class="op">/</span><span class="bu">len</span>(data_loader)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>For the training loop (defined in <code>train_one_epoch</code>), we will go through each mini-batch and do the following:</p>
@@ -428,40 +428,40 @@ Shape of bias: torch.Size([1])</code></pre>
 <li>Calculate the Mean Squared Error (MSE) loss and return the overall MSE at the end</li>
 </ul>
 <p>Now let’s run through some epochs and train our model.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T17:19:19.748844Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T17:19:19.560983Z&quot;}" data-execution_count="55">
-<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):    </span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T21:03:10.500597Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T21:03:10.149822Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb9"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb9-1"><a href="#cb9-1" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):</span>
 <span id="cb9-2"><a href="#cb9-2" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run one training loop</span></span>
 <span id="cb9-3"><a href="#cb9-3" aria-hidden="true" tabindex="-1"></a>    train_one_epoch(model, train_dataloader, optimizer)</span>
 <span id="cb9-4"><a href="#cb9-4" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run validation loop on training to compute training loss</span></span>
 <span id="cb9-5"><a href="#cb9-5" aria-hidden="true" tabindex="-1"></a>    train_loss <span class="op">=</span> validate_one_epoch(model, train_dataloader, optimizer)</span>
 <span id="cb9-6"><a href="#cb9-6" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run validation loop on testing to compute test loss</span></span>
 <span id="cb9-7"><a href="#cb9-7" aria-hidden="true" tabindex="-1"></a>    test_loss <span class="op">=</span> validate_one_epoch(model, test_dataloader, optimizer)</span>
-<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-8"><a href="#cb9-8" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-9"><a href="#cb9-9" aria-hidden="true" tabindex="-1"></a>    <span class="bu">print</span>(<span class="ss">f"Epoch </span><span class="sc">{</span>epoch<span class="sc">}</span><span class="ss">,Train MSE: </span><span class="sc">{</span>train_loss<span class="sc">:.4f}</span><span class="ss"> Test MSE: </span><span class="sc">{</span>test_loss<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
-<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb9-10"><a href="#cb9-10" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb9-11"><a href="#cb9-11" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Actual coefficients are: </span><span class="ch">\n</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(coef,<span class="dv">4</span>)<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Trained model weights are: </span><span class="ch">\n</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(model.w.squeeze().detach().numpy(),<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb9-12"><a href="#cb9-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Actual Bias term is </span><span class="sc">{</span><span class="dv">2</span><span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Trained model bias term is </span><span class="ch">\n</span><span class="sc">{</span>model<span class="sc">.</span>b<span class="sc">.</span>squeeze()<span class="sc">.</span>detach()<span class="sc">.</span>numpy()<span class="sc">.</span>item()<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch 0,Train MSE: 13529.4424 Test MSE: 15622.040
-Epoch 1,Train MSE: 278.9650 Test MSE: 329.534
-Epoch 2,Train MSE: 12.0025 Test MSE: 12.883
-Epoch 3,Train MSE: 5.8382 Test MSE: 5.576
-Epoch 4,Train MSE: 5.6956 Test MSE: 5.428
-Epoch 5,Train MSE: 5.6985 Test MSE: 5.439
-Epoch 6,Train MSE: 5.6968 Test MSE: 5.439
-Epoch 7,Train MSE: 5.7135 Test MSE: 5.459
-Epoch 8,Train MSE: 5.7058 Test MSE: 5.408
-Epoch 9,Train MSE: 5.6976 Test MSE: 5.414
+<pre><code>Epoch 0,Train MSE: 13657.7461 Test MSE: 16039.912
+Epoch 1,Train MSE: 267.4445 Test MSE: 319.128
+Epoch 2,Train MSE: 11.0232 Test MSE: 11.422
+Epoch 3,Train MSE: 5.9071 Test MSE: 5.284
+Epoch 4,Train MSE: 5.8251 Test MSE: 5.184
+Epoch 5,Train MSE: 5.8193 Test MSE: 5.183
+Epoch 6,Train MSE: 5.8243 Test MSE: 5.176
+Epoch 7,Train MSE: 5.8181 Test MSE: 5.243
+Epoch 8,Train MSE: 5.8192 Test MSE: 5.192
+Epoch 9,Train MSE: 5.8160 Test MSE: 5.230
 Actual coefficients are: 
 [63.0061 44.1452 84.3648  9.3378] 
 Trained model weights are: 
-[63.0042 44.1552 84.3705  9.3369]
+[63.0008 44.1527 84.3725  9.3218]
 Actual Bias term is 2 
 Trained model bias term is 
-2.0000</code></pre>
+1.9968</code></pre>
 </div>
 </div>
-<p>As shown above, our model has fit the data well. The actual coefficients and bias used to generate the random data roughly match the weights and bias term of our model.</p>
+<p>As shown above, our model has fit the data well. The actual coefficients and bias used to generate the random data roughly match the weights and bias terms of our model.</p>
 </section>
 <section id="conclusion" class="level2" data-number="6.3">
 <h2 data-number="6.3" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">6.3</span> Conclusion</h2>
@@ -733,6 +733,9 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
       </a>          
   </div>
   <div class="nav-page nav-page-next">
+      <a href="../basics/6_models.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></span> <i class="bi bi-arrow-right-short"></i>
+      </a>
   </div>
 </nav>
 </div> <!-- /content -->
