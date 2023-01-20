@@ -282,7 +282,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <section id="exercise-linear-regression" class="level2" data-number="7.2">
 <h2 data-number="7.2" class="anchored" data-anchor-id="exercise-linear-regression"><span class="header-section-number">7.2</span> Exercise: Linear Regression</h2>
 <p>To continue our example of linear regression, we will now see how to use the <code>torch.nn</code> module to replace our custom model class. Before we do that, we will first generate a random linear dataset with four features and split the data into training and testing sets. Then, we will create custom Dataset and DataLoader objects to load the training and testing data in mini-batches.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T20:05:15.176926Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T20:05:15.171156Z&quot;}" data-execution_count="53">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-20T07:03:08.335362Z&quot;,&quot;start_time&quot;:&quot;2023-01-20T07:03:07.791600Z&quot;}" data-execution_count="1">
 <details>
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Importing required functions</span></span>
@@ -364,7 +364,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </div>
 <p>The <code>torch.nn</code> module contains several predefined layers that can be used to create neural networks. These layers can be found in the official PyTorch documentation for the <a href="https://pytorch.org/docs/stable/nn.html">torch.nn module</a>. By using these predefined layers, we can simplify the process of building and training our model, as we don’t have to worry about implementing the details of each layer ourselves. Instead, we can simply specify the layers we want to use and let PyTorch handle the rest.</p>
 <p>Now let’s rewrite the model class using <code>torch.nn</code> module.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T20:05:15.199145Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T20:05:15.178267Z&quot;}" data-execution_count="54">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-20T07:03:19.047430Z&quot;,&quot;start_time&quot;:&quot;2023-01-20T07:03:19.038864Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> Linear(nn.Module):</span>
 <span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>    <span class="kw">def</span> <span class="fu">__init__</span>(<span class="va">self</span>, n_in, n_out):</span>
@@ -375,7 +375,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>        <span class="cf">return</span> <span class="va">self</span>.linear(x)</span>
 <span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a><span class="co">## Initializing model</span></span>
-<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Model(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>model <span class="op">=</span> Linear(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
 <span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Model: </span><span class="ch">\n</span><span class="sc">{</span>model<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Weights"</span>)</span>
@@ -385,15 +385,15 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">list</span>(model.parameters())[<span class="dv">1</span>])</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Model: 
-Model(
+Linear(
   (linear): Linear(in_features=4, out_features=1, bias=True)
 )
 Weights
 Parameter containing:
-tensor([[ 0.0064,  0.1040,  0.4674, -0.4811]], requires_grad=True)
+tensor([[ 0.4191,  0.2242, -0.1830,  0.0542]], requires_grad=True)
 Bias
 Parameter containing:
-tensor([-0.3250], requires_grad=True)</code></pre>
+tensor([0.4944], requires_grad=True)</code></pre>
 </div>
 </div>
 <p>The code above defines a class called <code>Linear</code> which extends the functionality of the <code>nn.Module</code> class from PyTorch’s <code>torch.nn</code> module. The Linear class has two methods: <code>__init__</code> and <code>forward</code>.</p>
@@ -403,7 +403,7 @@ tensor([-0.3250], requires_grad=True)</code></pre>
 </ul>
 <p>After the <code>Linear</code> class is defined, an instance of the class is created and assigned to the <code>model</code> variable. The <code>model</code> object has two learnable parameters: the weights and the bias of the linear layer. These parameters can be accessed using the <code>parameters</code> method and indexed using square brackets. The weights are the first element in the list of parameters, and the bias is the second element.</p>
 <p>Now let’s run through some epochs and train our model. We are using the same <code>optimizer</code>, <code>train_one_epoch</code>, and <code>validate_one_epoch</code> from the last chapter.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T20:05:15.387578Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T20:05:15.200573Z&quot;}" data-execution_count="55">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-20T07:03:23.612689Z&quot;,&quot;start_time&quot;:&quot;2023-01-20T07:03:23.398806Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb4"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a>optimizer <span class="op">=</span> torch.optim.SGD(model.parameters(), lr<span class="op">=</span><span class="fl">1e-3</span>)</span>
 <span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> epoch <span class="kw">in</span> <span class="bu">range</span>(<span class="dv">10</span>):    </span>
 <span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>    <span class="co"># run one training loop</span></span>
@@ -418,23 +418,23 @@ tensor([-0.3250], requires_grad=True)</code></pre>
 <span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Actual coefficients are: </span><span class="ch">\n</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(coef,<span class="dv">4</span>)<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Trained model weights are: </span><span class="ch">\n</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(<span class="bu">list</span>(model.parameters())[<span class="dv">0</span>].detach().numpy()[<span class="dv">0</span>],<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Actual Bias term is </span><span class="sc">{</span><span class="dv">2</span><span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Trained model bias term is </span><span class="ch">\n</span><span class="sc">{</span><span class="bu">list</span>(model.parameters())[<span class="dv">1</span>]<span class="sc">.</span>detach()<span class="sc">.</span>numpy()[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Epoch 0,Train MSE: 10776.8633 Test MSE: 10125.508
-Epoch 1,Train MSE: 157.2219 Test MSE: 154.909
-Epoch 2,Train MSE: 8.0473 Test MSE: 8.247
-Epoch 3,Train MSE: 5.7885 Test MSE: 5.475
-Epoch 4,Train MSE: 5.7482 Test MSE: 5.342
-Epoch 5,Train MSE: 5.7549 Test MSE: 5.356
-Epoch 6,Train MSE: 5.7490 Test MSE: 5.345
-Epoch 7,Train MSE: 5.7426 Test MSE: 5.354
-Epoch 8,Train MSE: 5.7440 Test MSE: 5.364
-Epoch 9,Train MSE: 5.7522 Test MSE: 5.366
+<pre><code>Epoch 0,Train MSE: 14168.0879 Test MSE: 16699.098
+Epoch 1,Train MSE: 285.8107 Test MSE: 347.672
+Epoch 2,Train MSE: 11.2080 Test MSE: 13.391
+Epoch 3,Train MSE: 5.7762 Test MSE: 5.876
+Epoch 4,Train MSE: 5.6652 Test MSE: 5.653
+Epoch 5,Train MSE: 5.6483 Test MSE: 5.556
+Epoch 6,Train MSE: 5.6559 Test MSE: 5.576
+Epoch 7,Train MSE: 5.6767 Test MSE: 5.539
+Epoch 8,Train MSE: 5.6488 Test MSE: 5.557
+Epoch 9,Train MSE: 5.6495 Test MSE: 5.552
 Actual coefficients are: 
 [63.0061 44.1452 84.3648  9.3378] 
 Trained model weights are: 
-[62.9929 44.1428 84.36    9.3326]
+[62.9917 44.1615 84.3643  9.3292]
 Actual Bias term is 2 
 Trained model bias term is 
-2.0012</code></pre>
+1.9978</code></pre>
 </div>
 </div>
 <p>As shown above, our model has fit the data well, just like the last chapter.</p>
@@ -442,22 +442,22 @@ Trained model bias term is
 <section id="saving-and-loading-models" class="level2" data-number="7.3">
 <h2 data-number="7.3" class="anchored" data-anchor-id="saving-and-loading-models"><span class="header-section-number">7.3</span> Saving and Loading models</h2>
 <p>If we want to save only the learned parameters from the model, we can use <code>torch.save(model.state_dict())</code> as follows:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T20:05:18.548727Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T20:05:18.544680Z&quot;}" data-execution_count="56">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-20T07:03:33.002791Z&quot;,&quot;start_time&quot;:&quot;2023-01-20T07:03:32.998582Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>path <span class="op">=</span> <span class="st">"../models/linear_model.pt"</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>torch.save(model.state_dict(), path)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To reload the saved parameters, we first need to initiate the model object and feed the saved model parameters.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-08T20:06:58.645840Z&quot;,&quot;start_time&quot;:&quot;2023-01-08T20:06:58.639556Z&quot;}" data-execution_count="62">
-<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_new <span class="op">=</span> Model(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-20T07:03:39.570150Z&quot;,&quot;start_time&quot;:&quot;2023-01-20T07:03:39.563807Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb7"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>model_new <span class="op">=</span> Linear(X.shape[<span class="dv">1</span>], <span class="dv">1</span>)</span>
 <span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a>model_new.load_state_dict(torch.load(path))</span>
 <span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Loaded model weights are: </span><span class="ch">\n</span><span class="sc">{</span>np<span class="sc">.</span><span class="bu">round</span>(<span class="bu">list</span>(model_new.parameters())[<span class="dv">0</span>].detach().numpy()[<span class="dv">0</span>],<span class="dv">4</span>)<span class="sc">}</span><span class="ss">"</span>)</span>
 <span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">Loaded model bias term is </span><span class="ch">\n</span><span class="sc">{</span><span class="bu">list</span>(model_new.parameters())[<span class="dv">1</span>]<span class="sc">.</span>detach()<span class="sc">.</span>numpy()[<span class="dv">0</span>]<span class="sc">:.4f}</span><span class="ss">"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Loaded model weights are: 
-[62.9929 44.1428 84.36    9.3326]
+[62.9917 44.1615 84.3643  9.3292]
 
 Loaded model bias term is 
-2.0012</code></pre>
+1.9978</code></pre>
 </div>
 </div>
 </section>
