@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../basics/3_autograd.html" rel="next">
-<link href="../basics/1_pytorch_tensors.html" rel="prev">
+<link href="../basics/4_autograd.html" rel="next">
+<link href="../basics/2_pytorch_tensors.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -204,37 +204,42 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/0_pytorch_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
+  <a href="../basics/1_pytorch_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/1_pytorch_tensors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></a>
+  <a href="../basics/2_pytorch_tensors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/2_broadcasting.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></a>
+  <a href="../basics/3_broadcasting.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/3_autograd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></a>
+  <a href="../basics/4_autograd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/4_datasets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets and Dataloaders</span></a>
+  <a href="../basics/5_datasets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets and Dataloaders</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/5_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
+  <a href="../basics/6_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/6_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  <a href="../basics/7_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks (Draft)</span></a>
   </div>
 </li>
       </ul>
@@ -422,7 +427,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 1. Visualizing randomly created clusters.</figcaption><p></p>
 </figure>
 </div>
@@ -450,7 +455,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 2. Visualizing randomly created centroid and cluster.</figcaption><p></p>
 </figure>
 </div>
@@ -515,7 +520,7 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 3. Visualizing newly created cluster based on centroids</figcaption><p></p>
 </figure>
 </div>
@@ -536,7 +541,7 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 4. Visualizing newly created centroids based on nearest cluster assignment</figcaption><p></p>
 </figure>
 </div>
@@ -561,7 +566,7 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 5. Visualizing final cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
@@ -605,7 +610,7 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 6. Visualizing output cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
@@ -618,7 +623,7 @@ dtype: int64</code></pre>
 <div class="cell-output cell-output-display">
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
-<p><img src="2_broadcasting_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
+<p><img src="3_broadcasting_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
 <p></p><figcaption class="figure-caption">Fig 7. Visualizing output cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
@@ -885,12 +890,12 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../basics/1_pytorch_tensors.html" class="pagination-link">
+      <a href="../basics/2_pytorch_tensors.html" class="pagination-link">
         <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../basics/3_autograd.html" class="pagination-link">
+      <a href="../basics/4_autograd.html" class="pagination-link">
         <span class="nav-page-text"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>

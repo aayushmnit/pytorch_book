@@ -21,13 +21,14 @@ book:
     - index.qmd
     - part: "PyTorch basics"
       chapters: 
-        - basics/0_pytorch_intro.ipynb
-        - basics/1_pytorch_tensors.ipynb
-        - basics/2_broadcasting.ipynb
-        - basics/3_autograd.ipynb
-        - basics/4_datasets.ipynb
-        - basics/5_optimizers.ipynb
-        - basics/6_models.ipynb
+        - basics/1_pytorch_intro.ipynb
+        - basics/2_pytorch_tensors.ipynb
+        - basics/3_broadcasting.ipynb
+        - basics/4_autograd.ipynb
+        - basics/5_datasets.ipynb
+        - basics/6_optimizers.ipynb
+        - basics/7_models.ipynb
+        - basics/8_NeuralNetworks.ipynb
   
 
 bibliography: references.bib
