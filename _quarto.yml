@@ -29,6 +29,7 @@ book:
         - basics/6_optimizers.ipynb
         - basics/7_models.ipynb
         - basics/8_NeuralNetworks.ipynb
+        - basics/9_NeuralNetworkWithFastAI.ipynb
   
 
 bibliography: references.bib

@@ -242,6 +242,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/9_NeuralNetworkWithFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -360,7 +365,12 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <span id="cb3-42"><a href="#cb3-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(data.head())</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </details>
 <div class="cell-output cell-output-display">
-<p><img src="5_datasets_files/figure-html/cell-3-output-1.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="5_datasets_files/figure-html/cell-3-output-1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Fig 5.1. Visualizing our linear data</figcaption><p></p>
+</figure>
+</div>
 </div>
 <div class="cell-output cell-output-stdout">
 <pre><code>          X         y
@@ -555,7 +565,12 @@ True bias term is 2 and predicted coefficient is 1.97.</code></pre>
 <span id="cb18-4"><a href="#cb18-4" aria-hidden="true" tabindex="-1"></a>            y_pred.append(model.forward(batch[<span class="st">'X'</span>].unsqueeze(<span class="op">-</span><span class="dv">1</span>)).detach().numpy())      </span>
 <span id="cb18-5"><a href="#cb18-5" aria-hidden="true" tabindex="-1"></a>plot_data(X, y, y_pred<span class="op">=</span>np.concatenate(y_pred))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
-<p><img src="5_datasets_files/figure-html/cell-12-output-1.png" class="img-fluid"></p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><img src="5_datasets_files/figure-html/cell-12-output-1.png" class="img-fluid figure-img"></p>
+<p></p><figcaption class="figure-caption">Fig 5.2. Visualizing our fit</figcaption><p></p>
+</figure>
+</div>
 </div>
 </div>
 <p>From the results above, it appears that the model’s performance improved with each epoch, as the mean squared error (MSE) consistently decreased. The performance of the model is now similar to the performance we observed in the last chapter.</p>

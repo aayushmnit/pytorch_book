@@ -242,6 +242,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></a>
   </div>
 </li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../basics/9_NeuralNetworkWithFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></a>
+  </div>
+</li>
       </ul>
   </li>
     </ul>
@@ -296,14 +301,14 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 <h2 data-number="3.1" class="anchored" data-anchor-id="what-is-broadcasting"><span class="header-section-number">3.1</span> What is Broadcasting?</h2>
 <p>In PyTorch, broadcasting refers to the automatic expansion of a tensor’s dimensions to match the dimensions of another tensor during an operation. This allows for element-wise operations between tensors of different shapes, as long as certain rules are followed.</p>
 <p>For example, consider the following operation:</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-07T16:12:19.444227Z&quot;,&quot;start_time&quot;:&quot;2023-01-07T16:12:18.730984Z&quot;}" data-execution_count="1">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-02-08T06:27:54.598114Z&quot;,&quot;start_time&quot;:&quot;2023-02-08T06:27:53.856321Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
 <span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>a <span class="op">=</span> torch.tensor([<span class="dv">1</span>, <span class="dv">2</span>, <span class="dv">3</span>])</span>
 <span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>b <span class="op">=</span> torch.tensor([<span class="dv">4</span>, <span class="dv">5</span>, <span class="dv">6</span>])</span>
 <span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a>c <span class="op">=</span> a <span class="op">+</span> b</span>
 <span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>c</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
-<div class="cell-output cell-output-display" data-execution_count="1">
+<div class="cell-output cell-output-display" data-execution_count="2">
 <pre><code>tensor([5, 7, 9])</code></pre>
 </div>
 </div>
@@ -404,7 +409,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <section id="create-some-random-data" class="level3" data-number="3.3.1">
 <h3 data-number="3.3.1" class="anchored" data-anchor-id="create-some-random-data"><span class="header-section-number">3.3.1</span> Create some random data</h3>
 <p>Let’s try to create some random data using scikit-learn <code>make_blobs</code> function.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-27T04:22:42.952420Z&quot;,&quot;start_time&quot;:&quot;2022-12-27T04:22:42.866929Z&quot;}" data-execution_count="58">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-02-08T06:27:57.986485Z&quot;,&quot;start_time&quot;:&quot;2023-02-08T06:27:57.848145Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
 <span id="cb14-2"><a href="#cb14-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb14-3"><a href="#cb14-3" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> sklearn.datasets <span class="im">import</span> make_blobs</span>
@@ -428,7 +433,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-9-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 1. Visualizing randomly created clusters.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.1. Visualizing randomly created clusters.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -456,7 +461,7 @@ Shape of tensor b is torch.Size([1, 3])</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-11-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 2. Visualizing randomly created centroid and cluster.</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.2. Visualizing randomly created centroid and cluster.</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -521,7 +526,7 @@ dtype: int64</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-16-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 3. Visualizing newly created cluster based on centroids</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.3. Visualizing newly created cluster based on centroids</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -542,7 +547,7 @@ dtype: int64</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-18-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 4. Visualizing newly created centroids based on nearest cluster assignment</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.4. Visualizing newly created centroids based on nearest cluster assignment</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -567,7 +572,7 @@ dtype: int64</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-20-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 5. Visualizing final cluster centers with original labels</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.5. Visualizing final cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -611,7 +616,7 @@ dtype: int64</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-22-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 6. Visualizing output cluster centers with original labels</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.6. Visualizing output cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
 </div>
@@ -624,7 +629,7 @@ dtype: int64</code></pre>
 <div class="quarto-figure quarto-figure-left">
 <figure class="figure">
 <p><img src="3_broadcasting_files/figure-html/cell-23-output-1.png" class="img-fluid figure-img"></p>
-<p></p><figcaption class="figure-caption">Fig 7. Visualizing output cluster centers with original labels</figcaption><p></p>
+<p></p><figcaption class="figure-caption">Fig 3.7. Visualizing output cluster centers with original labels</figcaption><p></p>
 </figure>
 </div>
 </div>
