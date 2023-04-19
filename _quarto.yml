@@ -27,9 +27,11 @@ book:
         - basics/4_autograd.ipynb
         - basics/5_datasets.ipynb
         - basics/6_optimizers.ipynb
-        - basics/7_models.ipynb
+        - basics/7_defining_models.ipynb
         - basics/8_NeuralNetworks.ipynb
-        - basics/9_NeuralNetworkWithFastAI.ipynb
+    - part: "fastai"
+      chapters:
+        - basics/9_IntroductionToFastAI.ipynb
   
 
 bibliography: references.bib

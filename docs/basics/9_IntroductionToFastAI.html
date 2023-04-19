@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The PyTorch Book - 9&nbsp; Neural Networks with fastai (draft)</title>
+<title>The PyTorch Book - 9&nbsp; Introduction to fastai (draft)</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -144,7 +144,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -236,17 +236,27 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/7_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  <a href="../basics/7_defining_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Defining Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></a>
+  <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">fastai</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/9_NeuralNetworkWithFastAI.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></a>
+  <a href="../basics/9_IntroductionToFastAI.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></a>
   </div>
 </li>
       </ul>
@@ -261,7 +271,11 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
    
   <ul>
   <li><a href="#what-is-fastai" id="toc-what-is-fastai" class="nav-link active" data-scroll-target="#what-is-fastai"><span class="toc-section-number">9.1</span>  What is fastai?</a></li>
-  <li><a href="#creating-a-dataloader" id="toc-creating-a-dataloader" class="nav-link" data-scroll-target="#creating-a-dataloader"><span class="toc-section-number">9.2</span>  Creating a dataloader</a></li>
+  <li><a href="#introduction-to-fastai-api" id="toc-introduction-to-fastai-api" class="nav-link" data-scroll-target="#introduction-to-fastai-api"><span class="toc-section-number">9.2</span>  Introduction to fastai API</a></li>
+  <li><a href="#mnist-example-using-high-level-api" id="toc-mnist-example-using-high-level-api" class="nav-link" data-scroll-target="#mnist-example-using-high-level-api"><span class="toc-section-number">9.3</span>  MNIST example using High level API</a></li>
+  <li><a href="#mnist-example-using-mid-level-api" id="toc-mnist-example-using-mid-level-api" class="nav-link" data-scroll-target="#mnist-example-using-mid-level-api"><span class="toc-section-number">9.4</span>  MNIST example using Mid level API</a></li>
+  <li><a href="#mnist-example-using-low-level-api" id="toc-mnist-example-using-low-level-api" class="nav-link" data-scroll-target="#mnist-example-using-low-level-api"><span class="toc-section-number">9.5</span>  MNIST example using Low level API</a></li>
+  <li><a href="#creating-a-dataloader" id="toc-creating-a-dataloader" class="nav-link" data-scroll-target="#creating-a-dataloader"><span class="toc-section-number">9.6</span>  Creating a dataloader</a></li>
   </ul>
 </nav>
     </div>
@@ -270,7 +284,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></h1>
 </div>
 
 
@@ -301,8 +315,20 @@ Fig 9.1: The layered API from fastai.
 </figcaption>
 </figure>
 </section>
-<section id="creating-a-dataloader" class="level2" data-number="9.2">
-<h2 data-number="9.2" class="anchored" data-anchor-id="creating-a-dataloader"><span class="header-section-number">9.2</span> Creating a dataloader</h2>
+<section id="introduction-to-fastai-api" class="level2" data-number="9.2">
+<h2 data-number="9.2" class="anchored" data-anchor-id="introduction-to-fastai-api"><span class="header-section-number">9.2</span> Introduction to fastai API</h2>
+</section>
+<section id="mnist-example-using-high-level-api" class="level2" data-number="9.3">
+<h2 data-number="9.3" class="anchored" data-anchor-id="mnist-example-using-high-level-api"><span class="header-section-number">9.3</span> MNIST example using High level API</h2>
+</section>
+<section id="mnist-example-using-mid-level-api" class="level2" data-number="9.4">
+<h2 data-number="9.4" class="anchored" data-anchor-id="mnist-example-using-mid-level-api"><span class="header-section-number">9.4</span> MNIST example using Mid level API</h2>
+</section>
+<section id="mnist-example-using-low-level-api" class="level2" data-number="9.5">
+<h2 data-number="9.5" class="anchored" data-anchor-id="mnist-example-using-low-level-api"><span class="header-section-number">9.5</span> MNIST example using Low level API</h2>
+</section>
+<section id="creating-a-dataloader" class="level2" data-number="9.6">
+<h2 data-number="9.6" class="anchored" data-anchor-id="creating-a-dataloader"><span class="header-section-number">9.6</span> Creating a dataloader</h2>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-02-08T07:26:53.900117Z&quot;,&quot;start_time&quot;:&quot;2023-02-08T07:26:53.897619Z&quot;}" data-execution_count="13">
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
@@ -342,7 +368,7 @@ Fig 9.1: The layered API from fastai.
 10</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="9_NeuralNetworkWithFastAI_files/figure-html/cell-7-output-2.png" class="img-fluid"></p>
+<p><img src="9_IntroductionToFastAI_files/figure-html/cell-8-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-02-08T07:27:00.174078Z&quot;,&quot;start_time&quot;:&quot;2023-02-08T07:26:58.460210Z&quot;}" data-execution_count="19">
@@ -403,7 +429,7 @@ Fig 9.1: The layered API from fastai.
 <pre><code>SuggestedLRs(valley=0.0005754399462603033)</code></pre>
 </div>
 <div class="cell-output cell-output-display">
-<p><img src="9_NeuralNetworkWithFastAI_files/figure-html/cell-11-output-4.png" class="img-fluid"></p>
+<p><img src="9_IntroductionToFastAI_files/figure-html/cell-12-output-4.png" class="img-fluid"></p>
 </div>
 </div>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-02-08T07:30:24.831416Z&quot;,&quot;start_time&quot;:&quot;2023-02-08T07:27:14.232225Z&quot;}" data-execution_count="23">
@@ -734,7 +760,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
       <a href="../basics/8_NeuralNetworks.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></span>
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">

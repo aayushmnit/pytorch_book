@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The PyTorch Book - 8&nbsp; Neural Networks</title>
+<title>The PyTorch Book - 8&nbsp; Modeling pipeline with Neural networks</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -93,8 +93,8 @@ code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warni
 <script src="../site_libs/quarto-search/fuse.min.js"></script>
 <script src="../site_libs/quarto-search/quarto-search.js"></script>
 <meta name="quarto:offset" content="../">
-<link href="../basics/9_NeuralNetworkWithFastAI.html" rel="next">
-<link href="../basics/7_models.html" rel="prev">
+<link href="../basics/9_IntroductionToFastAI.html" rel="next">
+<link href="../basics/7_defining_models.html" rel="prev">
 <script src="../site_libs/quarto-html/quarto.js"></script>
 <script src="../site_libs/quarto-html/popper.min.js"></script>
 <script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
@@ -146,7 +146,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -238,17 +238,27 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/7_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></a>
+  <a href="../basics/7_defining_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Defining Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></a>
+  <a href="../basics/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></a>
   </div>
 </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">fastai</a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" aria-expanded="true">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../basics/9_NeuralNetworkWithFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></a>
+  <a href="../basics/9_IntroductionToFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></a>
   </div>
 </li>
       </ul>
@@ -262,17 +272,18 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#downloading-data-from-kaggle" id="toc-downloading-data-from-kaggle" class="nav-link active" data-scroll-target="#downloading-data-from-kaggle"><span class="toc-section-number">8.1</span>  Downloading Data from Kaggle</a></li>
-  <li><a href="#creating-dataset-object" id="toc-creating-dataset-object" class="nav-link" data-scroll-target="#creating-dataset-object"><span class="toc-section-number">8.2</span>  Creating Dataset Object</a>
+  <li><a href="#modeling-pipeline-overview" id="toc-modeling-pipeline-overview" class="nav-link active" data-scroll-target="#modeling-pipeline-overview"><span class="toc-section-number">8.1</span>  Modeling Pipeline overview</a></li>
+  <li><a href="#downloading-data-from-kaggle" id="toc-downloading-data-from-kaggle" class="nav-link" data-scroll-target="#downloading-data-from-kaggle"><span class="toc-section-number">8.2</span>  Downloading Data from Kaggle</a></li>
+  <li><a href="#creating-dataset-object" id="toc-creating-dataset-object" class="nav-link" data-scroll-target="#creating-dataset-object"><span class="toc-section-number">8.3</span>  Creating Dataset Object</a>
   <ul class="collapse">
-  <li><a href="#using-pure-pytorch" id="toc-using-pure-pytorch" class="nav-link" data-scroll-target="#using-pure-pytorch"><span class="toc-section-number">8.2.1</span>  Using Pure Pytorch</a></li>
-  <li><a href="#using-torchvision" id="toc-using-torchvision" class="nav-link" data-scroll-target="#using-torchvision"><span class="toc-section-number">8.2.2</span>  Using Torchvision</a></li>
+  <li><a href="#using-pure-pytorch" id="toc-using-pure-pytorch" class="nav-link" data-scroll-target="#using-pure-pytorch"><span class="toc-section-number">8.3.1</span>  Using Pure Pytorch</a></li>
+  <li><a href="#using-torchvision" id="toc-using-torchvision" class="nav-link" data-scroll-target="#using-torchvision"><span class="toc-section-number">8.3.2</span>  Using Torchvision</a></li>
   </ul></li>
-  <li><a href="#create-a-dataloader" id="toc-create-a-dataloader" class="nav-link" data-scroll-target="#create-a-dataloader"><span class="toc-section-number">8.3</span>  Create a Dataloader</a></li>
-  <li><a href="#defining-our-training-and-validation-loops" id="toc-defining-our-training-and-validation-loops" class="nav-link" data-scroll-target="#defining-our-training-and-validation-loops"><span class="toc-section-number">8.4</span>  Defining our Training and Validation loops</a></li>
-  <li><a href="#training-using-a-fully-connected-multi-layer-perceptron-model" id="toc-training-using-a-fully-connected-multi-layer-perceptron-model" class="nav-link" data-scroll-target="#training-using-a-fully-connected-multi-layer-perceptron-model"><span class="toc-section-number">8.5</span>  Training using a Fully Connected/ Multi Layer Perceptron Model</a></li>
-  <li><a href="#training-using-a-simple-cnn-model" id="toc-training-using-a-simple-cnn-model" class="nav-link" data-scroll-target="#training-using-a-simple-cnn-model"><span class="toc-section-number">8.6</span>  Training using a simple CNN model</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">8.7</span>  Conclusion</a></li>
+  <li><a href="#create-a-dataloader" id="toc-create-a-dataloader" class="nav-link" data-scroll-target="#create-a-dataloader"><span class="toc-section-number">8.4</span>  Create a Dataloader</a></li>
+  <li><a href="#defining-our-training-and-validation-loops" id="toc-defining-our-training-and-validation-loops" class="nav-link" data-scroll-target="#defining-our-training-and-validation-loops"><span class="toc-section-number">8.5</span>  Defining our Training and Validation loops</a></li>
+  <li><a href="#training-using-a-fully-connected-multi-layer-perceptron-model" id="toc-training-using-a-fully-connected-multi-layer-perceptron-model" class="nav-link" data-scroll-target="#training-using-a-fully-connected-multi-layer-perceptron-model"><span class="toc-section-number">8.6</span>  Training using a Fully Connected/ Multi Layer Perceptron Model</a></li>
+  <li><a href="#training-using-a-simple-cnn-model" id="toc-training-using-a-simple-cnn-model" class="nav-link" data-scroll-target="#training-using-a-simple-cnn-model"><span class="toc-section-number">8.7</span>  Training using a simple CNN model</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">8.8</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -281,7 +292,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Neural Networks</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></h1>
 </div>
 
 
@@ -296,9 +307,30 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 </header>
 
-<p>In previous chapters, we covered the fundamentals of PyTorch and applied it to a linear regression example. Now, we will expand on that knowledge by constructing neural networks using PyTorch. The dataset we will be utilizing is the <code>MNIST png</code> dataset from <a href="https://www.kaggle.com/datasets/jidhumohan/mnist-png">Kaggle</a>, as opposed to the CSV version, for a more practical experience.</p>
-<section id="downloading-data-from-kaggle" class="level2" data-number="8.1">
-<h2 data-number="8.1" class="anchored" data-anchor-id="downloading-data-from-kaggle"><span class="header-section-number">8.1</span> Downloading Data from Kaggle</h2>
+<p>In previous chapters, we covered the fundamentals of PyTorch and applied it to a linear regression example. Now, we will expand on that knowledge by constructing neural networks using PyTorch.</p>
+<section id="modeling-pipeline-overview" class="level2" data-number="8.1">
+<h2 data-number="8.1" class="anchored" data-anchor-id="modeling-pipeline-overview"><span class="header-section-number">8.1</span> Modeling Pipeline overview</h2>
+<figure align="center" class="figure">
+<img src="./img/dl_pipeline.png" style="width:100%" class="figure-img">
+<figcaption align="center" class="figure-caption">
+Fig 8.1: Modeling Pipeline in Pytorch
+</figcaption>
+</figure>
+<p>Let’s take a look at the different steps involved in creating a typical modeling pipeline in PyTorch -</p>
+<ul>
+<li><p><strong>Getting the data</strong> - PyTorch provides several tools for loading and preprocessing data, such as the <code>torchvision</code> library for image-related tasks or <code>torchtext</code> for natural language processing. You can also create custom data loaders to load data in your desired format.</p></li>
+<li><p><strong>Build Dataloaders</strong> -Once you have your data, you’ll need to create data loaders, which are responsible for batching and shuffling the data during training. Data loaders are essential for efficient training, as they allow you to load and preprocess data in parallel, making use of the GPU capabilities for faster training.</p></li>
+<li><p><strong>Define Model</strong> - Next, you’ll need to define your model architecture. PyTorch provides a wide range of pre-defined layers and modules that you can use to build your neural network. You can also create custom layers or models by subclassing PyTorch’s <code>nn.Module</code> class. Defining your model involves specifying the layers, their connectivity, and any other parameters or hyperparameters that you need for your specific task.</p></li>
+<li><p><strong>Build Optimizer and Scheduler</strong> - Once your model is defined, you’ll need to configure an optimizer and a scheduler. The optimizer is responsible for updating the model’s parameters during training to minimize the loss, while the scheduler adjusts the learning rate to optimize the model’s performance. PyTorch provides various optimization algorithms, such as SGD, Adam, or RMSprop, and scheduling techniques like learning rate decay or cyclical learning rates.</p></li>
+<li><p><strong>Run training and validation loops</strong> - With your data loaders, model, optimizer, and scheduler in place, you’re ready to start the training loop. The training loop typically involves iterating over the data loaders, forwarding the inputs through the model, computing the loss, and backpropagating the gradients to update the model’s parameters. You’ll also need to evaluate your model’s performance on a validation set to monitor its progress during training and avoid overfitting.</p></li>
+<li><p><strong>Deploy</strong> - Once your model has been trained, you can deploy it for inference on new data. PyTorch provides tools for saving and loading model checkpoints, which allows you to reuse your trained model in different applications. You can deploy your model in a variety of environments, such as edge devices, cloud servers, or web applications, depending on your specific requirements.</p></li>
+</ul>
+<p>In summary, a typical modeling pipeline in PyTorch involves getting the data, building data loaders, defining the model architecture, configuring the optimizer and scheduler, implementing the training and validation loop, and finally deploying the trained model for inference in various environments.</p>
+<p>Let’s dive into the practical implementation of a modeling pipeline in PyTorch using the popular <code>MNIST</code>dataset as an example. We’ll follow the steps outlined above to build our first neural network from scratch.</p>
+</section>
+<section id="downloading-data-from-kaggle" class="level2" data-number="8.2">
+<h2 data-number="8.2" class="anchored" data-anchor-id="downloading-data-from-kaggle"><span class="header-section-number">8.2</span> Downloading Data from Kaggle</h2>
+<p>The dataset we will be utilizing is the <code>MNIST png</code> dataset from <a href="https://www.kaggle.com/datasets/jidhumohan/mnist-png">Kaggle</a>, as opposed to the CSV version, for a more practical experience.</p>
 <p>Here are few steps you need to perform before we download the data -</p>
 <ul>
 <li><p>If you don’t have a Kaggle account, you can make one for free <a href="https://www.kaggle.com/">here</a>.</p></li>
@@ -399,11 +431,11 @@ Warning
 </div>
 </div>
 </section>
-<section id="creating-dataset-object" class="level2" data-number="8.2">
-<h2 data-number="8.2" class="anchored" data-anchor-id="creating-dataset-object"><span class="header-section-number">8.2</span> Creating Dataset Object</h2>
+<section id="creating-dataset-object" class="level2" data-number="8.3">
+<h2 data-number="8.3" class="anchored" data-anchor-id="creating-dataset-object"><span class="header-section-number">8.3</span> Creating Dataset Object</h2>
 <p>As previously discussed, prior to training the model, it is necessary to establish a data pipeline in PyTorch. This includes defining a <code>Dataset</code> object and subsequently loading it via a PyTorch <code>Dataloader</code>.</p>
-<section id="using-pure-pytorch" class="level3" data-number="8.2.1">
-<h3 data-number="8.2.1" class="anchored" data-anchor-id="using-pure-pytorch"><span class="header-section-number">8.2.1</span> Using Pure Pytorch</h3>
+<section id="using-pure-pytorch" class="level3" data-number="8.3.1">
+<h3 data-number="8.3.1" class="anchored" data-anchor-id="using-pure-pytorch"><span class="header-section-number">8.3.1</span> Using Pure Pytorch</h3>
 <p>Initially, we will demonstrate the process of constructing a custom image <code>Dataset</code> object using pure PyTorch. To begin, we will import the necessary libraries.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:45:10.437520Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:45:09.414739Z&quot;}" data-execution_count="7">
 <div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
@@ -479,8 +511,8 @@ One object: Image Tensor of shape torch.Size([784]), Label: 3</code></pre>
 </div>
 </div>
 </section>
-<section id="using-torchvision" class="level3" data-number="8.2.2">
-<h3 data-number="8.2.2" class="anchored" data-anchor-id="using-torchvision"><span class="header-section-number">8.2.2</span> Using Torchvision</h3>
+<section id="using-torchvision" class="level3" data-number="8.3.2">
+<h3 data-number="8.3.2" class="anchored" data-anchor-id="using-torchvision"><span class="header-section-number">8.3.2</span> Using Torchvision</h3>
 <p>We have demonstrated the procedure of creating a custom <code>ImageDataset</code> object. Now we will examine how to simplify this process by utilizing the <code>torchvision</code> package. The <code>torchvision</code> package encompasses commonly used datasets, model architectures, and image transformations for computer vision tasks.</p>
 <p>To begin, we will import the <code>datasets</code> and <code>transforms</code> modules from the <code>torchvision</code> package.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:45:20.675215Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:45:20.542041Z&quot;}" data-execution_count="13">
@@ -520,8 +552,8 @@ One object: Image Tensor of shape torch.Size([784]), Label: 0</code></pre>
 <p>The code then prints the length of the train and test datasets and the shape and label of the first object in the train dataset. The <code>datasets.ImageFolder</code> class is a convenient way to create a Pytorch dataset from a directory of images and it is useful when you have the data in a structured way.</p>
 </section>
 </section>
-<section id="create-a-dataloader" class="level2" data-number="8.3">
-<h2 data-number="8.3" class="anchored" data-anchor-id="create-a-dataloader"><span class="header-section-number">8.3</span> Create a Dataloader</h2>
+<section id="create-a-dataloader" class="level2" data-number="8.4">
+<h2 data-number="8.4" class="anchored" data-anchor-id="create-a-dataloader"><span class="header-section-number">8.4</span> Create a Dataloader</h2>
 <p>Create a dataloader using <code>torch.utils.data.DataLoader</code> function.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:45:23.961042Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:45:23.958508Z&quot;}" data-execution_count="15">
 <div class="sourceCode cell-code" id="cb25"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> os</span>
@@ -554,8 +586,8 @@ One object: Image Tensor of shape torch.Size([784]), Label: 0</code></pre>
 </div>
 <p>As we can observe, each batch comprises of an input tensor of shape <code>(128x784)</code> representing 128 images of flattened <code>(28x28)</code> dimension, and a label tensor of shape <code>(128)</code> representing the corresponding digit labels for the images.</p>
 </section>
-<section id="defining-our-training-and-validation-loops" class="level2" data-number="8.4">
-<h2 data-number="8.4" class="anchored" data-anchor-id="defining-our-training-and-validation-loops"><span class="header-section-number">8.4</span> Defining our Training and Validation loops</h2>
+<section id="defining-our-training-and-validation-loops" class="level2" data-number="8.5">
+<h2 data-number="8.5" class="anchored" data-anchor-id="defining-our-training-and-validation-loops"><span class="header-section-number">8.5</span> Defining our Training and Validation loops</h2>
 <p>We will now implement the training loop. It is similar to the training loop we constructed in chapter 6.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:45:27.758169Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:45:27.754566Z&quot;}" data-execution_count="17">
 <div class="sourceCode cell-code" id="cb28"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb28-1"><a href="#cb28-1" aria-hidden="true" tabindex="-1"></a><span class="co">## Training loop</span></span>
@@ -622,8 +654,8 @@ One object: Image Tensor of shape torch.Size([784]), Label: 0</code></pre>
 <li>The loss, nums, and acc variables are used to keep track of the total loss, number of samples seen during the epoch and accuracy respectively.</li>
 </ul>
 </section>
-<section id="training-using-a-fully-connected-multi-layer-perceptron-model" class="level2" data-number="8.5">
-<h2 data-number="8.5" class="anchored" data-anchor-id="training-using-a-fully-connected-multi-layer-perceptron-model"><span class="header-section-number">8.5</span> Training using a Fully Connected/ Multi Layer Perceptron Model</h2>
+<section id="training-using-a-fully-connected-multi-layer-perceptron-model" class="level2" data-number="8.6">
+<h2 data-number="8.6" class="anchored" data-anchor-id="training-using-a-fully-connected-multi-layer-perceptron-model"><span class="header-section-number">8.6</span> Training using a Fully Connected/ Multi Layer Perceptron Model</h2>
 <p>Let’s define our model.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:45:30.405209Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:45:30.402617Z&quot;}" data-execution_count="18">
 <div class="sourceCode cell-code" id="cb30"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb30-1"><a href="#cb30-1" aria-hidden="true" tabindex="-1"></a><span class="kw">class</span> MLP(nn.Module):</span>
@@ -826,8 +858,8 @@ One object: Image Tensor of shape torch.Size([784]), Label: 0</code></pre>
 </div>
 <p>By utilizing the <code>AdamW</code> optimizer and <code>MLP</code> model, we can see that after 5 epochs, we have a highly accurate model with a 98% accuracy as compared to random prediction of 7-8%.</p>
 </section>
-<section id="training-using-a-simple-cnn-model" class="level2" data-number="8.6">
-<h2 data-number="8.6" class="anchored" data-anchor-id="training-using-a-simple-cnn-model"><span class="header-section-number">8.6</span> Training using a simple CNN model</h2>
+<section id="training-using-a-simple-cnn-model" class="level2" data-number="8.7">
+<h2 data-number="8.7" class="anchored" data-anchor-id="training-using-a-simple-cnn-model"><span class="header-section-number">8.7</span> Training using a simple CNN model</h2>
 <p>As previously demonstrated, the fit function is highly adaptable as we were able to change our optimizer without making any modifications to the function. Now, we will replace our MLP model with a CNN (Convolutional Neural Network) model. We will begin by defining a basic CNN network.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-01-24T05:50:42.399405Z&quot;,&quot;start_time&quot;:&quot;2023-01-24T05:50:42.395935Z&quot;}" data-execution_count="24">
 <div class="sourceCode cell-code" id="cb47"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb47-1"><a href="#cb47-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch.nn.functional <span class="im">as</span> F</span>
@@ -920,10 +952,10 @@ One object: Image Tensor of shape torch.Size([784]), Label: 0</code></pre>
 </div>
 <p>As can be observed, we are able to seamlessly switch from an MLP to a CNN model by utilizing the adaptable <code>fit</code> function and train the model.</p>
 </section>
-<section id="conclusion" class="level2" data-number="8.7">
-<h2 data-number="8.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.7</span> Conclusion</h2>
+<section id="conclusion" class="level2" data-number="8.8">
+<h2 data-number="8.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">8.8</span> Conclusion</h2>
 <p>In this chapter, we progressed from a basic linear regression example to building an image classifier using MLP and CNN models. We gained practical experience in creating custom <code>Dataset</code> and <code>Dataloader</code> objects and were introduced to the <code>torchvision</code> library for simplifying this process. Additionally, we developed a versatile <code>fit</code> function, which can be utilized with various models, optimizers, and loss functions for training our models.</p>
-<p>The idea of flexibility as demonstrated in the <code>fit</code> function is not unique, and there are many frameworks that aim to simplify the model training process by offering high-level APIs, allowing machine learning scientists to focus on building and solving problems, while the frameworks handle the majority of the complexity. In the next chapter, we will repeat the same exercise using the <a href="https://docs.fast.ai/"><code>fastai</code></a> library, which is a highly flexible and performant framework built on top of PyTorch, and observe how we can construct neural networks with minimal lines of code.</p>
+<p>The idea of flexibility as demonstrated in the <code>fit</code> function is not unique, and there are many frameworks that aim to simplify the model training process by offering high-level APIs, allowing machine learning scientists to focus on building and solving problems, while the frameworks handle the majority of the complexity. Later in the book, we will repeat the same exercise using the <a href="https://docs.fast.ai/"><code>fastai</code></a> library, which is a highly flexible and performant framework built on top of PyTorch, and observe how we can construct neural networks with minimal lines of code.</p>
 
 
 </section>
@@ -1179,13 +1211,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
-      <a href="../basics/7_models.html" class="pagination-link">
-        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Model building</span></span>
+      <a href="../basics/7_defining_models.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Defining Model</span></span>
       </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="../basics/9_NeuralNetworkWithFastAI.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Neural Networks with fastai (draft)</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../basics/9_IntroductionToFastAI.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
