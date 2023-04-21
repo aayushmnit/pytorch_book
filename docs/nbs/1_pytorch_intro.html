@@ -6,9 +6,8 @@
 
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
-<meta name="author" content="Aayush Agrawal">
 
-<title>The PyTorch Book</title>
+<title>The PyTorch Book - 1&nbsp; PyTorch Introduction and Installation</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -21,26 +20,90 @@ ul.task-list li input[type="checkbox"] {
   margin: 0 0.8em 0.2em -1.6em;
   vertical-align: middle;
 }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+    color: #aaaaaa;
+  }
+pre.numberSource { margin-left: 3em; border-left: 1px solid #aaaaaa;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+code span.al { color: #ff0000; font-weight: bold; } /* Alert */
+code span.an { color: #60a0b0; font-weight: bold; font-style: italic; } /* Annotation */
+code span.at { color: #7d9029; } /* Attribute */
+code span.bn { color: #40a070; } /* BaseN */
+code span.bu { color: #008000; } /* BuiltIn */
+code span.cf { color: #007020; font-weight: bold; } /* ControlFlow */
+code span.ch { color: #4070a0; } /* Char */
+code span.cn { color: #880000; } /* Constant */
+code span.co { color: #60a0b0; font-style: italic; } /* Comment */
+code span.cv { color: #60a0b0; font-weight: bold; font-style: italic; } /* CommentVar */
+code span.do { color: #ba2121; font-style: italic; } /* Documentation */
+code span.dt { color: #902000; } /* DataType */
+code span.dv { color: #40a070; } /* DecVal */
+code span.er { color: #ff0000; font-weight: bold; } /* Error */
+code span.ex { } /* Extension */
+code span.fl { color: #40a070; } /* Float */
+code span.fu { color: #06287e; } /* Function */
+code span.im { color: #008000; font-weight: bold; } /* Import */
+code span.in { color: #60a0b0; font-weight: bold; font-style: italic; } /* Information */
+code span.kw { color: #007020; font-weight: bold; } /* Keyword */
+code span.op { color: #666666; } /* Operator */
+code span.ot { color: #007020; } /* Other */
+code span.pp { color: #bc7a00; } /* Preprocessor */
+code span.sc { color: #4070a0; } /* SpecialChar */
+code span.ss { color: #bb6688; } /* SpecialString */
+code span.st { color: #4070a0; } /* String */
+code span.va { color: #19177c; } /* Variable */
+code span.vs { color: #4070a0; } /* VerbatimString */
+code span.wa { color: #60a0b0; font-weight: bold; font-style: italic; } /* Warning */
 </style>
 
 
-<script src="site_libs/quarto-nav/quarto-nav.js"></script>
-<script src="site_libs/quarto-nav/headroom.min.js"></script>
-<script src="site_libs/clipboard/clipboard.min.js"></script>
-<script src="site_libs/quarto-search/autocomplete.umd.js"></script>
-<script src="site_libs/quarto-search/fuse.min.js"></script>
-<script src="site_libs/quarto-search/quarto-search.js"></script>
-<meta name="quarto:offset" content="./">
-<link href="./nbs/1_pytorch_intro.html" rel="next">
-<script src="site_libs/quarto-html/quarto.js"></script>
-<script src="site_libs/quarto-html/popper.min.js"></script>
-<script src="site_libs/quarto-html/tippy.umd.min.js"></script>
-<script src="site_libs/quarto-html/anchor.min.js"></script>
-<link href="site_libs/quarto-html/tippy.css" rel="stylesheet">
-<script src="site_libs/bootstrap/bootstrap.min.js"></script>
-<link href="site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
-<link href="site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
-<link href="site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<script src="../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../">
+<link href="../nbs/2_pytorch_tensors.html" rel="next">
+<link href="../index.html" rel="prev">
+<script src="../site_libs/quarto-html/quarto.js"></script>
+<script src="../site_libs/quarto-html/popper.min.js"></script>
+<script src="../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<script src="../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../site_libs/bootstrap/bootstrap.min.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../site_libs/bootstrap/bootstrap-dark.min.css" rel="prefetch" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
 <script id="quarto-search-options" type="application/json">{
   "location": "sidebar",
   "copy-button": false,
@@ -79,7 +142,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title">The PyTorch Book</h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -92,7 +155,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <nav id="quarto-sidebar" class="sidebar collapse sidebar-navigation floating overflow-auto">
     <div class="pt-lg-2 mt-2 text-left sidebar-header">
     <div class="sidebar-title mb-0 py-0">
-      <a href="./">The PyTorch Book</a> 
+      <a href="../">The PyTorch Book</a> 
         <div class="sidebar-tools-main">
     <a href="" title="Share" id="sidebar-tool-dropdown-0" class="sidebar-tool dropdown-toggle px-1" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-share"></i></a>
     <ul class="dropdown-menu" aria-labelledby="sidebar-tool-dropdown-0">
@@ -128,7 +191,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
     <ul class="list-unstyled mt-1">
         <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./index.html" class="sidebar-item-text sidebar-link active">Preface</a>
+  <a href="../index.html" class="sidebar-item-text sidebar-link">Preface</a>
   </div>
 </li>
         <li class="sidebar-item sidebar-item-section">
@@ -141,42 +204,42 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/1_pytorch_intro.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
+  <a href="../nbs/1_pytorch_intro.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/2_pytorch_tensors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></a>
+  <a href="../nbs/2_pytorch_tensors.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/3_broadcasting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></a>
+  <a href="../nbs/3_broadcasting.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">3</span>&nbsp; <span class="chapter-title">Broadcasting</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/4_autograd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></a>
+  <a href="../nbs/4_autograd.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">4</span>&nbsp; <span class="chapter-title">Automatic Differentiation</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/5_datasets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets and Dataloaders</span></a>
+  <a href="../nbs/5_datasets.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">5</span>&nbsp; <span class="chapter-title">Datasets and Dataloaders</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/6_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
+  <a href="../nbs/6_optimizers.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">6</span>&nbsp; <span class="chapter-title">Optimizers and Learning loops</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/7_defining_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Defining Model</span></a>
+  <a href="../nbs/7_defining_models.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">7</span>&nbsp; <span class="chapter-title">Defining Model</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></a>
+  <a href="../nbs/8_NeuralNetworks.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">8</span>&nbsp; <span class="chapter-title">Modeling pipeline with Neural networks</span></a>
   </div>
 </li>
       </ul>
@@ -191,7 +254,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
       <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth1 show">  
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="./nbs/9_IntroductionToFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></a>
+  <a href="../nbs/9_IntroductionToFastAI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">9</span>&nbsp; <span class="chapter-title">Introduction to fastai (draft)</span></a>
   </div>
 </li>
       </ul>
@@ -205,12 +268,9 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
     <h2 id="toc-title">Table of contents</h2>
    
   <ul>
-  <li><a href="#preface" id="toc-preface" class="nav-link active" data-scroll-target="#preface">Preface</a>
-  <ul class="collapse">
-  <li><a href="#what-is-this-book-about" id="toc-what-is-this-book-about" class="nav-link" data-scroll-target="#what-is-this-book-about">What is this book about?</a></li>
-  <li><a href="#about-author" id="toc-about-author" class="nav-link" data-scroll-target="#about-author">About Author</a></li>
-  <li><a href="#contribute" id="toc-contribute" class="nav-link" data-scroll-target="#contribute">Contribute</a></li>
-  </ul></li>
+  <li><a href="#what-is-pytorch" id="toc-what-is-pytorch" class="nav-link active" data-scroll-target="#what-is-pytorch"><span class="toc-section-number">1.1</span>  What is PyTorch</a></li>
+  <li><a href="#installation" id="toc-installation" class="nav-link" data-scroll-target="#installation"><span class="toc-section-number">1.2</span>  Installation</a></li>
+  <li><a href="#checking-installation" id="toc-checking-installation" class="nav-link" data-scroll-target="#checking-installation"><span class="toc-section-number">1.3</span>  Checking Installation</a></li>
   </ul>
 </nav>
     </div>
@@ -219,19 +279,13 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block">The PyTorch Book</h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></h1>
 </div>
 
 
 
 <div class="quarto-title-meta">
 
-    <div>
-    <div class="quarto-title-meta-heading">Author</div>
-    <div class="quarto-title-meta-contents">
-             <p>Aayush Agrawal </p>
-          </div>
-  </div>
     
   
     
@@ -240,33 +294,68 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 </header>
 
-
-<section id="preface" class="level1 unnumbered">
-<p><img src="bookcover.jpg" title="The PyTorch Book" class="quarto-cover-image img-fluid"></p><h1 class="unnumbered">Preface</h1>
-<section id="what-is-this-book-about" class="level2">
-<h2 class="anchored" data-anchor-id="what-is-this-book-about">What is this book about?</h2>
-<p>This is a collection of content compiled during my journey to learn PyTorch, machine learning, and deep learning. The book will primarily cover practical applications of PyTorch and popular frameworks that build upon PyTorch, such as FastAI and Huggingface. Please note that this book is a work in progress and additional chapters will be added over time.I hope that this book, with its collection of theory and practical projects, will be useful for others who are also learning PyTorch.</p>
-</section>
-<section id="about-author" class="level2">
-<h2 class="anchored" data-anchor-id="about-author">About Author</h2>
-<div class="grid">
-<div class="g-col-8">
-<p>Aayush Agrawal is a skilled data scientist with expertise in machine learning solutions. He is interested in staying up-to-date with the latest data technologies, including big data platforms, deep learning, optimization methods, and business analytics. At the time of writing, He is working on developing data-driven products to improve recommendations for Microsoft Partners, M365 service administrators, and end-users in order to optimize the use of M365 services. Aayush has previously worked in various industries such as agricultural technology, pharmaceuticals, retail, e-commerce, and ride-sharing.</p>
-<p>Read more about him <a href="https://aayushmnit.com/about.html">here</a>.</p>
+<section id="what-is-pytorch" class="level2" data-number="1.1">
+<h2 data-number="1.1" class="anchored" data-anchor-id="what-is-pytorch"><span class="header-section-number">1.1</span> What is PyTorch</h2>
+<figure align="center" class="figure">
+<img src="./img/pytorch_logo.png" alt="Pytorch logo." class="figure-img">
+</figure>
+<p><a href="https://pytorch.org/">PyTorch</a> is an open-source machine learning library for Python, based on the Torch library, used for applications such as deep learning and GPU based acceleration. It is primarily developed by Facebook’s artificial intelligence research group. PyTorch provides a high-level interface for working with large-scale machine learning models. It allows developers to define and train neural networks in a fast, flexible, and dynamic way.</p>
+<p>Some key features of PyTorch include:</p>
+<ul>
+<li><strong>Tensor computations with GPU acceleration</strong>: PyTorch includes GPU acceleration out of the box, allowing you to train your models on a single or multiple GPUs with ease.</li>
+<li><strong>Dynamic computation graphs</strong>: PyTorch allows you to define your computations as a dynamic graph, which allows you to change the structure of the graph on the fly and enables you to use dynamic control flow.</li>
+<li><strong>Easy model building</strong>: PyTorch provides a wide range of predefined layers and architectures that you can use to build your models, making it easy to get started with machine learning.</li>
+<li><strong>Ecosystem support</strong>: PyTorch has a large and active community of users, and there are many tools and libraries available that are built on top of PyTorch, such as visualization tools, data loaders, and more.</li>
+</ul>
+<p>Overall, PyTorch is a powerful and flexible tool for working with large-scale machine learning models and is widely used in research and industry.</p>
+<div class="callout-note callout callout-style-default callout-captioned">
+<div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
 </div>
-<div class="g-col-4">
-<p><img src="./author_img.jpg" class="img-fluid"></p>
+<div class="callout-caption-container flex-fill">
+Note
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>On a personal note, I have used many different Deep learning frameworks and I find Pytorch to be the most intuitive. It blends nicely with regular Python and have really good ecosystem. I am also big fan of <a href="https://docs.fast.ai/">FastAI</a> library which is written on top of Pytorch and is one of the best framework to do deep learning based project.</p>
+</div>
 </div>
 </div>
 </section>
-<section id="contribute" class="level2">
-<h2 class="anchored" data-anchor-id="contribute">Contribute</h2>
-<p>The Pytorch book is a comprehensive, open-source resource on PyTorch and deep learning using only free software in Python. Its goal is to be accessible both financially and intellectually.</p>
-<p>If you found this book to be valuable, you can support it by sending a <a href="https://www.amazon.com/Amazon-1_US_Email-eGift-Card/dp/B004LLIKVU">Amazon gift card</a> to <code>aayushmnit@gmail.com</code>. These funds will be used to upgrade my machine and buying books/courses to continue my research. Alternatively, you can contribute by fixing typos, suggesting edits, or providing feedback on passages that were unclear. Simply go to the book’s repository and open an <a href="https://github.com/aayushmnit/pytorch_book/issues">issue</a>.</p>
-<p>Finally, if you enjoyed this content, please consider sharing it with others who might find it useful and consider giving it a star✨ on <a href="https://github.com/aayushmnit/pytorch_book">GitHub</a>.</p>
-
-
+<section id="installation" class="level2" data-number="1.2">
+<h2 data-number="1.2" class="anchored" data-anchor-id="installation"><span class="header-section-number">1.2</span> Installation</h2>
+<p>Since Pytorch is under active development and the new version keeps getting released. You want to visit <a href="https://pytorch.org/get-started/locally/">this website</a> for the latest Pytorch installation instruction.</p>
+<figure align="center" class="figure">
+<img src="./img/pytorch_installation.png" style="width:100%" class="figure-img">
+<figcaption align="center" class="figure-caption">
+Fig 1.1: Pytorch Installation page.
+</figcaption>
+</figure>
+<p>The above interface is what you will typically see on the installation page, based on your OS and other selection, it will produce a command you can run on your command line interface and install Pytorch. I recommend installing through conda as it will take care of the dependencies automatically.</p>
 </section>
+<section id="checking-installation" class="level2" data-number="1.3">
+<h2 data-number="1.3" class="anchored" data-anchor-id="checking-installation"><span class="header-section-number">1.3</span> Checking Installation</h2>
+<p>Let’s run the import command and see if we have Pytorch setup correctly.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-24T20:18:13.353460Z&quot;,&quot;start_time&quot;:&quot;2022-12-24T20:18:13.350814Z&quot;}" data-execution_count="5">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> torch</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(torch.__version__)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>1.12.1</code></pre>
+</div>
+</div>
+<p>It is recommended to use a machine with a GPU when working with PyTorch because it is typically used for GPU-accelerated computations. If you are running PyTorch on a machine with a GPU and want to verify that it has access to the GPU, you can run the following command-</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2022-12-24T20:21:59.940933Z&quot;,&quot;start_time&quot;:&quot;2022-12-24T20:21:59.938115Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>torch.cuda.is_available()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display" data-execution_count="9">
+<pre><code>True</code></pre>
+</div>
+</div>
+<p>If PyTorch is installed on a machine with a GPU, the above command will return <code>True</code> otherwise it will return <code>False</code>.</p>
+
+
 </section>
 
 </main> <!-- /main -->
@@ -520,10 +609,13 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 </script>
 <nav class="page-navigation">
   <div class="nav-page nav-page-previous">
+      <a href="../index.html" class="pagination-link">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Preface</span>
+      </a>          
   </div>
   <div class="nav-page nav-page-next">
-      <a href="./nbs/1_pytorch_intro.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">1</span>&nbsp; <span class="chapter-title">PyTorch Introduction and Installation</span></span> <i class="bi bi-arrow-right-short"></i>
+      <a href="../nbs/2_pytorch_tensors.html" class="pagination-link">
+        <span class="nav-page-text"><span class="chapter-number">2</span>&nbsp; <span class="chapter-title">Tensors</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>

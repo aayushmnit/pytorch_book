@@ -21,17 +21,17 @@ book:
     - index.qmd
     - part: "PyTorch basics"
       chapters: 
-        - basics/1_pytorch_intro.ipynb
-        - basics/2_pytorch_tensors.ipynb
-        - basics/3_broadcasting.ipynb
-        - basics/4_autograd.ipynb
-        - basics/5_datasets.ipynb
-        - basics/6_optimizers.ipynb
-        - basics/7_defining_models.ipynb
-        - basics/8_NeuralNetworks.ipynb
+        - nbs/1_pytorch_intro.ipynb
+        - nbs/2_pytorch_tensors.ipynb
+        - nbs/3_broadcasting.ipynb
+        - nbs/4_autograd.ipynb
+        - nbs/5_datasets.ipynb
+        - nbs/6_optimizers.ipynb
+        - nbs/7_defining_models.ipynb
+        - nbs/8_NeuralNetworks.ipynb
     - part: "fastai"
       chapters:
-        - basics/9_IntroductionToFastAI.ipynb
+        - nbs/9_IntroductionToFastAI.ipynb
   
 
 bibliography: references.bib
