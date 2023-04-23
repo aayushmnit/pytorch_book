@@ -32,6 +32,8 @@ book:
     - part: "fastai"
       chapters:
         - nbs/9_IntroductionToFastAI.ipynb
+        - nbs/10_MNISTusingFastaiHighLevelAPI.ipynb
+        - nbs/11_MNISTusingFastaiMidLevelAPI.ipynb
   
 
 bibliography: references.bib
