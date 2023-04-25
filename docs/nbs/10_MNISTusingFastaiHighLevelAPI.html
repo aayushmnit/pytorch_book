@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>The PyTorch Book - 10&nbsp; Model pipeline with fastai’s High-Level API</title>
+<title>The PyTorch Book - 10&nbsp; Modeling pipeline with fastai’s High-Level API</title>
 <style>
 code{white-space: pre-wrap;}
 span.smallcaps{font-variant: small-caps;}
@@ -145,7 +145,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <header id="quarto-header" class="headroom fixed-top">
   <nav class="quarto-secondary-nav" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Toggle sidebar navigation" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
     <div class="container-fluid d-flex justify-content-between">
-      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model pipeline with fastai’s High-Level API</span></h1>
+      <h1 class="quarto-secondary-nav-title"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Modeling pipeline with fastai’s High-Level API</span></h1>
       <button type="button" class="quarto-btn-toggle btn" aria-label="Show secondary navigation">
         <i class="bi bi-chevron-right"></i>
       </button>
@@ -262,12 +262,12 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../nbs/10_MNISTusingFastaiHighLevelAPI.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model pipeline with fastai’s High-Level API</span></a>
+  <a href="../nbs/10_MNISTusingFastaiHighLevelAPI.html" class="sidebar-item-text sidebar-link active"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Modeling pipeline with fastai’s High-Level API</span></a>
   </div>
 </li>
           <li class="sidebar-item">
   <div class="sidebar-item-container"> 
-  <a href="../nbs/11_MNISTusingFastaiMidLevelAPI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Model pipeline with fastai’s Mid-Level API (draft)</span></a>
+  <a href="../nbs/11_MNISTusingFastaiMidLevelAPI.html" class="sidebar-item-text sidebar-link"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modeling pipeline with fastai’s Mid-Level API (draft)</span></a>
   </div>
 </li>
       </ul>
@@ -285,9 +285,10 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
   <li><a href="#creating-dataloaders" id="toc-creating-dataloaders" class="nav-link" data-scroll-target="#creating-dataloaders"><span class="toc-section-number">10.2</span>  Creating DataLoaders</a></li>
   <li><a href="#creating-a-learner" id="toc-creating-a-learner" class="nav-link" data-scroll-target="#creating-a-learner"><span class="toc-section-number">10.3</span>  Creating a learner</a></li>
   <li><a href="#training-the-model" id="toc-training-the-model" class="nav-link" data-scroll-target="#training-the-model"><span class="toc-section-number">10.4</span>  Training the model</a></li>
-  <li><a href="#saving-and-loading-the-model" id="toc-saving-and-loading-the-model" class="nav-link" data-scroll-target="#saving-and-loading-the-model"><span class="toc-section-number">10.5</span>  Saving and Loading the model</a></li>
-  <li><a href="#performing-inference" id="toc-performing-inference" class="nav-link" data-scroll-target="#performing-inference"><span class="toc-section-number">10.6</span>  Performing inference</a></li>
-  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">10.7</span>  Conclusion</a></li>
+  <li><a href="#analyzing-model-performance" id="toc-analyzing-model-performance" class="nav-link" data-scroll-target="#analyzing-model-performance"><span class="toc-section-number">10.5</span>  Analyzing Model Performance</a></li>
+  <li><a href="#saving-and-loading-the-model" id="toc-saving-and-loading-the-model" class="nav-link" data-scroll-target="#saving-and-loading-the-model"><span class="toc-section-number">10.6</span>  Saving and Loading the model</a></li>
+  <li><a href="#performing-inference" id="toc-performing-inference" class="nav-link" data-scroll-target="#performing-inference"><span class="toc-section-number">10.7</span>  Performing inference</a></li>
+  <li><a href="#conclusion" id="toc-conclusion" class="nav-link" data-scroll-target="#conclusion"><span class="toc-section-number">10.8</span>  Conclusion</a></li>
   </ul>
 </nav>
     </div>
@@ -296,7 +297,7 @@ gtag('config', 'G-Q8J05XS7Q7', { 'anonymize_ip': true});
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Model pipeline with fastai’s High-Level API</span></h1>
+<h1 class="title d-none d-lg-block"><span class="chapter-number">10</span>&nbsp; <span class="chapter-title">Modeling pipeline with fastai’s High-Level API</span></h1>
 </div>
 
 
@@ -325,8 +326,10 @@ Fig 10.1: Using fastai high-level API flow.
 <section id="creating-dataloaders" class="level2" data-number="10.2">
 <h2 data-number="10.2" class="anchored" data-anchor-id="creating-dataloaders"><span class="header-section-number">10.2</span> Creating DataLoaders</h2>
 <p>First step in the process is creating a fastai <code>Dataloaders</code>. To begin, we will import the <code>fastai.vision</code> module, as we are working with image classification tasks in this case.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:49.768994Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:48.622432Z&quot;}" data-execution_count="1">
-<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:20.100230Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:17.913655Z&quot;}" data-execution_count="1">
+<div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">from</span> fastai.vision.<span class="bu">all</span> <span class="im">import</span> <span class="op">*</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> warnings</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>warnings.filterwarnings(<span class="st">'ignore'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <div class="callout-important callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="true" aria-label="Toggle callout">
@@ -364,7 +367,7 @@ Note
 </div>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:53.858690Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:50.453682Z&quot;}" data-execution_count="2">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:24.330559Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:20.276953Z&quot;}" data-execution_count="2">
 <div class="sourceCode cell-code" id="cb3"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a>dPath <span class="op">=</span> Path(<span class="st">"../data/mnist_png/"</span>)</span>
 <span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>dls <span class="op">=</span> ImageDataLoaders.from_folder(</span>
 <span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>        path <span class="op">=</span> dPath, </span>
@@ -394,14 +397,14 @@ Note
 </ul>
 <p>Finally, the <code>type(dls)</code> statement is used to print the type of the dls object, which should be a <code>fastai</code> <code>DataLoaders</code> object.</p>
 <p><code>fastai</code> offers various functions for easy inspection of data through data loaders. Let’s use the <code>show_batch</code> function to visualize one batch of the data.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:55.264564Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:53.883194Z&quot;}" data-execution_count="3">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:27.734504Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:26.317160Z&quot;}" data-execution_count="3">
 <div class="sourceCode cell-code" id="cb5"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb5-1"><a href="#cb5-1" aria-hidden="true" tabindex="-1"></a>dls.show_batch(figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>)) </span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 <p><img src="10_MNISTusingFastaiHighLevelAPI_files/figure-html/cell-4-output-1.png" class="img-fluid"></p>
 </div>
 </div>
 <p>It appears that we have successfully created a data loader with just one line of code. To better inspect the data, we can check the dimensions of a batch of data. Let’s use the <code>one_batch</code> function on the <code>dls</code> data loader object to obtain a single batch of data.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:56.298245Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:55.289616Z&quot;}" data-execution_count="4">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:30.093412Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:28.953898Z&quot;}" data-execution_count="4">
 <div class="sourceCode cell-code" id="cb6"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>x,y <span class="op">=</span> dls.one_batch()</span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Shape of X:</span><span class="sc">{</span>x<span class="sc">.</span>shape<span class="sc">}</span><span class="ss"> </span><span class="ch">\n</span><span class="ss">Shape of Labels:</span><span class="sc">{</span>y<span class="sc">.</span>shape<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
@@ -421,7 +424,7 @@ Shape of Labels:torch.Size([128])</code></pre>
 <section id="creating-a-learner" class="level2" data-number="10.3">
 <h2 data-number="10.3" class="anchored" data-anchor-id="creating-a-learner"><span class="header-section-number">10.3</span> Creating a learner</h2>
 <p>The next step involves creating a <code>fastai</code> <a href="https://docs.fast.ai/learner.html#learner"><code>Learner</code></a> object using the <a href="https://docs.fast.ai/vision.learner.html"><code>vision_learner</code></a> method.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:56.449238Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:56.346814Z&quot;}" data-execution_count="5">
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:31.826967Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:31.709234Z&quot;}" data-execution_count="5">
 <div class="sourceCode cell-code" id="cb8"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb8-1"><a href="#cb8-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> vision_learner(</span>
 <span id="cb8-2"><a href="#cb8-2" aria-hidden="true" tabindex="-1"></a>    dls<span class="op">=</span>dls,  </span>
 <span id="cb8-3"><a href="#cb8-3" aria-hidden="true" tabindex="-1"></a>    arch<span class="op">=</span> resnet18, </span>
@@ -432,12 +435,6 @@ Shape of Labels:torch.Size([128])</code></pre>
 <span id="cb8-8"><a href="#cb8-8" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="bu">type</span>(learn))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>&lt;class 'fastai.learner.Learner'&gt;</code></pre>
-</div>
-<div class="cell-output cell-output-stderr">
-<pre><code>/home/aayush/miniconda3/envs/fastai/lib/python3.9/site-packages/torchvision/models/_utils.py:208: UserWarning: The parameter 'pretrained' is deprecated since 0.13 and will be removed in 0.15, please use 'weights' instead.
-  warnings.warn(
-/home/aayush/miniconda3/envs/fastai/lib/python3.9/site-packages/torchvision/models/_utils.py:223: UserWarning: Arguments other than a weight enum or `None` for 'weights' are deprecated since 0.13 and will be removed in 0.15. The current behavior is equivalent to passing `weights=None`.
-  warnings.warn(msg)</code></pre>
 </div>
 </div>
 <p>As evident from the code snippet above, it is possible to create a <code>fastai</code> <code>Learner</code> in just one line of code. Let’s delve into the details of what’s happening with this function. The code above is creating a fastai <code>Learner</code> object for training a model on the MNIST dataset. Here’s what each parameter in the vision_learner method does:</p>
@@ -465,19 +462,19 @@ Important
 </div>
 </div>
 </div>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:47:58.704047Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:47:58.701225Z&quot;}" data-execution_count="6">
-<div class="sourceCode cell-code" id="cb11"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb11-1"><a href="#cb11-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Optimizer function used: </span><span class="sc">{</span>learn<span class="sc">.</span>opt_func<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb11-2"><a href="#cb11-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Default learning rate: </span><span class="sc">{</span>learn<span class="sc">.</span>lr<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb11-3"><a href="#cb11-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Default loss function: </span><span class="sc">{</span>learn<span class="sc">.</span>loss_func<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:34.016538Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:34.013822Z&quot;}" data-execution_count="6">
+<div class="sourceCode cell-code" id="cb10"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb10-1"><a href="#cb10-1" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Optimizer function used: </span><span class="sc">{</span>learn<span class="sc">.</span>opt_func<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-2"><a href="#cb10-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Default learning rate: </span><span class="sc">{</span>learn<span class="sc">.</span>lr<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb10-3"><a href="#cb10-3" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Default loss function: </span><span class="sc">{</span>learn<span class="sc">.</span>loss_func<span class="sc">}</span><span class="ss">'</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
-<pre><code>Optimizer function used: &lt;function Adam at 0x7f5d84437ca0&gt;
+<pre><code>Optimizer function used: &lt;function Adam at 0x7f53ce8a6e50&gt;
 Default learning rate: 0.001
 Default loss function: FlattenedLoss of CrossEntropyLoss()</code></pre>
 </div>
 </div>
 <p><code>fastai</code> <code>Learner</code> class also comes with a lot of helpful functions. An example would be <a href="https://github.com/fastai/fastai/blob/master/fastai/callback/hook.py#L209"><code>Learner.summary</code></a> function which prints a summary of the model, optimizer and loss function.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:48:04.755866Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:48:01.911298Z&quot;}" data-execution_count="7">
-<div class="sourceCode cell-code" id="cb13"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb13-1"><a href="#cb13-1" aria-hidden="true" tabindex="-1"></a>learn.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T05:56:39.149115Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:35.197853Z&quot;}" data-execution_count="7">
+<div class="sourceCode cell-code" id="cb12"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb12-1"><a href="#cb12-1" aria-hidden="true" tabindex="-1"></a>learn.summary()</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style>
@@ -585,7 +582,7 @@ Total params: 11,702,720
 Total trainable params: 11,702,720
 Total non-trainable params: 0
 
-Optimizer used: &lt;function Adam at 0x7f5d84437ca0&gt;
+Optimizer used: &lt;function Adam at 0x7f53ce8a6e50&gt;
 Loss function: FlattenedLoss of CrossEntropyLoss()
 
 Callbacks:
@@ -616,8 +613,8 @@ Callbacks:
 </ol>
 <p>These are some of the different <code>fit</code> functions available in <code>fastai</code>’s <code>Learner</code> class, providing flexibility and convenience for training machine learning models with various techniques and strategies.</p>
 <p>We will use <code>fit_one_cycle</code> function for our training example and train for five epochs.</p>
-<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T22:52:03.922651Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T22:48:08.185244Z&quot;}" data-execution_count="8">
-<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T06:00:41.215640Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T05:56:42.981424Z&quot;}" data-execution_count="8">
+<div class="sourceCode cell-code" id="cb14"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb14-1"><a href="#cb14-1" aria-hidden="true" tabindex="-1"></a>learn.fit_one_cycle(<span class="dv">5</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style>
@@ -651,37 +648,37 @@ Callbacks:
   <tbody>
     <tr>
       <td>0</td>
-      <td>0.164690</td>
-      <td>0.133020</td>
-      <td>0.962214</td>
+      <td>0.174721</td>
+      <td>0.149860</td>
+      <td>0.958000</td>
       <td>00:48</td>
     </tr>
     <tr>
       <td>1</td>
-      <td>0.097386</td>
-      <td>0.152779</td>
-      <td>0.960214</td>
-      <td>00:47</td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>0.059235</td>
-      <td>0.056804</td>
-      <td>0.982500</td>
-      <td>00:45</td>
-    </tr>
-    <tr>
-      <td>3</td>
-      <td>0.027329</td>
-      <td>0.030058</td>
-      <td>0.991500</td>
+      <td>0.097696</td>
+      <td>0.082462</td>
+      <td>0.976143</td>
       <td>00:46</td>
     </tr>
     <tr>
+      <td>2</td>
+      <td>0.062112</td>
+      <td>0.063939</td>
+      <td>0.982357</td>
+      <td>00:47</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>0.029472</td>
+      <td>0.030471</td>
+      <td>0.990286</td>
+      <td>00:47</td>
+    </tr>
+    <tr>
       <td>4</td>
-      <td>0.012300</td>
-      <td>0.023299</td>
-      <td>0.993071</td>
+      <td>0.012919</td>
+      <td>0.026187</td>
+      <td>0.992857</td>
       <td>00:47</td>
     </tr>
   </tbody>
@@ -695,8 +692,103 @@ Callbacks:
 <li>Time taken to run that particular epoch</li>
 </ul>
 </section>
-<section id="saving-and-loading-the-model" class="level2" data-number="10.5">
-<h2 data-number="10.5" class="anchored" data-anchor-id="saving-and-loading-the-model"><span class="header-section-number">10.5</span> Saving and Loading the model</h2>
+<section id="analyzing-model-performance" class="level2" data-number="10.5">
+<h2 data-number="10.5" class="anchored" data-anchor-id="analyzing-model-performance"><span class="header-section-number">10.5</span> Analyzing Model Performance</h2>
+<p>After training our model, we achieved an impressive accuracy rate of over 99% on the MNIST testing dataset. Additionally, <code>fastai</code> provides convenient functions such as <code>ClassificationInterpretation</code>, which allows us to easily plot losses and generate a confusion matrix for further model evaluation and analysis. These tools are useful in gaining insights into the performance of our trained model and making informed decisions for model refinement and improvement.</p>
+<p>First we will initiate <code>ClassificationInterpretation</code> object from our model.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T06:00:50.759111Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T06:00:41.268009Z&quot;}" data-execution_count="9">
+<div class="sourceCode cell-code" id="cb15"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb15-1"><a href="#cb15-1" aria-hidden="true" tabindex="-1"></a>interp <span class="op">=</span> ClassificationInterpretation.from_learner(learn)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+</div>
+<p>We can now visualize our top losses, which are examples where our model was highly confident in its prediction but got it wrong. By examining these cases, we can identify potential issues with the data labeling process or areas where our model struggles in accurately identifying the class of the image. Here in <code>plot_top_losses</code> we have passed two arguments:</p>
+<ul>
+<li>Number of images to be displayed</li>
+<li>Figure size</li>
+</ul>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T06:00:51.479472Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T06:00:50.817161Z&quot;}" data-execution_count="10">
+<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>interp.plot_top_losses(<span class="dv">9</span>, figsize<span class="op">=</span>(<span class="dv">10</span>,<span class="dv">6</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="10_MNISTusingFastaiHighLevelAPI_files/figure-html/cell-11-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+<p>From the above example, we can observe that our model occasionally confuses between:</p>
+<ul>
+<li>Digits 1, 2, and 7</li>
+<li>Digits 0, 5, and 8</li>
+</ul>
+<p>This is not uncommon, as these digits bear a close resemblance to each other. It is important to note that such misclassifications are not necessarily indicative of a problem with our model, but rather a reflection of the inherent similarities between these digits.</p>
+<p>We can also generate a visualization of the confusion matrix using the <code>plot_confusion_matrix</code> function. This allows us to gain further insights into the performance of our model by visually representing the misclassifications and the true positive rates for each class.</p>
+<div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-25T06:01:02.099582Z&quot;,&quot;start_time&quot;:&quot;2023-04-25T06:00:51.530403Z&quot;}" data-execution_count="11">
+<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>interp.plot_confusion_matrix(figsize<span class="op">=</span>(<span class="dv">12</span>,<span class="dv">12</span>))</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="cell-output cell-output-display">
+
+<style>
+    /* Turns off some styling */
+    progress {
+        /* gets rid of default border in Firefox and Opera. */
+        border: none;
+        /* Needs to be in here for Safari polyfill so background images work as expected. */
+        background-size: auto;
+    }
+    progress:not([value]), progress:not([value])::-webkit-progress-bar {
+        background: repeating-linear-gradient(45deg, #7e7e7e, #7e7e7e 10px, #5c5c5c 10px, #5c5c5c 20px);
+    }
+    .progress-bar-interrupted, .progress-bar-interrupted::-webkit-progress-bar {
+        background: #F44336;
+    }
+</style>
+</div>
+<div class="cell-output cell-output-display">
+
+</div>
+<div class="cell-output cell-output-display">
+<p><img src="10_MNISTusingFastaiHighLevelAPI_files/figure-html/cell-12-output-3.png" class="img-fluid"></p>
+</div>
+</div>
+</section>
+<section id="saving-and-loading-the-model" class="level2" data-number="10.6">
+<h2 data-number="10.6" class="anchored" data-anchor-id="saving-and-loading-the-model"><span class="header-section-number">10.6</span> Saving and Loading the model</h2>
 <p>We can save the model weights, optimizer state and <code>DataLoaders</code> transform by using <code>export</code> function.</p>
 <div class="callout-note callout callout-style-default callout-captioned">
 <div class="callout-header d-flex align-content-center">
@@ -712,14 +804,14 @@ Note
 </div>
 </div>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T23:06:33.278386Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T23:06:33.101724Z&quot;}" data-execution_count="22">
-<div class="sourceCode cell-code" id="cb16"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb16-1"><a href="#cb16-1" aria-hidden="true" tabindex="-1"></a>learn.export(fname<span class="op">=</span><span class="st">"mnist_highlevel.pkl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>learn.export(fname<span class="op">=</span><span class="st">"mnist_highlevel.pkl"</span>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p>To load the model we can use <code>load_learner</code> function.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T23:24:43.812001Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T23:24:43.726410Z&quot;}" data-execution_count="50">
-<div class="sourceCode cell-code" id="cb17"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb17-1"><a href="#cb17-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> load_learner(</span>
-<span id="cb17-2"><a href="#cb17-2" aria-hidden="true" tabindex="-1"></a>    fname<span class="op">=</span>dPath<span class="op">/</span><span class="st">"mnist_highlevel.pkl"</span>, </span>
-<span id="cb17-3"><a href="#cb17-3" aria-hidden="true" tabindex="-1"></a>    cpu<span class="op">=</span><span class="va">True</span></span>
-<span id="cb17-4"><a href="#cb17-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb19"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb19-1"><a href="#cb19-1" aria-hidden="true" tabindex="-1"></a>learn <span class="op">=</span> load_learner(</span>
+<span id="cb19-2"><a href="#cb19-2" aria-hidden="true" tabindex="-1"></a>    fname<span class="op">=</span>dPath<span class="op">/</span><span class="st">"mnist_highlevel.pkl"</span>, </span>
+<span id="cb19-3"><a href="#cb19-3" aria-hidden="true" tabindex="-1"></a>    cpu<span class="op">=</span><span class="va">True</span></span>
+<span id="cb19-4"><a href="#cb19-4" aria-hidden="true" tabindex="-1"></a>)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 </div>
 <p><code>load_learner</code> function takes following arguments -</p>
 <ul>
@@ -727,24 +819,24 @@ Note
 <li><code>cpu</code> - This parameter is set to <code>True</code>, indicating that the learner object should be loaded onto the CPU for inference.</li>
 </ul>
 </section>
-<section id="performing-inference" class="level2" data-number="10.6">
-<h2 data-number="10.6" class="anchored" data-anchor-id="performing-inference"><span class="header-section-number">10.6</span> Performing inference</h2>
+<section id="performing-inference" class="level2" data-number="10.7">
+<h2 data-number="10.7" class="anchored" data-anchor-id="performing-inference"><span class="header-section-number">10.7</span> Performing inference</h2>
 <p>To perform inference, we will first obtain the file path of an image from our testing folder.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T23:16:12.674645Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T23:16:12.655918Z&quot;}" data-execution_count="47">
-<div class="sourceCode cell-code" id="cb18"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb18-1"><a href="#cb18-1" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> (dPath<span class="op">/</span><span class="st">"testing/4"</span>).ls()[<span class="dv">0</span>]</span>
-<span id="cb18-2"><a href="#cb18-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sample file path: </span><span class="sc">{</span>fname<span class="sc">}</span><span class="ss">'</span>)</span>
-<span id="cb18-3"><a href="#cb18-3" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(fname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>fname <span class="op">=</span> (dPath<span class="op">/</span><span class="st">"testing/4"</span>).ls()[<span class="dv">0</span>]</span>
+<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f'Sample file path: </span><span class="sc">{</span>fname<span class="sc">}</span><span class="ss">'</span>)</span>
+<span id="cb20-3"><a href="#cb20-3" aria-hidden="true" tabindex="-1"></a>Image.<span class="bu">open</span>(fname)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-stdout">
 <pre><code>Sample file path: ../data/mnist_png/testing/4/1010.png</code></pre>
 </div>
 <div class="cell-output cell-output-display" data-execution_count="47">
-<p><img src="10_MNISTusingFastaiHighLevelAPI_files/figure-html/cell-12-output-2.png" class="img-fluid"></p>
+<p><img src="10_MNISTusingFastaiHighLevelAPI_files/figure-html/cell-15-output-2.png" class="img-fluid"></p>
 </div>
 </div>
 <p>We have selected an image of the digit four from our test dataset. To perform inference we will use the <a href="https://docs.fast.ai/learner.html#learner.predict"><code>predict</code></a> method from <code>Learner</code> class.</p>
 <div class="cell" data-executetime="{&quot;end_time&quot;:&quot;2023-04-23T23:17:20.306028Z&quot;,&quot;start_time&quot;:&quot;2023-04-23T23:17:20.219794Z&quot;}" data-execution_count="48">
-<div class="sourceCode cell-code" id="cb20"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb20-1"><a href="#cb20-1" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> learn.predict(fname)</span>
-<span id="cb20-2"><a href="#cb20-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
+<div class="sourceCode cell-code" id="cb22"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb22-1"><a href="#cb22-1" aria-hidden="true" tabindex="-1"></a>preds <span class="op">=</span> learn.predict(fname)</span>
+<span id="cb22-2"><a href="#cb22-2" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(preds)</span></code><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></pre></div>
 <div class="cell-output cell-output-display">
 
 <style>
@@ -778,9 +870,9 @@ Note
 <li>Raw probabilities of each class in the vocabulary.</li>
 </ul>
 </section>
-<section id="conclusion" class="level2" data-number="10.7">
-<h2 data-number="10.7" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.7</span> Conclusion</h2>
-<p>In this chapter, we delved into the intricacies of building a model pipeline using <code>fastai</code>’s high-level API. We covered the essential steps of data preparation, model training, and inference, and demonstrated how the rich functionality of <code>fastai</code>’s high-level API can streamline these processes. We also explored the convenience of its abstractions for tasks like data augmentation, model selection, and model interpretation using the MNIST dataset as an example. In the next chapter, we will continue our journey by exploring similar concepts but with a focus on <code>fastai</code>’s mid-level API.</p>
+<section id="conclusion" class="level2" data-number="10.8">
+<h2 data-number="10.8" class="anchored" data-anchor-id="conclusion"><span class="header-section-number">10.8</span> Conclusion</h2>
+<p>In this chapter, we delved into the intricacies of building a model pipeline using <code>fastai</code>’s high-level API. We covered the essential steps of data preparation, model training, and inference, and demonstrated how the rich functionality of <code>fastai</code>’s high-level API can streamline these processes using MNIST data. In the next chapter, we will continue our journey by exploring similar concepts but with a focus on <code>fastai</code>’s mid-level API.</p>
 
 
 </section>
@@ -1042,7 +1134,7 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
   </div>
   <div class="nav-page nav-page-next">
       <a href="../nbs/11_MNISTusingFastaiMidLevelAPI.html" class="pagination-link">
-        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Model pipeline with fastai’s Mid-Level API (draft)</span></span> <i class="bi bi-arrow-right-short"></i>
+        <span class="nav-page-text"><span class="chapter-number">11</span>&nbsp; <span class="chapter-title">Modeling pipeline with fastai’s Mid-Level API (draft)</span></span> <i class="bi bi-arrow-right-short"></i>
       </a>
   </div>
 </nav>
